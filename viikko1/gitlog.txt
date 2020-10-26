@@ -1,6 +1,6 @@
 commit 21fd88358d40f16b8d6d13cefa2030142439d3b4
 Author: XX
-Date:   Mon Oct 26 13:23:19 2020 +0200
+Date:   Mon Oct 26 13:23:19 2020 +
  
     harjoittelu valmis
  
