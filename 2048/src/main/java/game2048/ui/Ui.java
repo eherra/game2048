@@ -41,20 +41,23 @@ public class Ui extends Application {
         skene.setOnKeyPressed((KeyEvent event) -> {
             stakki.getChildren().remove(pane);
             if (event.getCode() == KeyCode.UP) {
-                logic.moveUp();
+                logic.moveUp(false);
                 pane = setSquares();
             } else if (event.getCode() == KeyCode.DOWN) {
-                logic.moveDown();
+                logic.moveDown(false);
                 pane = setSquares();
             } else if (event.getCode() == KeyCode.RIGHT) {
-                logic.moveRight();
+                logic.moveRight(false);
                 pane = setSquares();
             } else if (event.getCode() == KeyCode.LEFT) {
-                logic.moveLeft();
+                logic.moveLeft(false);
                 pane = setSquares();
             }
             styleGrid();
             stakki.getChildren().add(pane);
+            if (logic.isGameOver()) {
+                System.out.println("PELILOPPU"); // tähän takin päälle uusipeli? ja peliloppu teksti . Opacity stakki 
+            }
         });        
 
         stage.setScene(skene);
