@@ -1,11 +1,11 @@
 
-package com.mycompany;
+package game2048.domain;
 
+import game2048.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Set;
-
 
 public class GameLogic {
     private int[][] taulu;
@@ -167,6 +167,10 @@ public class GameLogic {
     
     public int[][] getBoard() {
         return taulu;
+    }
+    
+    public int getValueFromBoard(int x, int y) {
+        return taulu[x][y];
     }
      
     public PairXY getRandomCoordinates() {

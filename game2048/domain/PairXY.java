@@ -1,5 +1,7 @@
 
-package com.mycompany;
+package game2048.domain;
+
+import game2048.*;
 
 
 public class PairXY {
