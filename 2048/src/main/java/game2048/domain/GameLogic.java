@@ -5,14 +5,17 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class GameLogic {
-    private final int[][] taulu;
+    private final int[][] gameTable;
     private final Random ran;
     private ArrayList<PairXY> emptySpots;
     private boolean isGameOver;
+    private int tableLength, gamePoints;
     
     public GameLogic(int size) {
+        gamePoints = 0;
+        tableLength = size;
         isGameOver = false;
-        taulu = new int[size][size];
+        gameTable = new int[size][size];
         ran = new Random();
         emptySpots = createEmptySpots();
         initializeStartBoard();
@@ -21,15 +24,15 @@ public class GameLogic {
     public void initializeStartBoard() {
         for (int i = 0; i < 2; i++) {
             PairXY k = getRandomCoordinates();
-            taulu[k.getX()][k.getY()] = 2;
+            gameTable[k.getX()][k.getY()] = 2;
         }
     }
     
     public ArrayList<PairXY> createEmptySpots() {
         ArrayList<PairXY> k = new ArrayList();
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                if (taulu[i][j] == 0) {
+        for (int i = 0; i < tableLength; i++) {
+            for (int j = 0; j < tableLength; j++) {
+                if (gameTable[i][j] == 0) {
                     k.add(new PairXY(i,j));                
                 }
             }
@@ -39,23 +42,24 @@ public class GameLogic {
     
     public boolean moveUp(boolean gameOverTest) {
         boolean isMoveMade = false;
-        for (int y = 0; y < 4; y++) {
+        for (int y = 0; y < tableLength; y++) {
             int lastChangeNum = -1;
-            for (int x = 1; x < 4; x++) {
+            for (int x = 1; x < tableLength; x++) {
                 for (int lastX = x; lastX >= 1; lastX--) {
-                    int current = taulu[lastX][y];
-                    int comp = taulu[lastX-1][y];
+                    int current = gameTable[lastX][y];
+                    int comp = gameTable[lastX-1][y];
                     if (comp == 0 && current != 0) {
                         isMoveMade = true;
                         if (gameOverTest) return true;                           
-                        taulu[lastX-1][y] = current;
-                        taulu[lastX][y] = 0;
+                        gameTable[lastX-1][y] = current;
+                        gameTable[lastX][y] = 0;
                     } else if (comp == current && current != 0  && current != lastChangeNum * 2) { 
                         isMoveMade = true;
                         if (gameOverTest) return true; 
                         lastChangeNum = current;
-                        taulu[lastX-1][y] = comp * 2;
-                        taulu[lastX][y] = 0;
+                        gameTable[lastX-1][y] = comp * 2;
+                        gameTable[lastX][y] = 0;
+                        gamePoints += comp * 2;
                     }
                 }
             }
@@ -66,23 +70,24 @@ public class GameLogic {
     
     public boolean moveDown(boolean gameOverTest) {
         boolean isMoveMade = false;
-        for (int y = 0; y < 4; y++) {
+        for (int y = 0; y < tableLength; y++) {
             int lastChangeNum = -1;
-            for (int x = 2; x >= 0; x--) {
-                for (int lastX = x; lastX < 3; lastX++) {
-                    int current = taulu[lastX][y];
-                    int comp = taulu[lastX+1][y];
+            for (int x = tableLength - 2; x >= 0; x--) {
+                for (int lastX = x; lastX < tableLength - 1; lastX++) {
+                    int current = gameTable[lastX][y];
+                    int comp = gameTable[lastX+1][y];
                     if (comp == 0 && current != 0) {
                         isMoveMade = true;
                         if (gameOverTest) return true;
-                        taulu[lastX+1][y] = current;
-                        taulu[lastX][y] = 0;
+                        gameTable[lastX+1][y] = current;
+                        gameTable[lastX][y] = 0;
                     } else if (comp == current && current != 0  && current != lastChangeNum * 2) {
                         isMoveMade = true;
                         if (gameOverTest) return true;                        
                         lastChangeNum = current;
-                        taulu[lastX+1][y] = comp * 2;
-                        taulu[lastX][y] = 0;
+                        gameTable[lastX+1][y] = comp * 2;
+                        gameTable[lastX][y] = 0;
+                        gamePoints += comp * 2;
                     }
                 }
             }
@@ -90,25 +95,27 @@ public class GameLogic {
         if (isMoveMade) updateBoard();
         return false;
     }
+    
     public boolean moveLeft(boolean gameOverTest) {
         boolean isMoveMade = false;
-        for (int x = 0; x < 4; x++) {
+        for (int x = 0; x < tableLength; x++) {
             int lastChangeNum = -1;
-            for (int y = 1; y < 4; y++) {
+            for (int y = 1; y < tableLength; y++) {
                 for (int lastY = y; lastY > 0; lastY--) {
-                    int current = taulu[x][lastY];
-                    int comp = taulu[x][lastY-1];
+                    int current = gameTable[x][lastY];
+                    int comp = gameTable[x][lastY-1];
                     if (comp == 0 && current != 0) {
                         isMoveMade = true;
                         if (gameOverTest) return true;
-                        taulu[x][lastY-1] = current;
-                        taulu[x][lastY] = 0;
+                        gameTable[x][lastY-1] = current;
+                        gameTable[x][lastY] = 0;
                     } else if (comp == current && current != 0  && current != lastChangeNum * 2) {
                         isMoveMade = true;
                         if (gameOverTest) return true;
                         lastChangeNum = current;
-                        taulu[x][lastY-1] = comp * 2;
-                        taulu[x][lastY] = 0;
+                        gameTable[x][lastY-1] = comp * 2;
+                        gameTable[x][lastY] = 0;
+                        gamePoints += comp * 2;
                     }
                 }
             }
@@ -116,25 +123,27 @@ public class GameLogic {
         if (isMoveMade) updateBoard();
         return false;
     }
+    
     public boolean moveRight(boolean gameOverTest) {
         boolean isMoveMade = false;
-        for (int x = 0; x < 4; x++) {
+        for (int x = 0; x < tableLength; x++) {
             int lastChangeNum = -1;
-            for (int y = 2; y >= 0; y--) {
-                for (int lastY = y; lastY < 3; lastY++) {
-                    int current = taulu[x][lastY];
-                    int comp = taulu[x][lastY+1];
+            for (int y = tableLength - 2; y >= 0; y--) {
+                for (int lastY = y; lastY < tableLength - 1; lastY++) {
+                    int current = gameTable[x][lastY];
+                    int comp = gameTable[x][lastY+1];
                     if (comp == 0 && current != 0) {
                         isMoveMade = true;
                         if (gameOverTest) return true;                        
-                        taulu[x][lastY+1] = current;
-                        taulu[x][lastY] = 0;
+                        gameTable[x][lastY+1] = current;
+                        gameTable[x][lastY] = 0;
                     } else if (comp == current && current != 0  && current != lastChangeNum * 2) {
                         isMoveMade = true;
                         if (gameOverTest) return true;                        
                         lastChangeNum = current;
-                        taulu[x][lastY+1] = comp * 2;
-                        taulu[x][lastY] = 0;
+                        gameTable[x][lastY+1] = comp * 2;
+                        gameTable[x][lastY] = 0;
+                        gamePoints += comp * 2;
                     }
                 }
             }
@@ -151,18 +160,18 @@ public class GameLogic {
     public void addRandomValue() {
         PairXY k = getRandomCoordinates();
         if (Math.random() < 0.1) {
-            taulu[k.getX()][k.getY()] = 4;
+            gameTable[k.getX()][k.getY()] = 4;
         } else {
-            taulu[k.getX()][k.getY()] = 2;
+            gameTable[k.getX()][k.getY()] = 2;
         }
     }
     
     public int[][] getBoard() {
-        return taulu;
+        return gameTable;
     }
     
     public int getValueFromBoard(int x, int y) {
-        return taulu[x][y];
+        return gameTable[x][y];
     }
      
     public PairXY getRandomCoordinates() {
@@ -176,10 +185,18 @@ public class GameLogic {
         return !(moveUp(true) || moveDown(true) || moveLeft(true) || moveRight(true));
     }
     
+    public int getTableSize() {
+        return tableLength;
+    }
+    
+    public int getGamePoints() {
+        return gamePoints;
+    }
+    
     public void print2DArray() {
-        for (int i = 0; i < taulu.length; i++) {
-            for (int j = 0; j < taulu.length; j++) {
-                System.out.print(taulu[i][j] + " ");
+        for (int i = 0; i < gameTable.length; i++) {
+            for (int j = 0; j < gameTable.length; j++) {
+                System.out.print(gameTable[i][j] + " ");
             }
             System.out.println("");
         }

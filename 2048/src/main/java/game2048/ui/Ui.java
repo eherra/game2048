@@ -5,7 +5,9 @@ import game2048.domain.GameLogic;
 import java.util.HashMap;
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -13,6 +15,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -23,6 +26,10 @@ public class Ui extends Application {
     private GameLogic logic;
     private GridPane pane;
     private StackPane stakki;
+    private BorderPane rootSetting;
+    private BorderPane mainTop;
+    private VBox mainTopRight;
+    private Label currentScore, highScore;
    
     public Ui() {
         logic = new GameLogic(4);
@@ -30,14 +37,31 @@ public class Ui extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        stakki = new StackPane();
-        pane = setSquares();
+        rootSetting = new BorderPane();
+        pane = getStyledPane();
+        mainTop = new BorderPane();
+        stakki = new StackPane(mainTop);
+        mainTopRight = new VBox();
+        HBox scoreShow = new HBox();
+        
+        Button b = new Button("New game?");
+        b.setFocusTraversable(false);
+        Label leftTopLabel = new Label("Game 2048");
+        leftTopLabel.setPadding(new Insets(20, 20, 20, 20));
+        leftTopLabel.setFont(new Font("Arial", 30));
+        highScore = new Label("High Score \n 88888");
+        currentScore = new Label("Current Score \n " + logic.getGamePoints());
+        scoreShow.getChildren().addAll(currentScore, highScore);
+        mainTopRight.getChildren().addAll(scoreShow, b);
+        mainTop.setRight(mainTopRight);
+        mainTop.setLeft(leftTopLabel);
+        
         stakki.setStyle("-fx-background-color:#bbada0");
-        styleGrid();
-
-        Scene skene = new Scene(stakki);
         stakki.getChildren().add(pane);
-
+        rootSetting.setTop(mainTop);
+        rootSetting.setCenter(stakki);
+        Scene skene = new Scene(rootSetting);
+        
         skene.setOnKeyPressed((KeyEvent event) -> {
             stakki.getChildren().remove(pane);
             if (event.getCode() == KeyCode.UP) {
@@ -53,7 +77,9 @@ public class Ui extends Application {
                 logic.moveLeft(false);
                 pane = setSquares();
             }
-            styleGrid();
+            currentScore.setText("Current Score \n " + logic.getGamePoints());
+
+            pane = getStyledPane();
             stakki.getChildren().add(pane);
             if (logic.isGameOver()) {
                 System.out.println("PELILOPPU"); // tähän takin päälle uusipeli? ja peliloppu teksti . Opacity stakki 
@@ -64,16 +90,19 @@ public class Ui extends Application {
         stage.show();
     }
     
-    public void styleGrid() {
-        pane.setPadding(new Insets(5, 5, 5, 5));
-        pane.setHgap(10);
-        pane.setVgap(10);
+    public GridPane getStyledPane() {
+        GridPane toReturnPane = setSquares();
+        toReturnPane.setPadding(new Insets(5, 5, 5, 5));
+        toReturnPane.setHgap(10);
+        toReturnPane.setVgap(10);
+        
+        return toReturnPane;
     }
     
     public GridPane setSquares() {
         GridPane pane = new GridPane();
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
+        for (int i = 0; i < logic.getTableSize(); i++) {
+            for (int j = 0; j < logic.getTableSize(); j++) {
                 StackPane s = getRectangle(logic.getValueFromBoard(i, j));
                 pane.add(s, j, i);
             }
