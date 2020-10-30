@@ -5,16 +5,13 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class GameLogic {
-    private final int[][] gameTable;
+    private int[][] gameTable;
     private final Random ran;
     private ArrayList<PairXY> emptySpots;
-    private boolean isGameOver;
-    private int tableLength, gamePoints;
+    private int tableLength, gamePoints, highScore;
     
     public GameLogic(int size) {
-        gamePoints = 0;
         tableLength = size;
-        isGameOver = false;
         gameTable = new int[size][size];
         ran = new Random();
         emptySpots = createEmptySpots();
@@ -191,6 +188,21 @@ public class GameLogic {
     
     public int getGamePoints() {
         return gamePoints;
+    }
+    
+    public int getHighScore() {
+        return highScore;
+    }
+    
+    public void setHighScore(int high) {
+        highScore = high;
+    }
+    
+    public void setNewGame() {
+        gamePoints = 0;
+        gameTable = new int[tableLength][tableLength];
+        emptySpots = createEmptySpots();
+        initializeStartBoard();
     }
     
     public void print2DArray() {
