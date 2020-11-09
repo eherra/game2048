@@ -31,7 +31,7 @@ public class Ui extends Application {
     private BorderPane mainTop;
     private VBox mainTopRight;
     private Label currentScoreLabel, highScoreLabel;
-    private Button newGameButton;
+    private Button topNewGameButton;
     private double sceneHeigth, sceneWidth;
    
     public Ui() {
@@ -48,8 +48,9 @@ public class Ui extends Application {
         mainTopRight = new VBox();
         HBox scoreShow = new HBox();
         
-        newGameButton = getNewGameButton();
-        newGameButton.setFocusTraversable(false);
+        topNewGameButton = getNewGameButton();
+        topNewGameButton.setFocusTraversable(false);
+
         Label leftTopLabel = new Label("Game 2048");
         leftTopLabel.setUnderline(true);
         leftTopLabel.setPadding(new Insets(20, 20, 20, 20));
@@ -64,7 +65,7 @@ public class Ui extends Application {
 
         scoreShow.getChildren().addAll(currentScoreLabel, highScoreLabel);
         scoreShow.setSpacing(10);
-        mainTopRight.getChildren().addAll(scoreShow, newGameButton);
+        mainTopRight.getChildren().addAll(scoreShow, topNewGameButton);
         mainTop.setRight(mainTopRight);
         mainTop.setLeft(leftTopLabel);
         
@@ -89,16 +90,16 @@ public class Ui extends Application {
                 return;
             }
             gridForSquares = getUpdatedAndStyledPane();
-            currentScoreLabel.setText("Current Score \n " + logic.getGamePoints());
-            highScoreLabel.setText("High Score \n " + logic.getHighScore()); // metodin hakemaan highScoren
+            currentScoreLabel.setText("Current Score \n" + logic.getGamePoints());
+            highScoreLabel.setText("High Score \n" + logic.getHighScore()); // metodin hakemaan highScoren
             squareStack.getChildren().add(gridForSquares);
             
             if (logic.isGameOver()) {
+                topNewGameButton.setDisable(true);
                 gameOverStack = getGameOverStack();
                 squareStack.getChildren().add((gameOverStack));
             }
         });      
-        
         stage.setScene(skene);
         stage.show();
         sceneHeigth = skene.getHeight();
@@ -153,25 +154,27 @@ public class Ui extends Application {
             logic.setNewGame();
             gridForSquares = getUpdatedAndStyledPane();
             squareStack.getChildren().add(gridForSquares);
-            currentScoreLabel.setText("Current Score \n " + logic.getGamePoints());
+            currentScoreLabel.setText("Current Score \n" + logic.getGamePoints());
             gameOverStack.setVisible(false);
+            topNewGameButton.setDisable(false);
         });
         return newGameButton;
     }
+    
     
     public StackPane getSquareStack(int size) {
         Rectangle square = new Rectangle(100,100,100,100);
         StackPane stackToReturn = new StackPane();
         square.setArcWidth(15);
         square.setArcHeight(15);
-        square.setFill(Color.web(getRectangleColour(size)));
+        square.setFill(Color.web(getSquareColour(size)));
         Label fontLabel = size != 0 ? new Label(String.valueOf(size)) : new Label();
         fontLabel.setFont(new Font("Sans-Serif", 30));
         stackToReturn.getChildren().addAll(square, fontLabel);
         return stackToReturn;
     }
     
-    public String getRectangleColour(int size) {
+    public String getSquareColour(int size) {
         switch (size) {
             case 0:
                 return "#cdc0b4";
@@ -186,7 +189,7 @@ public class Ui extends Application {
             case 32:
                 return "#ff7f7f";
             case 64:
-                return "#b25858";
+                return "#ee5d39";
             case 128:
                 return "#F9E79F";
             case 256:
@@ -200,7 +203,6 @@ public class Ui extends Application {
         }
         return "";
     }
-   
     
     public static void main(String[] args) {
         launch(args);

@@ -7,34 +7,37 @@ import java.util.Random;
 public class GameLogic {
     private int[][] gameTable;
     private final Random ran;
-    private ArrayList<PairXY> emptySpots;
-    private int tableLength, gamePoints, highScore;
+    private ArrayList<int[]> emptyCoordinates;
+    private int tableLength;
+    private Scoreboard scoreboard;
     
     public GameLogic(int size) {
+        scoreboard = new Scoreboard();
         tableLength = size;
         gameTable = new int[size][size];
         ran = new Random();
-        emptySpots = createEmptySpots();
+        emptyCoordinates = findEmptyCoordinates();
         initializeStartBoard();
     }
     
     public void initializeStartBoard() {
         for (int i = 0; i < 2; i++) {
-            PairXY k = getRandomCoordinates();
-            gameTable[k.getX()][k.getY()] = 2;
+            int[] coordinatesXY = getRandomCoordinate();
+            gameTable[coordinatesXY[0]][coordinatesXY[1]] = 2;
         }
     }
     
-    public ArrayList<PairXY> createEmptySpots() {
-        ArrayList<PairXY> k = new ArrayList();
-        for (int i = 0; i < tableLength; i++) {
-            for (int j = 0; j < tableLength; j++) {
-                if (gameTable[i][j] == 0) {
-                    k.add(new PairXY(i,j));                
+    public ArrayList<int[]> findEmptyCoordinates() {
+        ArrayList<int[]> emptyCoordinates = new ArrayList();
+        for (int x = 0; x < tableLength; x++) {
+            for (int y = 0; y < tableLength; y++) {
+                if (gameTable[x][y] == 0) {
+                    int[] coordinates = {x, y};
+                    emptyCoordinates.add(coordinates);   
                 }
             }
         }
-        return k;
+        return emptyCoordinates;
     }
     
     public boolean moveUp(boolean gameOverTest) {
@@ -43,20 +46,22 @@ public class GameLogic {
             int lastChangeNum = -1;
             for (int x = 1; x < tableLength; x++) {
                 for (int lastX = x; lastX >= 1; lastX--) {
-                    int current = gameTable[lastX][y];
-                    int comp = gameTable[lastX-1][y];
-                    if (comp == 0 && current != 0) {
+                    if (gameTable[lastX][y] == 0) continue;
+                    
+                    int currentValue = gameTable[lastX][y];
+                    int positionToMoveValue = gameTable[lastX-1][y];
+                    if (positionToMoveValue == 0) {
+                        if (gameOverTest) return true;     
                         isMoveMade = true;
-                        if (gameOverTest) return true;                           
-                        gameTable[lastX-1][y] = current;
+                        gameTable[lastX-1][y] = currentValue;
                         gameTable[lastX][y] = 0;
-                    } else if (comp == current && current != 0  && current != lastChangeNum * 2) { 
-                        isMoveMade = true;
+                    } else if (positionToMoveValue == currentValue && currentValue != lastChangeNum * 2) { 
                         if (gameOverTest) return true; 
-                        lastChangeNum = current;
-                        gameTable[lastX-1][y] = comp * 2;
+                        isMoveMade = true;
+                        lastChangeNum = currentValue;
+                        gameTable[lastX-1][y] = currentValue * 2;
                         gameTable[lastX][y] = 0;
-                        gamePoints += comp * 2;
+                        scoreboard.addCurrentPoints(currentValue);
                     }
                 }
             }
@@ -71,20 +76,22 @@ public class GameLogic {
             int lastChangeNum = -1;
             for (int x = tableLength - 2; x >= 0; x--) {
                 for (int lastX = x; lastX < tableLength - 1; lastX++) {
-                    int current = gameTable[lastX][y];
-                    int comp = gameTable[lastX+1][y];
-                    if (comp == 0 && current != 0) {
+                    if (gameTable[lastX][y] == 0) continue;
+                    
+                    int currentValue = gameTable[lastX][y];
+                    int positionToMoveValue = gameTable[lastX+1][y];
+                    if (positionToMoveValue == 0) {
                         isMoveMade = true;
                         if (gameOverTest) return true;
-                        gameTable[lastX+1][y] = current;
+                        gameTable[lastX+1][y] = currentValue;
                         gameTable[lastX][y] = 0;
-                    } else if (comp == current && current != 0  && current != lastChangeNum * 2) {
+                    } else if (positionToMoveValue == currentValue && currentValue != lastChangeNum * 2) {
                         isMoveMade = true;
                         if (gameOverTest) return true;                        
-                        lastChangeNum = current;
-                        gameTable[lastX+1][y] = comp * 2;
+                        lastChangeNum = currentValue;
+                        gameTable[lastX+1][y] = currentValue * 2;
                         gameTable[lastX][y] = 0;
-                        gamePoints += comp * 2;
+                        scoreboard.addCurrentPoints(currentValue);
                     }
                 }
             }
@@ -99,20 +106,22 @@ public class GameLogic {
             int lastChangeNum = -1;
             for (int y = 1; y < tableLength; y++) {
                 for (int lastY = y; lastY > 0; lastY--) {
-                    int current = gameTable[x][lastY];
-                    int comp = gameTable[x][lastY-1];
-                    if (comp == 0 && current != 0) {
+                    if (gameTable[x][lastY] == 0) continue;
+                    
+                    int currentValue = gameTable[x][lastY];
+                    int positionToMoveValue = gameTable[x][lastY-1];
+                    if (positionToMoveValue == 0) {
                         isMoveMade = true;
                         if (gameOverTest) return true;
-                        gameTable[x][lastY-1] = current;
+                        gameTable[x][lastY-1] = currentValue;
                         gameTable[x][lastY] = 0;
-                    } else if (comp == current && current != 0  && current != lastChangeNum * 2) {
+                    } else if (positionToMoveValue == currentValue && currentValue != lastChangeNum * 2) {
                         isMoveMade = true;
                         if (gameOverTest) return true;
-                        lastChangeNum = current;
-                        gameTable[x][lastY-1] = comp * 2;
+                        lastChangeNum = currentValue;
+                        gameTable[x][lastY-1] = currentValue * 2;
                         gameTable[x][lastY] = 0;
-                        gamePoints += comp * 2;
+                        scoreboard.addCurrentPoints(currentValue);
                     }
                 }
             }
@@ -127,20 +136,22 @@ public class GameLogic {
             int lastChangeNum = -1;
             for (int y = tableLength - 2; y >= 0; y--) {
                 for (int lastY = y; lastY < tableLength - 1; lastY++) {
-                    int current = gameTable[x][lastY];
-                    int comp = gameTable[x][lastY+1];
-                    if (comp == 0 && current != 0) {
+                    if (gameTable[x][lastY] == 0) continue;
+                    
+                    int currentValue = gameTable[x][lastY];
+                    int positionToMoveValue = gameTable[x][lastY+1];
+                    if (positionToMoveValue == 0) {
                         isMoveMade = true;
                         if (gameOverTest) return true;                        
-                        gameTable[x][lastY+1] = current;
+                        gameTable[x][lastY+1] = currentValue;
                         gameTable[x][lastY] = 0;
-                    } else if (comp == current && current != 0  && current != lastChangeNum * 2) {
+                    } else if (positionToMoveValue == currentValue  && currentValue != lastChangeNum * 2) {
                         isMoveMade = true;
                         if (gameOverTest) return true;                        
-                        lastChangeNum = current;
-                        gameTable[x][lastY+1] = comp * 2;
+                        lastChangeNum = currentValue;
+                        gameTable[x][lastY+1] = currentValue * 2;
                         gameTable[x][lastY] = 0;
-                        gamePoints += comp * 2;
+                        scoreboard.addCurrentPoints(currentValue);
                     }
                 }
             }
@@ -150,16 +161,16 @@ public class GameLogic {
     }
     
     public void updateBoard() {
-        emptySpots = createEmptySpots();
+        emptyCoordinates = findEmptyCoordinates();
         addRandomValue();
     }
 
     public void addRandomValue() {
-        PairXY k = getRandomCoordinates();
+        int[] coordinate = getRandomCoordinate();
         if (Math.random() < 0.1) {
-            gameTable[k.getX()][k.getY()] = 4;
+            gameTable[coordinate[0]][coordinate[1]] = 4;
         } else {
-            gameTable[k.getX()][k.getY()] = 2;
+            gameTable[coordinate[0]][coordinate[1]] = 2;
         }
     }
     
@@ -171,74 +182,33 @@ public class GameLogic {
         return gameTable[x][y];
     }
      
-    public PairXY getRandomCoordinates() {
-        int randomInd = ran.nextInt(emptySpots.size());
-        PairXY ret = emptySpots.get(randomInd);
-        emptySpots.remove(randomInd);
-        return ret;
+    public int[] getRandomCoordinate() {
+        int randomInd = ran.nextInt(emptyCoordinates.size());
+        int[] coordinatesToReturn = emptyCoordinates.get(randomInd);
+        emptyCoordinates.remove(randomInd);
+        return coordinatesToReturn;
     }
     
     public boolean isGameOver() {
-        return !(moveUp(true) || moveDown(true) || moveLeft(true) || moveRight(true));
+        return !moveUp(true) && !moveDown(true) && !moveLeft(true) && !moveRight(true);
     }
     
     public int getTableSize() {
         return tableLength;
     }
     
-    public int getGamePoints() {
-        return gamePoints;
-    }
-    
     public int getHighScore() {
-        return highScore;
+        return scoreboard.getHighScore();
     }
     
-    public void setHighScore(int high) {
-        highScore = high;
+    public int getGamePoints() {
+        return scoreboard.getCurrentScore();
     }
     
     public void setNewGame() {
-        gamePoints = 0;
+        scoreboard.setToZeroCurrentScore();
         gameTable = new int[tableLength][tableLength];
-        emptySpots = createEmptySpots();
+        emptyCoordinates = findEmptyCoordinates();
         initializeStartBoard();
     }
-    
-    public void print2DArray() {
-        for (int i = 0; i < gameTable.length; i++) {
-            for (int j = 0; j < gameTable.length; j++) {
-                System.out.print(gameTable[i][j] + " ");
-            }
-            System.out.println("");
-        }
-    }
 }
-
-
-//    public int[] moveNumbers(int[] nums) {
-//        int[] arrayToReturn = new int[nums.length];
-//        for (int i = 1; i < nums.length; i++) {
-//            int helpInd = i;
-//            
-//            while (helpInd != 0) {
-//                int next = nums[helpInd-1];
-//                int current = nums[helpInd];
-//                System.out.println(next + " on next, " + current);
-//                
-//                if (next == 0 && current != 0) {
-//                System.out.println(next + " on next, " + current +" eka if");
-//                    arrayToReturn[helpInd-1] = current;
-//                    arrayToReturn[helpInd] = 0;
-//                } else if (next == current) {
-//                System.out.println(next + " on next, " + current +" toka if");
-//                    arrayToReturn[helpInd-1] = current * 2;
-//                    arrayToReturn[helpInd] = 0;
-//                    System.out.println(ArraysarrayToReturn);
-//                }
-//                helpInd--;
-//            }
-//        }
-//        System.out.println(Arrays.toString((arrayToReturn)));
-//        return arrayToReturn;
-//    }
