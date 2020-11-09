@@ -9,4 +9,4 @@
 | 2.11.      | 2    | määrittelydokumentin luonti |
 | 9.11.      | 4    | tehokkaammat tietorakenteet gamelogic luokkaan, pisteenlaskun eriytys gamelogic-luokasta|
 
-| yht   |   18 | | 
+| yht   |   22 | 
