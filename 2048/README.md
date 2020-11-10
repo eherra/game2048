@@ -9,12 +9,12 @@ To start from terminal:
 mvn compile exec:java -Dexec.mainClass=game2048.ui.Ui
 ```
 
-To run tests from terminal:
+To run tests:
 ```console
 mvn test
 ```
 
-To get Jacoco report, run from terminal:
+To get Jacoco report:
 ```console
 mvn test jacoco:report
 ```
