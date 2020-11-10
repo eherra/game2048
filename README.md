@@ -16,8 +16,11 @@
 
 ## Viikko3
 [task1](https://github.com/eherra/ot-harjoitustyo/blob/main/laskarit/viikko3/task1.png)
+</br>
 [task2](https://github.com/eherra/ot-harjoitustyo/blob/main/laskarit/viikko3/task2.png)
+</br>
 [task3](https://github.com/eherra/ot-harjoitustyo/blob/main/laskarit/viikko3/task3.png)
+</br>
 [task4](https://github.com/eherra/ot-harjoitustyo/blob/main/laskarit/viikko3/task4ff.png)
 
 # Projekti
