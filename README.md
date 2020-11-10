@@ -20,5 +20,5 @@
 [task3](https://github.com/eherra/ot-harjoitustyo/blob/main/laskarit/viikko3/task3.png)
 [task4](https://github.com/eherra/ot-harjoitustyo/blob/main/laskarit/viikko3/task4ff.png)
 
-### Projekti
+# Projekti
 [Game2048](https://github.com/eherra/ot-harjoitustyo/tree/main/2048)
