@@ -12,7 +12,7 @@
 </br>
 [Unicafe](https://github.com/eherra/ot-harjoitustyo/tree/main/laskarit/viikko2/Unicafe)
 </br>
-[Määrittelydokumentti](https://github.com/eherra/ot-harjoitustyo/blob/main/laskarit/viikko2/m%C3%A4%C3%A4rittelydokumentti.md)
+[dokumentaatio](https://github.com/eherra/ot-harjoitustyo/tree/main/2048/dokumentaatio)
 
 ## Viikko3
 [task1](https://github.com/eherra/ot-harjoitustyo/blob/main/laskarit/viikko3/task1.png)
