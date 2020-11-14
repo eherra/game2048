@@ -54,7 +54,7 @@ public class Ui extends Application {
         Label leftTopLabel = new Label("Game 2048");
         leftTopLabel.setUnderline(true);
         leftTopLabel.setPadding(new Insets(20, 20, 20, 20));
-        leftTopLabel.setFont(Font.font("Sans-Serif", FontWeight.BOLD, 30));
+        leftTopLabel.setFont(Font.font("Monospaced", FontWeight.BOLD, 30));
         highScoreLabel = new Label("High Score \n " + logic.getHighScore());
         highScoreLabel.setFont(new Font("Sans-Serif", 15));
         highScoreLabel.setTextFill(Color.web("#ffffff"));
@@ -94,7 +94,7 @@ public class Ui extends Application {
             highScoreLabel.setText("High Score \n" + logic.getHighScore()); // metodin hakemaan highScoren
             squareStack.getChildren().add(gridForSquares);
             
-            if (logic.isGameOver()) {
+            if (!logic.isMoveableSquares() && logic.isGameOver()) {
                 topNewGameButton.setDisable(true);
                 gameOverStack = getGameOverStack();
                 squareStack.getChildren().add((gameOverStack));
@@ -198,10 +198,8 @@ public class Ui extends Application {
                 return "#F1C40F";
             case 1024:
                 return "#B7950B";
-            case 2048:
-                return "#7D3C98";
         }
-        return "";
+        return "7D3C98"; // colour of 2048 square
     }
     
     public static void main(String[] args) {

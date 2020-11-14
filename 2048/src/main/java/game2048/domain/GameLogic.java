@@ -190,7 +190,11 @@ public class GameLogic {
     }
     
     public boolean isGameOver() {
-        return !moveUp(true) && !moveDown(true) && !moveLeft(true) && !moveRight(true);
+        return !moveRight(true) && !moveUp(true) && !moveDown(true) && !moveLeft(true);
+    }
+    
+    public boolean isMoveableSquares() {
+        return emptyCoordinates.size() != 0;
     }
     
     public int getTableSize() {

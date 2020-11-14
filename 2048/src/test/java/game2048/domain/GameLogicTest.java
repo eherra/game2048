@@ -16,12 +16,7 @@ import static org.junit.Assert.*;
  */
 public class GameLogicTest {
     private GameLogic testLogic;
-    
-    public GameLogicTest() {
-        
-        
-    }
-    
+
     @Before
     public void setUp() {
         testLogic = new GameLogic(4);   // creating board size 4x4 with 2 values in random coordinates on int[][] array. 
