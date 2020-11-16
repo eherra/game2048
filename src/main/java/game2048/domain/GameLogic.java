@@ -7,7 +7,7 @@ import java.util.Random;
 public class GameLogic {
     private int[][] gameTable;
     private final Random ran;
-    private ArrayList<int[]> emptyCoordinates;
+    private ArrayList<byte[]> emptyCoordinates;
     private int tableLength;
     private Scoreboard scoreboard;
     
@@ -22,7 +22,7 @@ public class GameLogic {
     
     public void initializeStartBoard() {
         for (int i = 0; i < 2; i++) {
-            int[] coordinatesXY = getRandomCoordinate();
+            byte[] coordinatesXY = getRandomCoordinate();
             gameTable[coordinatesXY[0]][coordinatesXY[1]] = 2;
         }
     }
@@ -32,7 +32,7 @@ public class GameLogic {
         for (int x = 0; x < tableLength; x++) {
             for (int y = 0; y < tableLength; y++) {
                 if (gameTable[x][y] == 0) {
-                    int[] coordinates = {x, y};
+                    byte[] coordinates = {(byte)x, (byte)y};
                     emptyCoordinates.add(coordinates);   
                 }
             }
@@ -165,7 +165,7 @@ public class GameLogic {
     }
 
     public void addRandomValue() {
-        int[] coordinate = getRandomCoordinate();
+        byte[] coordinate = getRandomCoordinate();
         if (Math.random() < 0.1) {
             gameTable[coordinate[0]][coordinate[1]] = 4;
         } else {
@@ -181,9 +181,9 @@ public class GameLogic {
         return gameTable[x][y];
     }
      
-    public int[] getRandomCoordinate() {
+    public byte[] getRandomCoordinate() {
         int randomInd = ran.nextInt(emptyCoordinates.size());
-        int[] coordinatesToReturn = emptyCoordinates.get(randomInd);
+        byte[] coordinatesToReturn = emptyCoordinates.get(randomInd);
         emptyCoordinates.remove(randomInd);
         return coordinatesToReturn;
     }

@@ -25,12 +25,12 @@ import javafx.stage.Stage;
 
 public class Ui extends Application {
     private GameLogic logic;
-    private GridPane gridForSquares;
+    private GridPane gridForSquares, gridToReturn, toReturnPane;
     private StackPane squareStack, gameOverStack, stackToReturn;
     private BorderPane rootSetting;
     private BorderPane mainTop;
     private VBox mainTopRight;
-    private Label currentScoreLabel, highScoreLabel;
+    private Label currentScoreLabel, highScoreLabel, fontLabel;
     private Button topNewGameButton;
     private Rectangle square;
     private double sceneHeigth, sceneWidth;
@@ -126,7 +126,7 @@ public class Ui extends Application {
     }
     
     public GridPane getUpdatedAndStyledPane() {
-        GridPane toReturnPane = setSquares();
+        toReturnPane = setSquares();
         toReturnPane.setPadding(new Insets(5, 5, 5, 5));
         toReturnPane.setHgap(10);
         toReturnPane.setVgap(10);
@@ -134,7 +134,7 @@ public class Ui extends Application {
     }
     
     public GridPane setSquares() {
-        GridPane gridToReturn = new GridPane();
+        gridToReturn = new GridPane();
         StackPane squareStack = new StackPane();
         for (int i = 0; i < logic.getTableSize(); i++) {
             for (int j = 0; j < logic.getTableSize(); j++) {
@@ -153,12 +153,12 @@ public class Ui extends Application {
         newGameButton.setOnMouseExited(e -> newGameButton.setStyle("-fx-background-color: #679fd3"));
 
         newGameButton.setOnMouseClicked((event) -> {
+            gameOverStack.setVisible(false);
+            topNewGameButton.setDisable(false);
             logic.setNewGame();
             gridForSquares = getUpdatedAndStyledPane();
             squareStack.getChildren().add(gridForSquares);
             currentScoreLabel.setText("Current Score \n" + logic.getGamePoints());
-            gameOverStack.setVisible(false);
-            topNewGameButton.setDisable(false);
         });
         return newGameButton;
     }
@@ -170,7 +170,7 @@ public class Ui extends Application {
         square.setArcWidth(15);
         square.setArcHeight(15);
         square.setFill(Color.web(getSquareColour(size)));
-        Label fontLabel = size != 0 ? new Label(String.valueOf(size)) : new Label();
+        fontLabel = size != 0 ? new Label(String.valueOf(size)) : new Label();
         fontLabel.setFont(new Font("Sans-Serif", 30));
         stackToReturn.getChildren().addAll(square, fontLabel);
         return stackToReturn;
