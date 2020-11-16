@@ -26,12 +26,13 @@ import javafx.stage.Stage;
 public class Ui extends Application {
     private GameLogic logic;
     private GridPane gridForSquares;
-    private StackPane squareStack, gameOverStack;
+    private StackPane squareStack, gameOverStack, stackToReturn;
     private BorderPane rootSetting;
     private BorderPane mainTop;
     private VBox mainTopRight;
     private Label currentScoreLabel, highScoreLabel;
     private Button topNewGameButton;
+    private Rectangle square;
     private double sceneHeigth, sceneWidth;
    
     public Ui() {
@@ -134,9 +135,10 @@ public class Ui extends Application {
     
     public GridPane setSquares() {
         GridPane gridToReturn = new GridPane();
+        StackPane squareStack = new StackPane();
         for (int i = 0; i < logic.getTableSize(); i++) {
             for (int j = 0; j < logic.getTableSize(); j++) {
-                StackPane squareStack = getSquareStack(logic.getValueFromBoard(i, j));
+                squareStack = getSquareStack(logic.getValueFromBoard(i, j));
                 gridToReturn.add(squareStack, j, i);
             }
         }
@@ -163,8 +165,8 @@ public class Ui extends Application {
     
     
     public StackPane getSquareStack(int size) {
-        Rectangle square = new Rectangle(100,100,100,100);
-        StackPane stackToReturn = new StackPane();
+        square = new Rectangle(100,100,100,100);
+        stackToReturn = new StackPane();
         square.setArcWidth(15);
         square.setArcHeight(15);
         square.setFill(Color.web(getSquareColour(size)));

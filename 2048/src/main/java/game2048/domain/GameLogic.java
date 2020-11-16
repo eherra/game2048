@@ -16,7 +16,7 @@ public class GameLogic {
         tableLength = size;
         gameTable = new int[size][size];
         ran = new Random();
-        emptyCoordinates = findEmptyCoordinates();
+        findEmptyCoordinates();
         initializeStartBoard();
     }
     
@@ -27,8 +27,8 @@ public class GameLogic {
         }
     }
     
-    public ArrayList<int[]> findEmptyCoordinates() {
-        ArrayList<int[]> emptyCoordinates = new ArrayList();
+    public void findEmptyCoordinates() {
+        emptyCoordinates = new ArrayList();
         for (int x = 0; x < tableLength; x++) {
             for (int y = 0; y < tableLength; y++) {
                 if (gameTable[x][y] == 0) {
@@ -37,7 +37,6 @@ public class GameLogic {
                 }
             }
         }
-        return emptyCoordinates;
     }
     
     public boolean moveUp(boolean gameOverTest) {
@@ -161,7 +160,7 @@ public class GameLogic {
     }
     
     public void updateBoard() {
-        emptyCoordinates = findEmptyCoordinates();
+        findEmptyCoordinates();
         addRandomValue();
     }
 
@@ -212,7 +211,7 @@ public class GameLogic {
     public void setNewGame() {
         scoreboard.setToZeroCurrentScore();
         gameTable = new int[tableLength][tableLength];
-        emptyCoordinates = findEmptyCoordinates();
+        findEmptyCoordinates();
         initializeStartBoard();
     }
 }
