@@ -1,5 +1,7 @@
-target/
+target
 .DS_Store
 /viikko2/Maksukortti/nbproject/
 /laskarit/viikko2/Unicafe/nbproject/
 /2048/nbproject/
+/nbproject/
+nbactions.xml
