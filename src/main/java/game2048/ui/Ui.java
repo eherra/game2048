@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -18,7 +19,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
@@ -27,8 +27,7 @@ public class Ui extends Application {
     private GameLogic logic;
     private GridPane gridForSquares, gridToReturn, toReturnPane;
     private StackPane squareStack, gameOverStack, stackToReturn;
-    private BorderPane rootSetting;
-    private BorderPane mainTop;
+    private BorderPane rootSetting, mainTop;
     private VBox mainTopRight;
     private Label currentScoreLabel, highScoreLabel, fontLabel;
     private Button topNewGameButton;
@@ -56,11 +55,11 @@ public class Ui extends Application {
         leftTopLabel.setUnderline(true);
         leftTopLabel.setPadding(new Insets(20, 20, 20, 20));
         leftTopLabel.setFont(Font.font("Monospaced", FontWeight.BOLD, 30));
-        highScoreLabel = new Label("High Score \n " + logic.getHighScore());
+        highScoreLabel = new Label("High Score \n" + logic.getHighScore());
         highScoreLabel.setFont(new Font("Sans-Serif", 15));
         highScoreLabel.setTextFill(Color.web("#ffffff"));
         
-        currentScoreLabel = new Label("Current Score \n " + logic.getGamePoints());
+        currentScoreLabel = new Label("Current Score \n" + logic.getGamePoints());
         currentScoreLabel.setFont(new Font("Sans-Serif", 15));
         currentScoreLabel.setTextFill(Color.web("#ffffff"));
 
@@ -109,7 +108,7 @@ public class Ui extends Application {
     
     public StackPane getGameOverStack() {
         StackPane gameOverStack = new StackPane();
-        Rectangle square = new Rectangle(sceneHeigth - 100, sceneWidth -200, sceneHeigth - 100, sceneWidth - 200);
+        Rectangle square = new Rectangle(sceneHeigth - 100, sceneWidth - 200, sceneHeigth - 100, sceneWidth - 200);
         Label gameOverLabel = new Label("You lost!");
         square.setFill(Color.web("#2F4F4F"));
         gameOverLabel.setFont(new Font("Sans-Serif", 30));
@@ -144,26 +143,7 @@ public class Ui extends Application {
         }
         return gridToReturn;
     }
-    
-    public Button getNewGameButton() {
-        Button newGameButton = new Button("New game");
-        newGameButton.setFont(new Font("Sans-Serif", 15));
-        newGameButton.setStyle("-fx-background-color: #679fd3; ");
-        newGameButton.setOnMouseEntered(e -> newGameButton.setStyle("-fx-background-color: #aacef7"));
-        newGameButton.setOnMouseExited(e -> newGameButton.setStyle("-fx-background-color: #679fd3"));
-
-        newGameButton.setOnMouseClicked((event) -> {
-            gameOverStack.setVisible(false);
-            topNewGameButton.setDisable(false);
-            logic.setNewGame();
-            gridForSquares = getUpdatedAndStyledPane();
-            squareStack.getChildren().add(gridForSquares);
-            currentScoreLabel.setText("Current Score \n" + logic.getGamePoints());
-        });
-        return newGameButton;
-    }
-    
-    
+       
     public StackPane getSquareStack(int size) {
         square = new Rectangle(100,100,100,100);
         stackToReturn = new StackPane();
@@ -202,6 +182,24 @@ public class Ui extends Application {
                 return "#B7950B";
         }
         return "7D3C98"; // colour of 2048 square
+    }
+       
+    public Button getNewGameButton() {
+        Button newGameButton = new Button("New game");
+        newGameButton.setFont(new Font("Sans-Serif", 15));
+        newGameButton.setStyle("-fx-background-color: #679fd3; ");
+        newGameButton.setOnMouseEntered(e -> newGameButton.setStyle("-fx-background-color: #aacef7"));
+        newGameButton.setOnMouseExited(e -> newGameButton.setStyle("-fx-background-color: #679fd3"));
+
+        newGameButton.setOnMouseClicked((event) -> {
+            gameOverStack.setVisible(false);
+            topNewGameButton.setDisable(false);
+            logic.setNewGame();
+            gridForSquares = getUpdatedAndStyledPane();
+            squareStack.getChildren().add(gridForSquares);
+            currentScoreLabel.setText("Current Score \n" + logic.getGamePoints());
+        });
+        return newGameButton;
     }
     
     public static void main(String[] args) {

@@ -9,57 +9,153 @@ import java.util.HashSet;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 
-/**
- *
- * @author balooza
- */
 public class GameLogicTest {
     private GameLogic testLogic;
+    private int n;
 
     @Before
     public void setUp() {
         testLogic = new GameLogic(4);   // creating board size 4x4 with 2 values in random coordinates on int[][] array. 
                                         // Making testing a bit harder but is workaroundable
+        n = testLogic.getTableSize();
     }
-
-    @Test
-    public void testInitializeStartBoard() {
+    
+    /**
+    * Helper method to check if board is on starting settings (2 random placed '2' values).
+    */
+    public int[] checkingStartBoard() {
+        int[] ret = new int[2];
+        
         int amountOfTwos = 0;
         int amountOfZeroes = 0;
-        
-        for (int i = 0; i < testLogic.getBoard().length; i++) {
-            for (int j = 0; j < testLogic.getBoard().length; j++) {
+        int tableSize = testLogic.getTableSize();
+
+        for (int i = 0; i < tableSize; i++) {
+            for (int j = 0; j < tableSize; j++) {
                 if (testLogic.getValueFromBoard(i, j) == 0) amountOfZeroes++;
                 if (testLogic.getValueFromBoard(i, j) == 2) amountOfTwos++;
             }
         }
+
+        int amountOfSquares = tableSize * tableSize;
+        ret[0] = amountOfZeroes;
+        ret[1] = amountOfTwos;
+        return ret;
+    }
+
+    @Test
+    public void testInitializeStartBoard() {
+        int tableSize = testLogic.getTableSize();
+        int amountOfSquares = tableSize * tableSize;
         
-        int amountOfSquares = testLogic.getBoard().length * testLogic.getBoard().length;
-        
-        assertEquals(true, amountOfTwos == 2);
-        assertEquals(true, amountOfZeroes == amountOfSquares - 2);
+        int[] values = checkingStartBoard();
+        assertEquals(true, values[1] == 2);
+        assertEquals(true, values[0] == amountOfSquares - 2);
     }
 
     @Test
     public void testFindEmptyCoordinates() {
+        
     }
 
+    /**
+    * Creating a specific board setup and testing the moving methods for it in order to simplify the testing.
+    */
+    public int[][] getTableForMovingMethods() {
+        int[][] k = {{2, 4, 4, 2},
+                    {2, 4, 2, 2},
+                    {2, 8, 2, 2},
+                    {2, 8, 4, 4}};
+        
+        return k;
+    }
     @Test
     public void testMoveUp() {
+        testLogic.setTable(getTableForMovingMethods());
+        testLogic.moveUp(false);
+        int differences = 0;
         
+        // the values which should be after a moveUp method.
+        int[][] k = {{4, 8, 4, 4},
+                    {4, 16, 4, 2},
+                    {0, 0, 4, 4},
+                    {0, 0, 0, 0}};
+                
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (!(testLogic.getValueFromBoard(i, j) == k[i][j])) {
+                    differences++;
+                }
+            }
+        }
+        assertEquals(true, differences == 1); // difference should be one since 1 random square is coming after every move
     }
 
     @Test
     public void testMoveDown() {
+        testLogic.setTable(getTableForMovingMethods());
+        testLogic.moveDown(false);
+        // the values which should be after a moveDown method.
+        int[][] k = {{0, 0, 0, 0},
+                    {0, 0, 4, 2},
+                    {4, 8, 4, 4},
+                    {4, 16, 4, 4}};
+                
+        int differences = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (!(testLogic.getValueFromBoard(i, j) == k[i][j])) {
+                    differences++;
+                }
+            }
+        }
+        assertEquals(true, differences == 1); 
     }
 
     @Test
     public void testMoveLeft() {
+        testLogic.setTable(getTableForMovingMethods());
+        testLogic.moveLeft(false);
+        int differences = 0;
+        
+        // the values which should be after a moveLeft method.
+        int[][] k = {{2, 8, 2, 0},
+                    {2, 4, 4, 0},
+                    {2, 8, 4, 0},
+                    {2, 8, 8, 0}};
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (!(testLogic.getValueFromBoard(i, j) == k[i][j])) {
+                    differences++;
+                }
+            }
+        }
+        assertEquals(true, differences == 1);
     }
-
+    
     @Test
     public void testMoveRight() {
+        testLogic.setTable(getTableForMovingMethods());
+        testLogic.moveRight(false);
+        int differences = 0;
+
+        // the values which should be after a moveLeft method.
+        int[][] k = {{0, 2, 8, 2},
+                    {0, 2, 4, 4},
+                    {0, 2, 8, 4},
+                    {0, 2, 8, 8}};
+                
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (!(testLogic.getValueFromBoard(i, j) == k[i][j])) {
+                    differences++;
+                }
+            }
+        }
+        assertEquals(true, differences == 1);
     }
 
     @Test
@@ -71,15 +167,6 @@ public class GameLogicTest {
     }
     
     @Test
-    public void testGetBoard() {
-    }
-
-
-    @Test
-    public void testGetValueFromBoard() {
-    }
-
-    @Test
     public void testGetRandomCoordinate() {
     }
 
@@ -89,26 +176,15 @@ public class GameLogicTest {
     @Test
     public void testIsGameOver() {
     }
-
-    /**
-     * Test of getTableSize method, of class GameLogic.
-     */
-    @Test
-    public void testGetTableSize() {
-    }
-
-    /**
-     * Test of getHighScore method, of class GameLogic.
-     */
-    @Test
-    public void testGetHighScore() {
-    }
-
-    /**
-     * Test of getGamePoints method, of class GameLogic.
-     */
-    @Test
-    public void testGetGamePoints() {
+    
+    public void print() {
+        for (int i = 0; i < n; i++){
+            for (int j = 0; j < n; j++) {
+                System.out.print(testLogic.getValueFromBoard(i, j) + " ");
+            }
+            System.out.println("");
+        }
+        
     }
 
     /**
@@ -116,6 +192,20 @@ public class GameLogicTest {
      */
     @Test
     public void testSetNewGame() {
+        for (int i = 0; i < 5; i++) {
+            testLogic.moveLeft(false);
+            testLogic.moveRight(false);
+        }
+        
+        testLogic.setNewGame();
+        
+        int tableSize = testLogic.getTableSize();
+        int amountOfSquares = tableSize * tableSize;
+        
+        int[] values = checkingStartBoard();
+        assertEquals(true, values[1] == 2);
+        assertEquals(true, values[0] == amountOfSquares - 2);
     }
+
     
 }
