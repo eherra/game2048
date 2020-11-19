@@ -8,5 +8,6 @@
 | 30.10. | 4  | käyttöjärjestelmän designeä väreillä, uusi pelin napin luominen, sovellusloogikan pistelaskun lisäys käyttöjärjestelmään |
 | 2.11.      | 2    | määrittelydokumentin luonti |
 | 9.11.      | 4    | tehokkaammat tietorakenteet gamelogic luokkaan, pisteenlaskun eriytys gamelogic-luokasta|
+| 19.11.      | 4    | testejä game logic luokkaan, iso bugi löydetty ja korjattu|
 
-| yht   |   22 | 
+| yht   |   27 | 
