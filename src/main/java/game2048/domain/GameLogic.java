@@ -77,7 +77,7 @@ public class GameLogic {
     }
     
     public boolean isMoveableSquares() {
-        return emptyCoordinates.size() != 0;
+        return emptyCoordinates.size() != 1;
     }
     
     public int getTableSize() {
@@ -96,6 +96,7 @@ public class GameLogic {
         return !moveRight(true) && !moveUp(true) && !moveDown(true) && !moveLeft(true);
     }
     
+    //spageth code down from here, need to be divided for couple of methods
     public boolean moveUp(boolean gameOverTest) {
         boolean isMoveMade = false;
         for (int y = 0; y < tableLength; y++) {
@@ -170,6 +171,7 @@ public class GameLogic {
             for (int y = 1; y < tableLength; y++) {
                 for (int lastY = y; lastY > 0; lastY--) {
                     if (gameTable[x][lastY] == 0) continue;
+                    
                     int currentValue = gameTable[x][lastY];
                     int positionToMoveValue = gameTable[x][lastY-1];
                     if (positionToMoveValue == 0) {

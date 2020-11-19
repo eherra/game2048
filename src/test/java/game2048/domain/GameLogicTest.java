@@ -26,7 +26,7 @@ public class GameLogicTest {
     * Helper method to check if board is on starting settings (2 random placed '2' values).
     */
     public int[] checkingStartBoard() {
-        int[] ret = new int[2];
+        int[] arrayToReturn = new int[2];
         
         int amountOfTwos = 0;
         int amountOfZeroes = 0;
@@ -40,9 +40,9 @@ public class GameLogicTest {
         }
 
         int amountOfSquares = tableSize * tableSize;
-        ret[0] = amountOfZeroes;
-        ret[1] = amountOfTwos;
-        return ret;
+        arrayToReturn[0] = amountOfZeroes;
+        arrayToReturn[1] = amountOfTwos;
+        return arrayToReturn;
     }
 
     @Test
@@ -61,7 +61,7 @@ public class GameLogicTest {
     }
 
     /**
-    * Creating a specific board setup and testing the moving methods for it in order to simplify the testing.
+    * Creating a specific board setup for testing the moving methods. Simplifying the testing
     */
     public int[][] getTableForMovingMethods() {
         int[][] k = {{2, 4, 4, 2},
@@ -90,7 +90,7 @@ public class GameLogicTest {
                 }
             }
         }
-        assertEquals(true, differences == 1); // difference should be one since 1 random square is coming after every move
+        assertEquals(true, differences == 1); // difference should be one since 1 random square is added to table after every move
     }
 
     @Test
@@ -175,16 +175,6 @@ public class GameLogicTest {
      */
     @Test
     public void testIsGameOver() {
-    }
-    
-    public void print() {
-        for (int i = 0; i < n; i++){
-            for (int j = 0; j < n; j++) {
-                System.out.print(testLogic.getValueFromBoard(i, j) + " ");
-            }
-            System.out.println("");
-        }
-        
     }
 
     /**

@@ -30,7 +30,7 @@ public class Ui extends Application {
     private BorderPane rootSetting, mainTop;
     private VBox mainTopRight;
     private Label currentScoreLabel, highScoreLabel, fontLabel;
-    private Button topNewGameButton;
+    private Button topNewGameButton, topMainMenuButton;
     private Rectangle square;
     private double sceneHeigth, sceneWidth;
    
@@ -47,9 +47,15 @@ public class Ui extends Application {
         squareStack = new StackPane(mainTop);
         mainTopRight = new VBox();
         HBox scoreShow = new HBox();
+        HBox buttonShow = new HBox();
         
+        // top right new game button
         topNewGameButton = getNewGameButton();
         topNewGameButton.setFocusTraversable(false);
+
+        //back to menu button
+        topMainMenuButton = getTopMenuButton();
+        topMainMenuButton.setFocusTraversable(false);
 
         Label leftTopLabel = new Label("Game 2048");
         leftTopLabel.setUnderline(true);
@@ -62,10 +68,14 @@ public class Ui extends Application {
         currentScoreLabel = new Label("Current Score \n" + logic.getGamePoints());
         currentScoreLabel.setFont(new Font("Sans-Serif", 15));
         currentScoreLabel.setTextFill(Color.web("#ffffff"));
-
+        
+        // right top
         scoreShow.getChildren().addAll(currentScoreLabel, highScoreLabel);
         scoreShow.setSpacing(10);
-        mainTopRight.getChildren().addAll(scoreShow, topNewGameButton);
+        buttonShow.getChildren().addAll(topNewGameButton, topMainMenuButton);
+        buttonShow.setSpacing(5);
+
+        mainTopRight.getChildren().addAll(scoreShow, buttonShow);
         mainTop.setRight(mainTopRight);
         mainTop.setLeft(leftTopLabel);
         
@@ -115,12 +125,33 @@ public class Ui extends Application {
         gameOverLabel.setTextFill(Color.web("#FFFFFF", 0.9));
         square.setArcWidth(15);
         square.setArcHeight(15);
+        
+        // opacity button
+        Button opacityForStackButton = new Button("hodl");
+        opacityForStackButton.setFont(new Font("Sans-Serif", 10));
+        opacityForStackButton.setStyle("-fx-background-color: #679fd3; ");
+        opacityForStackButton.setOnMousePressed((event) -> {gameOverStack.setOpacity(0.3);});
+        opacityForStackButton.setOnMouseReleased((event) -> {gameOverStack.setOpacity(1);});
+        opacityForStackButton.setOnMouseEntered(e -> opacityForStackButton.setStyle("-fx-background-color: #aacef7"));
+        opacityForStackButton.setOnMouseExited(e -> opacityForStackButton.setStyle("-fx-background-color: #679fd3"));
+        
+        //menu button, not finished
+        Button highScoresButton = new Button("High score");
+        highScoresButton.setFont(new Font("Sans-Serif", 15));
+        highScoresButton.setStyle("-fx-background-color: #679fd3; ");        
+        highScoresButton.setOnMouseEntered(e -> highScoresButton.setStyle("-fx-background-color: #aacef7"));
+        highScoresButton.setOnMouseExited(e -> highScoresButton.setStyle("-fx-background-color: #679fd3"));
+        
+        VBox rows = new VBox();
+        HBox col = new HBox();
+        col.getChildren().addAll(getNewGameButton(), highScoresButton, opacityForStackButton);
+        col.setSpacing(20);
+        col.setAlignment(Pos.CENTER);
+        rows.getChildren().addAll(gameOverLabel, col);
+        rows.setSpacing(20);
+        rows.setAlignment(Pos.CENTER);
+        gameOverStack.getChildren().addAll(square, rows);
 
-        VBox k = new VBox();
-        k.getChildren().addAll(gameOverLabel, getNewGameButton());
-        k.setSpacing(20);
-        gameOverStack.getChildren().addAll(square, k);
-        k.setAlignment(Pos.CENTER);
         return gameOverStack;
     }
     
@@ -200,6 +231,19 @@ public class Ui extends Application {
             currentScoreLabel.setText("Current Score \n" + logic.getGamePoints());
         });
         return newGameButton;
+    }
+    
+    public Button getTopMenuButton() {
+        Button topMainMenuButton = new Button("Back");
+        topMainMenuButton.setFont(new Font("Sans-Serif", 15));
+        topMainMenuButton.setStyle("-fx-background-color: #CD5C5C; ");
+        topMainMenuButton.setOnMouseEntered(e -> topMainMenuButton.setStyle("-fx-background-color: #F08080"));
+        topMainMenuButton.setOnMouseExited(e -> topMainMenuButton.setStyle("-fx-background-color: #CD5C5C"));
+        topMainMenuButton.setFocusTraversable(false);
+        
+        // set on mouse clicked, change skene to main menu
+        
+        return topMainMenuButton;
     }
     
     public static void main(String[] args) {
