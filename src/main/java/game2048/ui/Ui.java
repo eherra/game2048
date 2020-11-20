@@ -2,6 +2,7 @@
 package game2048.ui;
 
 import game2048.domain.GameLogic;
+import game2048.domain.MoveMaker;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -25,6 +26,7 @@ import javafx.stage.Stage;
 
 public class Ui extends Application {
     private GameLogic logic;
+    private MoveMaker moveMaker;
     private GridPane gridForSquares, gridToReturn, toReturnPane;
     private StackPane squareStack, gameOverStack, stackToReturn;
     private BorderPane rootSetting, mainTop;
@@ -36,6 +38,7 @@ public class Ui extends Application {
    
     public Ui() {
         logic = new GameLogic(4);
+        moveMaker = new MoveMaker(logic);
     }
 
     @Override
@@ -82,6 +85,7 @@ public class Ui extends Application {
         buttonShow.getChildren().addAll(topNewGameButton, topMainMenuButton);
         buttonShow.setSpacing(5);
 
+        // top setting
         mainTop = new BorderPane();
         mainTopRight = new VBox();
 
@@ -99,13 +103,13 @@ public class Ui extends Application {
         
         skene.setOnKeyPressed((KeyEvent event) -> {
             if (event.getCode() == KeyCode.UP) {
-                logic.moveUp(false);
+                moveMaker.moveUp(false);
             } else if (event.getCode() == KeyCode.DOWN) {
-                logic.moveDown(false);
+                moveMaker.moveDown(false);
             } else if (event.getCode() == KeyCode.RIGHT) {
-                logic.moveRight(false);
+                moveMaker.moveRight(false);
             } else if (event.getCode() == KeyCode.LEFT) {
-                logic.moveLeft(false);
+                moveMaker.moveLeft(false);
             } else {
                 return;
             }
@@ -114,7 +118,8 @@ public class Ui extends Application {
             highScoreLabel.setText("High Score \n" + logic.getHighScore()); // metodin hakemaan highScoren
             squareStack.getChildren().add(gridForSquares);
             
-            if (!logic.isMoveableSquares() && logic.isGameOver()) {
+            if (!logic.isMoveableSquares() && moveMaker.isGameOver()) {
+                System.out.println("jee");
                 topNewGameButton.setDisable(true);
                 gameOverStack = getGameOverStack();
                 squareStack.getChildren().add((gameOverStack));
