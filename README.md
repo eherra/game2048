@@ -4,7 +4,13 @@ A game where you move squares on board and try to sum same valued squares with e
 
 The game will start with two random squares values of '2', and if summing has happened after a move (up, down, left or right), the board will be updated with random coordinated square with value of '2' or '4' (10% chance for value '4')
 
-To start from terminal:
+### Dokumentation
+* [Arkkitehtuuri](https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/arkkitehtuuri.md)
+* [Määrittelydokumentti](https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/arkkitehtuuri.md)
+
+
+### Terminal commands:
+To start the game:
 ```console
 mvn compile exec:java -Dexec.mainClass=game2048.ui.Ui
 ```
@@ -19,3 +25,7 @@ To get Jacoco report:
 mvn test jacoco:report
 ```
 
+To run checkstyle:
+```console
+mvn jxr:jxr checkstyle:checkstyle
+```
