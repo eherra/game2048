@@ -9,5 +9,6 @@
 | 2.11.      | 2    | määrittelydokumentin luonti |
 | 9.11.      | 4    | tehokkaammat tietorakenteet gamelogic luokkaan, pisteenlaskun eriytys gamelogic-luokasta|
 | 19.11.      | 4    | testejä game logic luokkaan, iso bugi löydetty ja korjattu|
+|     | 4    | käyttöliittymään uusia ominaisuuksia ja nappeja|
 
 | yht   |   27 | 

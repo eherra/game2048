@@ -29,7 +29,7 @@ public class GameLogic {
     
     public void updateBoard() {
         findEmptyCoordinates();
-        addRandomValue();
+        addRandomSquare();
     }
     
     public void findEmptyCoordinates() {
@@ -37,20 +37,16 @@ public class GameLogic {
         for (int x = 0; x < tableLength; x++) {
             for (int y = 0; y < tableLength; y++) {
                 if (gameTable[x][y] == 0) {
-                    byte[] coordinates = {(byte)x, (byte)y};
+                    byte[] coordinates = {(byte) x, (byte) y};
                     emptyCoordinates.add(coordinates);   
                 }
             }
         }
     }
 
-    public void addRandomValue() {
+    public void addRandomSquare() {
         byte[] coordinate = getRandomCoordinate();
-        if (Math.random() < 0.1) {
-            gameTable[coordinate[0]][coordinate[1]] = 4;
-        } else {
-            gameTable[coordinate[0]][coordinate[1]] = 2;
-        }
+        gameTable[coordinate[0]][coordinate[1]] = Math.random() <= 0.1 ? 4 : 2;
     }
     
     public void setNewGame() {
@@ -104,29 +100,37 @@ public class GameLogic {
             int lastChangeNumIndex = -10;
             for (int x = 1; x < tableLength; x++) {
                 for (int lastX = x; lastX >= 1; lastX--) {
-                    if (gameTable[lastX][y] == 0) continue;
+                    if (gameTable[lastX][y] == 0) {
+                        continue;
+                    }
                     
                     int currentValue = gameTable[lastX][y];
-                    int positionToMoveValue = gameTable[lastX-1][y];
+                    int positionToMoveValue = gameTable[lastX - 1][y];
                     if (positionToMoveValue == 0) {
-                        if (gameOverTest) return true;     
+                        if (gameOverTest) {
+                            return true;
+                        }     
                         isMoveMade = true;
-                        gameTable[lastX-1][y] = currentValue;
+                        gameTable[lastX - 1][y] = currentValue;
                         gameTable[lastX][y] = 0;
                     } else if (positionToMoveValue == currentValue && currentValue != lastChangeNum * 2 || 
                                positionToMoveValue == currentValue && currentValue == lastChangeNum * 2 && lastX - lastChangeNumIndex > 1) { 
-                        if (gameOverTest) return true; 
+                        if (gameOverTest) {
+                            return true;
+                        } 
                         isMoveMade = true;
                         lastChangeNum = currentValue;
                         lastChangeNumIndex = lastX - 1;
-                        gameTable[lastX-1][y] = currentValue * 2;
+                        gameTable[lastX - 1][y] = currentValue * 2;
                         gameTable[lastX][y] = 0;
                         scoreboard.addCurrentPoints(currentValue);
                     }
                 }
             }
         }
-        if (isMoveMade) updateBoard();
+        if (isMoveMade) {
+            updateBoard();
+        }
         return false;
     }
     
@@ -137,29 +141,37 @@ public class GameLogic {
             int lastChangeNumIndex = -10;
             for (int x = tableLength - 2; x >= 0; x--) {
                 for (int lastX = x; lastX < tableLength - 1; lastX++) {
-                    if (gameTable[lastX][y] == 0) continue;
+                    if (gameTable[lastX][y] == 0) {
+                        continue;
+                    }
                     
                     int currentValue = gameTable[lastX][y];
-                    int positionToMoveValue = gameTable[lastX+1][y];
+                    int positionToMoveValue = gameTable[lastX + 1][y];
                     if (positionToMoveValue == 0) {
                         isMoveMade = true;
-                        if (gameOverTest) return true;
-                        gameTable[lastX+1][y] = currentValue;
+                        if (gameOverTest) {
+                            return true;
+                        }
+                        gameTable[lastX + 1][y] = currentValue;
                         gameTable[lastX][y] = 0;
                     } else if (positionToMoveValue == currentValue && currentValue != lastChangeNum * 2 || 
                                positionToMoveValue == currentValue && currentValue == lastChangeNum * 2 && lastChangeNumIndex - lastX > 1) {                         
                         isMoveMade = true;
-                        if (gameOverTest) return true;                        
+                        if (gameOverTest) {
+                            return true;
+                        }                        
                         lastChangeNum = currentValue;
                         lastChangeNumIndex = lastX - 1;
-                        gameTable[lastX+1][y] = currentValue * 2;
+                        gameTable[lastX + 1][y] = currentValue * 2;
                         gameTable[lastX][y] = 0;
                         scoreboard.addCurrentPoints(currentValue);
                     }
                 }
             }
         }
-        if (isMoveMade) updateBoard();
+        if (isMoveMade) {
+            updateBoard();
+        }
         return false;
     }
     
@@ -170,29 +182,37 @@ public class GameLogic {
             int lastChangeNumIndex = -10;
             for (int y = 1; y < tableLength; y++) {
                 for (int lastY = y; lastY > 0; lastY--) {
-                    if (gameTable[x][lastY] == 0) continue;
+                    if (gameTable[x][lastY] == 0) {
+                        continue;
+                    }
                     
                     int currentValue = gameTable[x][lastY];
-                    int positionToMoveValue = gameTable[x][lastY-1];
+                    int positionToMoveValue = gameTable[x][lastY - 1];
                     if (positionToMoveValue == 0) {
                         isMoveMade = true;
-                        if (gameOverTest) return true;
-                        gameTable[x][lastY-1] = currentValue;
+                        if (gameOverTest) {
+                            return true;
+                        } 
+                        gameTable[x][lastY - 1] = currentValue;
                         gameTable[x][lastY] = 0;
                     } else if (positionToMoveValue == currentValue && currentValue != lastChangeNum * 2 || 
                                positionToMoveValue == currentValue && currentValue == lastChangeNum * 2 && lastChangeNumIndex - lastY > 1) {                         
                         isMoveMade = true;
-                        if (gameOverTest) return true;
+                        if (gameOverTest) {
+                            return true;
+                        }
                         lastChangeNum = currentValue;
                         lastChangeNumIndex = lastY - 1;
-                        gameTable[x][lastY-1] = currentValue * 2;
+                        gameTable[x][lastY - 1] = currentValue * 2;
                         gameTable[x][lastY] = 0;
                         scoreboard.addCurrentPoints(currentValue);
                     }
                 }
             }
         }
-        if (isMoveMade) updateBoard();
+        if (isMoveMade) {
+            updateBoard();
+        }
         return false;
     }
     
@@ -203,29 +223,37 @@ public class GameLogic {
             int lastChangeNumIndex = -10;
             for (int y = tableLength - 2; y >= 0; y--) {
                 for (int lastY = y; lastY < tableLength - 1; lastY++) {
-                    if (gameTable[x][lastY] == 0) continue;
+                    if (gameTable[x][lastY] == 0) {
+                        continue;
+                    }
                     
                     int currentValue = gameTable[x][lastY];
-                    int positionToMoveValue = gameTable[x][lastY+1];
+                    int positionToMoveValue = gameTable[x][lastY + 1];
                     if (positionToMoveValue == 0) {
                         isMoveMade = true;
-                        if (gameOverTest) return true;                        
-                        gameTable[x][lastY+1] = currentValue;
+                        if (gameOverTest) {
+                            return true;
+                        }                        
+                        gameTable[x][lastY + 1] = currentValue;
                         gameTable[x][lastY] = 0;
                     } else if (positionToMoveValue == currentValue && currentValue != lastChangeNum * 2 || 
                                positionToMoveValue == currentValue && currentValue == lastChangeNum * 2 && lastY - lastChangeNumIndex > 1) {                         
                         isMoveMade = true;
-                        if (gameOverTest) return true;                        
+                        if (gameOverTest) {
+                            return true;
+                        }                        
                         lastChangeNum = currentValue;
                         lastChangeNumIndex = lastY - 1;
-                        gameTable[x][lastY+1] = currentValue * 2;
+                        gameTable[x][lastY + 1] = currentValue * 2;
                         gameTable[x][lastY] = 0;
                         scoreboard.addCurrentPoints(currentValue);
                     }
                 }
             }
         }
-        if (isMoveMade) updateBoard();
+        if (isMoveMade) {
+            updateBoard();
+        }
         return false;
     }
 }
