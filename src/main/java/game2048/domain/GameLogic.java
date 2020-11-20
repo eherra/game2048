@@ -23,6 +23,7 @@ public class GameLogic {
     public void initializeStartBoard() {
         for (int i = 0; i < 2; i++) {
             byte[] coordinatesXY = getRandomCoordinate();
+            emptyCoordinates.remove(coordinatesXY);
             gameTable[coordinatesXY[0]][coordinatesXY[1]] = 2;
         }
     }

@@ -118,7 +118,7 @@ public class Ui extends Application {
     
     public StackPane getGameOverStack() {
         StackPane gameOverStack = new StackPane();
-        Rectangle square = new Rectangle(sceneHeigth - 100, sceneWidth - 200, sceneHeigth - 100, sceneWidth - 200);
+        Rectangle square = new Rectangle(sceneHeigth - 100, sceneWidth - 150, sceneHeigth - 100, sceneWidth - 150);
         Label gameOverLabel = new Label("You lost!");
         square.setFill(Color.web("#2F4F4F"));
         gameOverLabel.setFont(new Font("Sans-Serif", 30));
