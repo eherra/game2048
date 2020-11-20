@@ -41,13 +41,14 @@ public class Ui extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         gameOverStack = new StackPane();
+        
+        // stack for moving squares
+        squareStack = new StackPane();
+        squareStack.setStyle("-fx-background-color:#bbada0");
+
+        // root for game view
         rootSetting = new BorderPane();
-        gridForSquares = getUpdatedAndStyledPane();
-        mainTop = new BorderPane();
-        squareStack = new StackPane(mainTop);
-        mainTopRight = new VBox();
-        HBox scoreShow = new HBox();
-        HBox buttonShow = new HBox();
+        rootSetting.setStyle("-fx-background-color:#008080");
         
         // top right new game button
         topNewGameButton = getNewGameButton();
@@ -57,17 +58,23 @@ public class Ui extends Application {
         topMainMenuButton = getTopMenuButton();
         topMainMenuButton.setFocusTraversable(false);
 
+        // top labels
         Label leftTopLabel = new Label("Game 2048");
+        currentScoreLabel = new Label("Current Score \n" + logic.getGamePoints());
+        highScoreLabel = new Label("High Score \n" + logic.getHighScore());
+        
+        // top labels styling
         leftTopLabel.setUnderline(true);
         leftTopLabel.setPadding(new Insets(20, 20, 20, 20));
         leftTopLabel.setFont(Font.font("Monospaced", FontWeight.BOLD, 30));
-        highScoreLabel = new Label("High Score \n" + logic.getHighScore());
         highScoreLabel.setFont(new Font("Sans-Serif", 15));
         highScoreLabel.setTextFill(Color.web("#ffffff"));
-        
-        currentScoreLabel = new Label("Current Score \n" + logic.getGamePoints());
         currentScoreLabel.setFont(new Font("Sans-Serif", 15));
         currentScoreLabel.setTextFill(Color.web("#ffffff"));
+        
+        // top right scoreshow
+        HBox scoreShow = new HBox();
+        HBox buttonShow = new HBox();
         
         // right top
         scoreShow.getChildren().addAll(currentScoreLabel, highScoreLabel);
@@ -75,12 +82,15 @@ public class Ui extends Application {
         buttonShow.getChildren().addAll(topNewGameButton, topMainMenuButton);
         buttonShow.setSpacing(5);
 
+        mainTop = new BorderPane();
+        mainTopRight = new VBox();
+
         mainTopRight.getChildren().addAll(scoreShow, buttonShow);
         mainTop.setRight(mainTopRight);
         mainTop.setLeft(leftTopLabel);
         
-        squareStack.setStyle("-fx-background-color:#bbada0");
-        rootSetting.setStyle("-fx-background-color:#008080");
+        gridForSquares = getUpdatedAndStyledPane();
+        
         squareStack.getChildren().add(gridForSquares);
         rootSetting.setTop(mainTop);
         rootSetting.setCenter(squareStack);

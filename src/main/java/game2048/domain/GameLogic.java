@@ -104,7 +104,6 @@ public class GameLogic {
                     if (gameTable[lastX][y] == 0) {
                         continue;
                     }
-                    
                     int currentValue = gameTable[lastX][y];
                     int positionToMoveValue = gameTable[lastX - 1][y];
                     if (positionToMoveValue == 0) {
@@ -145,7 +144,6 @@ public class GameLogic {
                     if (gameTable[lastX][y] == 0) {
                         continue;
                     }
-                    
                     int currentValue = gameTable[lastX][y];
                     int positionToMoveValue = gameTable[lastX + 1][y];
                     if (positionToMoveValue == 0) {
@@ -186,7 +184,6 @@ public class GameLogic {
                     if (gameTable[x][lastY] == 0) {
                         continue;
                     }
-                    
                     int currentValue = gameTable[x][lastY];
                     int positionToMoveValue = gameTable[x][lastY - 1];
                     if (positionToMoveValue == 0) {
