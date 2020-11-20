@@ -6,8 +6,9 @@ The game will start with two random squares values of '2', and if summing has ha
 
 ### Dokumentation
 * [Arkkitehtuuri](https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/arkkitehtuuri.md)
+<!---
 * [Määrittelydokumentti](https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/arkkitehtuuri.md)
-
+-->
 
 ### Terminal commands:
 To start the game:
