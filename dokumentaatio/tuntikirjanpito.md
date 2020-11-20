@@ -11,4 +11,4 @@
 | 19.11.      | 4    | testejä game logic luokkaan, iso bugi löydetty ja korjattu|
 |     | 4    | käyttöliittymään uusia ominaisuuksia ja nappeja|
 | 20.11.      | 2    | dokumentteja kuntoon, luokkakaavion teko, readmen viilaus|
-| yht   |   27 | 
+| yht   |   29 | 
