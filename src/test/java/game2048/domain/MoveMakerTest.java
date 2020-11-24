@@ -15,14 +15,14 @@ import static org.junit.Assert.*;
  */
 public class MoveMakerTest {
     private GameLogic testLogic;
-    private MoveMaker testMoveController;
+    private MoveService testMoveController;
     private int n;
 
     
     @Before
     public void setUp() {
         testLogic = new GameLogic(4);
-        testMoveController = new MoveMaker(testLogic);
+        testMoveController = new MoveService(testLogic);
         n = testLogic.getTableSize();
     }
 

@@ -1,12 +1,17 @@
 
 package game2048.domain;
 
-public class MoveMaker {
+/**
+ * A class to handle movements and updates to the game table. 
+ * The code is a bit hard to read since the move methods have quite complex algorithms for checking the rows and cols for 
+ * matching values and adding them if yes they are possible to add according the rules of game 2048.
+ */
+public class MoveService {
     public boolean isMoveMade;
     public int lastChangeNum, lastChangeNumIndex, tableLength;
     public GameLogic gameLogic;
 
-    public MoveMaker(GameLogic gameLogic) {
+    public MoveService(GameLogic gameLogic) {
         this.gameLogic = gameLogic;
         tableLength = gameLogic.getTableSize();
     }
@@ -63,7 +68,7 @@ public class MoveMaker {
                     int currentValue = gameLogic.getValueFromBoard(x, lastY);
                     int valueToMoveTo = gameLogic.getValueFromBoard(x, lastY + 1);                    
                     if (currentValue == 0) continue;
-                    if (makeChangesToBoardLeftAndRight(x, lastY, currentValue, valueToMoveTo, gameOverTest, false)) return true;
+                    if (makeChangesToBoardLeftAndRightMoves(x, lastY, currentValue, valueToMoveTo, gameOverTest, false)) return true;
                 }
             }
         }
@@ -84,7 +89,7 @@ public class MoveMaker {
                     int valueToMoveTo = gameLogic.getValueFromBoard(x, lastY - 1);  
                     
                     if (currentValue == 0) continue;
-                    if (makeChangesToBoardLeftAndRight(x, lastY, currentValue, valueToMoveTo, gameOverTest, true)) return true;
+                    if (makeChangesToBoardLeftAndRightMoves(x, lastY, currentValue, valueToMoveTo, gameOverTest, true)) return true;
                 }
             }
         }
@@ -115,7 +120,7 @@ public class MoveMaker {
         return false;
     }
     
-    public boolean makeChangesToBoardLeftAndRight(int x, int lastY, int currentValue, int positionToMoveValue, boolean gameOverTest, boolean isLeftMove) {
+    public boolean makeChangesToBoardLeftAndRightMoves(int x, int lastY, int currentValue, int positionToMoveValue, boolean gameOverTest, boolean isLeftMove) {
         if (positionToMoveValue == 0) {
             if (gameOverTest) {
                 return true;

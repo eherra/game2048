@@ -13,7 +13,7 @@ import org.junit.Ignore;
 
 public class GameLogicTest {
     private GameLogic testLogic;
-    private MoveMaker testMoveController;
+    private MoveService testMoveController;
     private int n;
 
     @Before
@@ -21,7 +21,7 @@ public class GameLogicTest {
         testLogic = new GameLogic(4);   // creating board size 4x4 with 2 values in random coordinates on int[][] array. 
                                         // Making testing a bit harder but is workaroundable
         n = testLogic.getTableSize();
-        testMoveController = new MoveMaker(testLogic);
+        testMoveController = new MoveService(testLogic);
     }
     
     /**
@@ -65,101 +65,7 @@ public class GameLogicTest {
     /**
     * Creating a specific board setup for testing the moving methods. Simplifying the testing
     */
-    public int[][] getTableForMovingMethods() {
-        int[][] k = {{2, 4, 4, 2},
-                    {2, 4, 2, 2},
-                    {2, 8, 2, 2},
-                    {2, 8, 4, 4}};
-        
-        return k;
-    }
-    @Test
-    public void testMoveUp() {
-        testLogic.setTable(getTableForMovingMethods());
-        testMoveController.moveUp(false);
-        int differences = 0;
-        
-        // the values which should be after a moveUp method.
-        int[][] k = {{4, 8, 4, 4},
-                    {4, 16, 4, 2},
-                    {0, 0, 4, 4},
-                    {0, 0, 0, 0}};
-                
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (!(testLogic.getValueFromBoard(i, j) == k[i][j])) {
-                    differences++;
-                }
-            }
-        }
-        assertEquals(true, differences == 1); // difference should be one since 1 random square is added to table after every move
-    }
-
-    @Test
-    public void testMoveDown() {
-        testLogic.setTable(getTableForMovingMethods());
-        testMoveController.moveDown(false);
-        // the values which should be after a moveDown method.
-        int[][] k = {{0, 0, 0, 0},
-                    {0, 0, 4, 2},
-                    {4, 8, 4, 4},
-                    {4, 16, 4, 4}};
-                
-        int differences = 0;
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (!(testLogic.getValueFromBoard(i, j) == k[i][j])) {
-                    differences++;
-                }
-            }
-        }
-        assertEquals(true, differences == 1); 
-    }
-
-    @Test
-    public void testMoveLeft() {
-        testLogic.setTable(getTableForMovingMethods());
-        testMoveController.moveLeft(false);
-        int differences = 0;
-        
-        // the values which should be after a moveLeft method.
-        int[][] k = {{2, 8, 2, 0},
-                    {2, 4, 4, 0},
-                    {2, 8, 4, 0},
-                    {2, 8, 8, 0}};
-        
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (!(testLogic.getValueFromBoard(i, j) == k[i][j])) {
-                    differences++;
-                }
-            }
-        }
-        assertEquals(true, differences == 1);
-    }
-    
-    @Test
-    public void testMoveRight() {
-        testLogic.setTable(getTableForMovingMethods());
-        testMoveController.moveRight(false);
-        int differences = 0;
-
-        // the values which should be after a moveLeft method.
-        int[][] k = {{0, 2, 8, 2},
-                    {0, 2, 4, 4},
-                    {0, 2, 8, 4},
-                    {0, 2, 8, 8}};
-                
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (!(testLogic.getValueFromBoard(i, j) == k[i][j])) {
-                    differences++;
-                }
-            }
-        }
-        assertEquals(true, differences == 1);
-    }
-
+ 
     @Test
     public void testUpdateBoard() {
     }

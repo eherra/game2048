@@ -2,7 +2,7 @@
 package game2048.ui;
 
 import game2048.domain.GameLogic;
-import game2048.domain.MoveMaker;
+import game2048.domain.MoveService;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -26,7 +26,7 @@ import javafx.stage.Stage;
 
 public class Ui extends Application {
     private GameLogic logic;
-    private MoveMaker moveMaker;
+    private MoveService moveService;
     private GridPane gridForSquares, gridToReturn, toReturnPane;
     private StackPane squareStack, gameOverStack, stackToReturn;
     private BorderPane rootSetting, mainTop;
@@ -35,10 +35,11 @@ public class Ui extends Application {
     private Button topNewGameButton, topMainMenuButton;
     private Rectangle square;
     private double sceneHeigth, sceneWidth;
-   
-    public Ui() {
+    
+    @Override
+    public void init() {
         logic = new GameLogic(4);
-        moveMaker = new MoveMaker(logic);
+        moveService = new MoveService(logic);
     }
 
     @Override
@@ -103,13 +104,13 @@ public class Ui extends Application {
         
         skene.setOnKeyPressed((KeyEvent event) -> {
             if (event.getCode() == KeyCode.UP) {
-                moveMaker.moveUp(false);
+                moveService.moveUp(false);
             } else if (event.getCode() == KeyCode.DOWN) {
-                moveMaker.moveDown(false);
+                moveService.moveDown(false);
             } else if (event.getCode() == KeyCode.RIGHT) {
-                moveMaker.moveRight(false);
+                moveService.moveRight(false);
             } else if (event.getCode() == KeyCode.LEFT) {
-                moveMaker.moveLeft(false);
+                moveService.moveLeft(false);
             } else {
                 return;
             }
@@ -118,8 +119,7 @@ public class Ui extends Application {
             highScoreLabel.setText("High Score \n" + logic.getHighScore()); // metodin hakemaan highScoren
             squareStack.getChildren().add(gridForSquares);
             
-            if (!logic.isMoveableSquares() && moveMaker.isGameOver()) {
-                System.out.println("jee");
+            if (!logic.isMoveableSquares() && moveService.isGameOver()) {
                 topNewGameButton.setDisable(true);
                 gameOverStack = getGameOverStack();
                 squareStack.getChildren().add((gameOverStack));
@@ -133,22 +133,28 @@ public class Ui extends Application {
     
     public StackPane getGameOverStack() {
         StackPane gameOverStack = new StackPane();
-        Rectangle square = new Rectangle(sceneHeigth - 100, sceneWidth - 150, sceneHeigth - 100, sceneWidth - 150);
+        
         Label gameOverLabel = new Label("You lost!");
-        square.setFill(Color.web("#2F4F4F"));
         gameOverLabel.setFont(new Font("Sans-Serif", 30));
         gameOverLabel.setTextFill(Color.web("#FFFFFF", 0.9));
+        
+        Label endScore = new Label("Final score: " + logic.getGamePoints());
+        endScore.setFont(new Font("Sans-Serif", 25));
+        endScore.setTextFill(Color.web("#FFFFFF", 0.9));
+        
+        Rectangle square = new Rectangle(sceneHeigth - 100, sceneWidth - 150, sceneHeigth - 100, sceneWidth - 150);
+        square.setFill(Color.web("#2F4F4F"));
         square.setArcWidth(15);
         square.setArcHeight(15);
         
         // opacity button
-        Button opacityForStackButton = new Button("hodl");
+        Button opacityForStackButton = new Button("hold for boardview");
         opacityForStackButton.setFont(new Font("Sans-Serif", 10));
-        opacityForStackButton.setStyle("-fx-background-color: #679fd3; ");
+        opacityForStackButton.setStyle("-fx-background-color: #F9E79F; ");
         opacityForStackButton.setOnMousePressed((event) -> {gameOverStack.setOpacity(0.3);});
         opacityForStackButton.setOnMouseReleased((event) -> {gameOverStack.setOpacity(1);});
-        opacityForStackButton.setOnMouseEntered(e -> opacityForStackButton.setStyle("-fx-background-color: #aacef7"));
-        opacityForStackButton.setOnMouseExited(e -> opacityForStackButton.setStyle("-fx-background-color: #679fd3"));
+        opacityForStackButton.setOnMouseEntered(e -> opacityForStackButton.setStyle("-fx-background-color: #FEF9E7"));
+        opacityForStackButton.setOnMouseExited(e -> opacityForStackButton.setStyle("-fx-background-color: #F9E79F"));
         
         //menu button, not finished
         Button highScoresButton = new Button("High score");
@@ -159,10 +165,10 @@ public class Ui extends Application {
         
         VBox rows = new VBox();
         HBox col = new HBox();
-        col.getChildren().addAll(getNewGameButton(), highScoresButton, opacityForStackButton);
+        col.getChildren().addAll(getNewGameButton(), highScoresButton);
         col.setSpacing(20);
         col.setAlignment(Pos.CENTER);
-        rows.getChildren().addAll(gameOverLabel, col);
+        rows.getChildren().addAll(opacityForStackButton, gameOverLabel, endScore, col);
         rows.setSpacing(20);
         rows.setAlignment(Pos.CENTER);
         gameOverStack.getChildren().addAll(square, rows);
