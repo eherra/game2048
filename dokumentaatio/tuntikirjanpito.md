@@ -11,4 +11,5 @@
 | 19.11.      | 4    | testejä game logic luokkaan, iso bugi löydetty ja korjattu|
 |     | 4    | käyttöliittymään uusia ominaisuuksia ja nappeja|
 | 20.11.      | 2    | dokumentteja kuntoon, luokkakaavion teko, readmen viilaus|
-| yht   |   29 | 
+|       | 2    | spagettikoodia pois, uusi luokka siirroille, gamelogic luokkaa kevyemmäksi|
+| yht   |   31 | 
