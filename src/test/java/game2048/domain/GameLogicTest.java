@@ -13,7 +13,7 @@ import org.junit.Ignore;
 
 public class GameLogicTest {
     private GameLogic testLogic;
-    private MoveService testMoveController;
+    private MoveExecutor testMoveController;
     private int n;
 
     @Before
@@ -21,7 +21,7 @@ public class GameLogicTest {
         testLogic = new GameLogic(4);   // creating board size 4x4 with 2 values in random coordinates on int[][] array. 
                                         // Making testing a bit harder but is workaroundable
         n = testLogic.getTableSize();
-        testMoveController = new MoveService(testLogic);
+        testMoveController = new MoveExecutor(testLogic);
     }
     
     /**

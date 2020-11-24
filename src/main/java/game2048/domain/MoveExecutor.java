@@ -2,16 +2,16 @@
 package game2048.domain;
 
 /**
- * A class to handle movements and updates to the game table. 
+ * A class to handle movements and updates to the game table to the GameLogic class. 
  * The code is a bit hard to read since the move methods have quite complex algorithms for checking the rows and cols for 
- * matching values and adding them if yes they are possible to add according the rules of game 2048.
+ * matching values and adding them if they are possible to add according the rules of game 2048.
  */
-public class MoveService {
+public class MoveExecutor {
     public boolean isMoveMade;
     public int lastChangeNum, lastChangeNumIndex, tableLength;
     public GameLogic gameLogic;
 
-    public MoveService(GameLogic gameLogic) {
+    public MoveExecutor(GameLogic gameLogic) {
         this.gameLogic = gameLogic;
         tableLength = gameLogic.getTableSize();
     }

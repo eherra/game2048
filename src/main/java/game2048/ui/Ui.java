@@ -2,7 +2,7 @@
 package game2048.ui;
 
 import game2048.domain.GameLogic;
-import game2048.domain.MoveService;
+import game2048.domain.MoveExecutor;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -26,7 +26,7 @@ import javafx.stage.Stage;
 
 public class Ui extends Application {
     private GameLogic logic;
-    private MoveService moveService;
+    private MoveExecutor moveService;
     private GridPane gridForSquares, gridToReturn, toReturnPane;
     private StackPane squareStack, gameOverStack, stackToReturn;
     private BorderPane rootSetting, mainTop;
@@ -39,7 +39,7 @@ public class Ui extends Application {
     @Override
     public void init() {
         logic = new GameLogic(4);
-        moveService = new MoveService(logic);
+        moveService = new MoveExecutor(logic);
     }
 
     @Override
