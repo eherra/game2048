@@ -268,6 +268,7 @@ public class Ui extends Application {
             } else {
                 return;
             }
+            gridForSquares.getChildren().clear();
             gridForSquares = getUpdatedAndStyledPane();
             currentScoreLabel.setText("Current Score \n" + logic.getGamePoints());
             highScoreLabel.setText("High Score \n" + logic.getHighScore()); // metodin hakemaan highScoren
@@ -357,6 +358,7 @@ public class Ui extends Application {
     }
     
     public GridPane getUpdatedAndStyledPane() {
+        toReturnPane = new GridPane();
         toReturnPane = setSquares();
         toReturnPane.setPadding(new Insets(5, 5, 5, 5));
         toReturnPane.setHgap(10);
