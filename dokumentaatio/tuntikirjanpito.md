@@ -12,4 +12,6 @@
 |     | 4    | käyttöliittymään uusia ominaisuuksia ja nappeja|
 | 20.11.      | 2    | dokumentteja kuntoon, luokkakaavion teko, readmen viilaus|
 |       | 2    | spagettikoodia pois, uusi luokka siirroille, gamelogic luokkaa kevyemmäksi|
-| yht   |   31 | 
+| 25.11.      | 3    | alotusmenun hahmotelma|
+| 26.11.      | 3    | alotusmenun UI kuntoon, nappien painallukset|
+| yht   |   37 | 
