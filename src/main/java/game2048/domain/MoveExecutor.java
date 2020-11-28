@@ -26,8 +26,12 @@ public class MoveExecutor {
                     int currentValue = gameLogic.getValueFromBoard(lastX, y);
                     int valueToMoveTo = gameLogic.getValueFromBoard(lastX - 1, y);
 
-                    if (currentValue == 0) continue;
-                    if (makeChangesToBoardDownAndUpMoves(lastX, y, currentValue, valueToMoveTo, gameOverTest, true)) return true;
+                    if (currentValue == 0) {
+                        continue;
+                    }
+                    if (makeChangesToBoardDownAndUpMoves(lastX, y, currentValue, valueToMoveTo, gameOverTest, true)) {
+                        return true;
+                    }
                 }
             }
         }
@@ -40,15 +44,18 @@ public class MoveExecutor {
     public boolean moveDown(boolean gameOverTest) {
         isMoveMade = false;
         for (int y = 0; y < tableLength; y++) {
-            lastChangeNum = -1;
+            lastChangeNum = -1; 
             lastChangeNumIndex = -10;
             for (int x = tableLength - 2; x >= 0; x--) {
                 for (int lastX = x; lastX < tableLength - 1; lastX++) {
-                    int currentValue = gameLogic.getValueFromBoard(lastX, y);
+                    int currentValue = gameLogic.getValueFromBoard(lastX, y); 
                     int valueToMoveTo = gameLogic.getValueFromBoard(lastX + 1, y);
-                    
-                    if (currentValue == 0) continue;
-                    if (makeChangesToBoardDownAndUpMoves(lastX, y, currentValue, valueToMoveTo, gameOverTest, false)) return true;
+                    if (currentValue == 0) {
+                        continue;
+                    }
+                    if (makeChangesToBoardDownAndUpMoves(lastX, y, currentValue, valueToMoveTo, gameOverTest, false)) {
+                        return true;
+                    }
                 }
             }
         }
@@ -61,14 +68,18 @@ public class MoveExecutor {
     public boolean moveRight(boolean gameOverTest) {
         isMoveMade = false;
         for (int x = 0; x < tableLength; x++) {
-            lastChangeNum = -1;
+            lastChangeNum = -1; 
             lastChangeNumIndex = -10;
             for (int y = tableLength - 2; y >= 0; y--) {
                 for (int lastY = y; lastY < tableLength - 1; lastY++) {
-                    int currentValue = gameLogic.getValueFromBoard(x, lastY);
+                    int currentValue = gameLogic.getValueFromBoard(x, lastY); 
                     int valueToMoveTo = gameLogic.getValueFromBoard(x, lastY + 1);                    
-                    if (currentValue == 0) continue;
-                    if (makeChangesToBoardLeftAndRightMoves(x, lastY, currentValue, valueToMoveTo, gameOverTest, false)) return true;
+                    if (currentValue == 0) {
+                        continue;
+                    }
+                    if (makeChangesToBoardLeftAndRightMoves(x, lastY, currentValue, valueToMoveTo, gameOverTest, false)) {
+                        return true;
+                    }
                 }
             }
         }
@@ -87,9 +98,12 @@ public class MoveExecutor {
                 for (int lastY = y; lastY > 0; lastY--) {
                     int currentValue = gameLogic.getValueFromBoard(x, lastY);
                     int valueToMoveTo = gameLogic.getValueFromBoard(x, lastY - 1);  
-                    
-                    if (currentValue == 0) continue;
-                    if (makeChangesToBoardLeftAndRightMoves(x, lastY, currentValue, valueToMoveTo, gameOverTest, true)) return true;
+                    if (currentValue == 0) {
+                        continue;
+                    }
+                    if (makeChangesToBoardLeftAndRightMoves(x, lastY, currentValue, valueToMoveTo, gameOverTest, true)) {
+                        return true;
+                    }
                 }
             }
         }

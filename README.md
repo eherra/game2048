@@ -6,9 +6,8 @@ The game will start with two random squares values of '2', and if summing has ha
 
 ### Dokumentation
 * [Arkkitehtuuri](https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/arkkitehtuuri.md)
-<!---
 * [Määrittelydokumentti](https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/arkkitehtuuri.md)
--->
+* [Tuntikirjanpito](https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/tuntikirjanpito.md)
 
 ### Terminal commands:
 To start the game:
@@ -29,4 +28,9 @@ mvn test jacoco:report
 To run checkstyle:
 ```console
 mvn jxr:jxr checkstyle:checkstyle
+```
+
+To create jar file:
+```console
+mvn package
 ```

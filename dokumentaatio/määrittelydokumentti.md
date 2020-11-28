@@ -3,7 +3,7 @@
 Sovellus on 2048 peliin perustuva replika, jossa voi itse valita pelilaudan koon. 
 
 ### Suunnitellut toiminnallisuudet
-- Peliä on mahdollista pelata haluamallaan pelikoolla. 
+- Peliä on mahdollista pelata haluamallaan pelikoolla. (tehty)
 - Sovellus pitää kirjaa pelaajien high scoresta ja tallentaa ne mongoDB tietokantaan vain jos pelimuoto on 4x4 ruutua. Muissa pelilautojen koissa sovellus laskee pelaajan pisteet, mutta niitä ei lasketa high score-järjestelmään. 
 - Sovelluksessa on osio, josta näkee TOP 10 pisteet (vain koko 4x4) pelaajista jotka ovat sovellusta pelanneet. Pelin päätyttyä oman scoren voi lisätä listalle 3 kirjaimisella nimimerkillä jos näin tahtoo. 
 
@@ -14,4 +14,4 @@ Ylläpitäjä huolehtii että MongoDB tietokanta toimii sovelluksen kanssa, jott
 Sovellus toimii macOS ja Linux pohjaisilla käyttöjärjestelmillä.
 
 ### Käyttöliittymä
-Sovelluksen käyttöliittymä tehdään Javan javafx-kirjastolla. Käyttöliittymä on yksinkertainen, jossa sovelluksen käynnistäessä aukeaa pelinäkymä ja pelin päätyttyä näkymän päälle luodaan näkymä jossa mahdollisuus uuden pelin aloittamiseen ja oman scoren tallentamiseen tietokantaan. 
+Sovelluksen käyttöliittymä tehdään Javan javafx-kirjastolla. Käyttöliittymä on yksinkertainen, jossa sovelluksen käynnistäessä aukeaa pelinäkymä ja pelin päätyttyä näkymän päälle luodaan näkymä jossa mahdollisuus uuden pelin aloittamiseen ja oman scoren tallentamiseen tietokantaan. (tehty)
