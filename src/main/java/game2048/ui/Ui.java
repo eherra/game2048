@@ -41,7 +41,7 @@ public class Ui extends Application {
     private Rectangle square;
     private double sceneHeigth, sceneWidth;
     private Stage currentStage;
-    private int wrongInputCount;
+    private int wrongInputCount, boardSize;
     
     @Override
     public void start(Stage stage) throws Exception {
@@ -219,7 +219,7 @@ public class Ui extends Application {
         // top labels styling
         leftTopLabel.setUnderline(true);
         leftTopLabel.setPadding(new Insets(20, 20, 20, 20));
-        leftTopLabel.setFont(Font.font("Monospaced", FontWeight.BOLD, 30));
+        leftTopLabel.setFont(Font.font("Monospaced", FontWeight.BOLD, 35));
         highScoreLabel.setFont(new Font("Sans-Serif", 15));
         highScoreLabel.setTextFill(Color.web("#ffffff"));
         currentScoreLabel.setFont(new Font("Sans-Serif", 15));
@@ -325,7 +325,7 @@ public class Ui extends Application {
         
         // opacity button
         Button opacityForStackButton = new Button("hold for boardview");
-        opacityForStackButton.setFont(new Font("Sans-Serif", 10));
+        opacityForStackButton.setFont(new Font("Sans-Serif", 12));
         opacityForStackButton.setStyle("-fx-background-color: #F9E79F; ");
         opacityForStackButton.setOnMousePressed((event) -> {gameOverStack.setOpacity(0.3);});
         opacityForStackButton.setOnMouseReleased((event) -> {gameOverStack.setOpacity(1);});
@@ -334,7 +334,7 @@ public class Ui extends Application {
         
         //menu button, not finished
         Button highScoresButton = new Button("High score");
-        highScoresButton.setFont(new Font("Sans-Serif", 15));
+        highScoresButton.setFont(new Font("Sans-Serif", 16));
         highScoresButton.setStyle("-fx-background-color: #b0d3bf; ");        
         highScoresButton.setOnMouseEntered(e -> highScoresButton.setStyle("-fx-background-color: #d3e5d1"));
         highScoresButton.setOnMouseExited(e -> highScoresButton.setStyle("-fx-background-color: #b0d3bf"));
@@ -373,15 +373,36 @@ public class Ui extends Application {
     }
        
     public StackPane getSquareStack(int size) {
-        square = new Rectangle(100,100,100,100);
+        int squareSize = setSquareSizeOrFont(logic.getTableSize(), false);
+        square = new Rectangle(squareSize, squareSize, squareSize, squareSize);
         stackToReturn = new StackPane();
         square.setArcWidth(15);
         square.setArcHeight(15);
         square.setFill(Color.web(getSquareColour(size)));
         fontLabel = size != 0 ? new Label(String.valueOf(size)) : new Label();
-        fontLabel.setFont(new Font("Sans-Serif", 30));
+        int fontSize = setSquareSizeOrFont(logic.getTableSize(), true);
+        
+        fontLabel.setFont(new Font("Sans-Serif", fontSize));
         stackToReturn.getChildren().addAll(square, fontLabel);
         return stackToReturn;
+    }
+    
+    public int setSquareSizeOrFont(int size, boolean isFont) {
+        switch (size) {
+            case 3:
+                return isFont ? 30 : 120;
+            case 4:
+                return isFont ? 26 : 100;
+            case 5: 
+                return isFont ? 25 : 95;
+            case 6:
+                return isFont ? 23 : 90;
+            case 7:
+                return isFont ? 23 : 85;
+            case 8:
+                return isFont ? 22 : 75;
+        }
+        return isFont ? 21 : 70;
     }
     
     public String getSquareColour(int size) {
@@ -452,16 +473,4 @@ public class Ui extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
-//    Timeline fiveSecondsWonder = new Timeline( for 
-//                 new KeyFrame(Duration.seconds(5), 
-//                 new EventHandler<ActionEvent>() {
-//
-//    @Override
-//    public void handle(ActionEvent event) {
-//        System.out.println("this is called every 5 seconds on UI thread");
-//    }
-//    }));
-//    fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
-//    fiveSecondsWonder.play();
 }
