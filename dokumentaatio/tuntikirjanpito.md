@@ -15,4 +15,6 @@
 | 25.11.      | 3    | alotusmenun hahmotelma|
 | 26.11.      | 3    | alotusmenun UI kuntoon, nappien painallukset|
 | 28.11.      | 2    | checkstylen viilaus, sekvenssikaavion teko|
-| yht   |   39| 
+| 30.11.      | 2    | UI:n refaktorointi, muutamia lisäominaisuudet UI:n näppäimiin, Square-luokan luonti|
+
+| yht   |   41| 
