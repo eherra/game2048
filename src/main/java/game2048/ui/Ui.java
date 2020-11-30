@@ -55,7 +55,6 @@ public class Ui extends Application {
     }
     
     public Scene getMainMenuScene() throws FileNotFoundException {
-        wrongInputCount = 0;
         BorderPane rootMenu = new BorderPane();
         rootMenu.setStyle("-fx-background-color:#008080");
         
@@ -139,6 +138,7 @@ public class Ui extends Application {
             currentStage.close();
         });
         
+        wrongInputCount = 0;
         playButton.setOnMouseClicked((event) -> {
             if (!chooseBoardSizeField.getText().matches("[3-9]")) {
                 if (chooseBoardSizeField.getText().equals("Choose board size (3-9)")) {
@@ -159,7 +159,7 @@ public class Ui extends Application {
                 return;
             }
             
-            int size = (int)Integer.valueOf(chooseBoardSizeField.getText());
+            int size = Integer.valueOf(chooseBoardSizeField.getText());
             
             Scene playScene = getGameScene(size);
             currentStage.setScene(playScene);
