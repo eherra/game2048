@@ -37,11 +37,12 @@ public class Ui extends Application {
     private StackPane squareStack, gameOverStack, stackToReturn;
     private BorderPane rootSetting, mainTop;
     private VBox mainTopRight;
-    private Label currentScoreLabel, highScoreLabel, fontLabel;
+    private TextField chooseBoardSizeField;
+    private Label currentScoreLabel, highScoreLabel, fontLabel, wrongInputErrors;
     private Button topNewGameButton, topMainMenuButton;
     private Rectangle square;
-    private double sceneHeigth, sceneWidth;
     private Stage currentStage;
+    private double sceneHeigth, sceneWidth;
     private int wrongInputCount;
     
     @Override
@@ -77,7 +78,7 @@ public class Ui extends Application {
         playArea.setTextFill(Color.web("#131516"));
         
         // textField wrong inputs casehandeling
-        Label wrongInputErrors = new Label("How about between 3-9?");
+        wrongInputErrors = new Label("How about between 3-9?");
         wrongInputErrors.setFont(Font.font("Sans-serif", FontWeight.BOLD, 15));
         wrongInputErrors.setTextFill(Color.web("#FFFF99"));
         wrongInputErrors.setVisible(false);
@@ -87,7 +88,7 @@ public class Ui extends Application {
         Button playButton = styleMenuButtons("Play!");
         Button quickStart = styleMenuButtons("Quick start");
         Button rulesButton = styleMenuButtons("Rules"); // think a position for this
-        TextField chooseBoardSizeField = getBoardSetUpField();
+        chooseBoardSizeField = getBoardSetUpField();
 
         // AI menu
         Label feelingLazy = new Label("\tFeeling lazy? \nLet AI Doge play for you!");
@@ -109,13 +110,13 @@ public class Ui extends Application {
         dogeButtonArea.setSpacing(7);
         dogeButtonArea.setAlignment(Pos.CENTER);
         
-        HBox startButtons = new HBox();
-        startButtons.getChildren().addAll(playButton, quickStart);
-        startButtons.setAlignment(Pos.CENTER);
-        startButtons.setSpacing(7);
+        HBox gameStartButtons = new HBox();
+        gameStartButtons.getChildren().addAll(playButton, quickStart);
+        gameStartButtons.setAlignment(Pos.CENTER);
+        gameStartButtons.setSpacing(7);
         
         VBox gameSettingArea = new VBox();
-        gameSettingArea.getChildren().addAll(playArea, chooseBoardSizeField, startButtons, wrongInputErrors);
+        gameSettingArea.getChildren().addAll(playArea, chooseBoardSizeField, gameStartButtons, wrongInputErrors);
         gameSettingArea.setSpacing(7);
         gameSettingArea.setAlignment(Pos.CENTER);
 
@@ -143,36 +144,11 @@ public class Ui extends Application {
         
         wrongInputCount = 0;
         playButton.setOnMouseClicked((event) -> {
-            if (!chooseBoardSizeField.getText().matches("[3-9]")) {
-                if (chooseBoardSizeField.getText().equals("Choose board size (3-9)")) {
-                    wrongInputErrors.setText("You forgot board size.");
-                    wrongInputErrors.setVisible(true);
-                    return;
-                } else if (wrongInputCount == 0) {
-                    wrongInputErrors.setText("How about between 3-9?");
-                } else if (wrongInputCount == 1) {
-                    wrongInputErrors.setText("Still not between 3-9.");
-                } else if (wrongInputCount == 2) {
-                    wrongInputErrors.setText("Not even funny.");
-                } else if (wrongInputCount >= 3) {
-                    wrongInputErrors.setText("Between 3-9 and we go.");
-                } 
-                wrongInputErrors.setVisible(true);
-                wrongInputCount++;
-                return;
-            }
-            
-            int size = Integer.valueOf(chooseBoardSizeField.getText());
-            
-            Scene playScene = getGameScene(size);
-            currentStage.setScene(playScene);
-            sceneHeigth = currentStage.getHeight();
-            sceneWidth = currentStage.getWidth();
+            handlePlayButtonEvent();
         });
-        
+               
         quickStart.setOnMouseClicked((event) -> {
-            Scene playScene = getGameScene(4);
-            currentStage.setScene(playScene);
+            currentStage.setScene(getGameScene(4));
             sceneHeigth = currentStage.getHeight();
             sceneWidth = currentStage.getWidth();
         });
@@ -282,34 +258,6 @@ public class Ui extends Application {
         return gameSkene;
     }
     
-    public TextField getBoardSetUpField() {
-        TextField chooseBoardSizeField = new TextField("Choose board size (3-9)");
-        chooseBoardSizeField.setStyle("-fx-text-inner-color: #b3b3b3");
-        
-        chooseBoardSizeField.setOnMouseEntered((event) -> {
-            if (!chooseBoardSizeField.getText().equals("Choose board size (3-9)")) return;
-            chooseBoardSizeField.setStyle("-fx-text-inner-color: #1a1a1a");
-            chooseBoardSizeField.setText("");
-        });
-        
-        chooseBoardSizeField.setOnMouseExited((event) -> {
-            if (!chooseBoardSizeField.getText().equals("")) return;
-            chooseBoardSizeField.setStyle("-fx-text-inner-color: #b3b3b3");
-            chooseBoardSizeField.setText("Choose board size (3-9)");
-            chooseBoardSizeField.setFocusTraversable(false);
-        });
-        
-        chooseBoardSizeField.setOnKeyPressed((event) -> {
-            if (chooseBoardSizeField.getText().contains("Choose board size (3-9)")) {
-                chooseBoardSizeField.setText(chooseBoardSizeField.getText().replace("Choose board size (3-9)", ""));
-                chooseBoardSizeField.setStyle("-fx-text-inner-color: #1a1a1a");
-            }
-        });
-       
-        chooseBoardSizeField.setFocusTraversable(false);
-        return chooseBoardSizeField;
-    }
-    
     public StackPane getGameOverStack() {
         StackPane gameOverStack = new StackPane();
         
@@ -411,6 +359,67 @@ public class Ui extends Application {
         });
         
         return topMainMenuButton;
+    }
+    
+    public TextField getBoardSetUpField() {
+        TextField chooseBoardSizeField = new TextField("Choose board size (3-9)");
+        chooseBoardSizeField.setStyle("-fx-text-inner-color: #b3b3b3");
+        
+        chooseBoardSizeField.setOnMouseEntered((event) -> {
+            if (!chooseBoardSizeField.getText().equals("Choose board size (3-9)")) return;
+            chooseBoardSizeField.setStyle("-fx-text-inner-color: #1a1a1a");
+            chooseBoardSizeField.setText("");
+        });
+        
+        chooseBoardSizeField.setOnMouseExited((event) -> {
+            if (!chooseBoardSizeField.getText().equals("")) return;
+            chooseBoardSizeField.setStyle("-fx-text-inner-color: #b3b3b3");
+            chooseBoardSizeField.setText("Choose board size (3-9)");
+            chooseBoardSizeField.setFocusTraversable(false);
+        });
+        
+        chooseBoardSizeField.setOnKeyPressed((event) -> {
+            if (chooseBoardSizeField.getText().contains("Choose board size (3-9)")) {
+                chooseBoardSizeField.setText(chooseBoardSizeField.getText().replace("Choose board size (3-9)", ""));
+                chooseBoardSizeField.setStyle("-fx-text-inner-color: #1a1a1a");
+            }
+        });
+        
+        chooseBoardSizeField.setOnKeyPressed((event) -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                handlePlayButtonEvent();            
+            }
+        });
+       
+        chooseBoardSizeField.setFocusTraversable(false);
+        return chooseBoardSizeField;
+    }
+    
+    public void handlePlayButtonEvent() {
+        if (!chooseBoardSizeField.getText().matches("[3-9]")) {
+                if (chooseBoardSizeField.getText().equals("Choose board size (3-9)")) {
+                    wrongInputErrors.setText("You forgot board size.");
+                    wrongInputErrors.setVisible(true);
+                    return;
+                } else if (wrongInputCount == 0) {
+                    wrongInputErrors.setText("How about between 3-9?");
+                } else if (wrongInputCount == 1) {
+                    wrongInputErrors.setText("Still not between 3-9.");
+                } else if (wrongInputCount == 2) {
+                    wrongInputErrors.setText("Not even funny.");
+                } else if (wrongInputCount >= 3) {
+                    wrongInputErrors.setText("Between 3-9 and we go.");
+                } 
+                wrongInputErrors.setVisible(true);
+                wrongInputCount++;
+                return;
+            }
+            
+            int size = Integer.valueOf(chooseBoardSizeField.getText());
+            
+            currentStage.setScene(getGameScene(size));
+            sceneHeigth = currentStage.getHeight();
+            sceneWidth = currentStage.getWidth();
     }
     
     public static void main(String[] args) {
