@@ -8,7 +8,9 @@ The game will start with two random squares values of '2', and if summing has ha
 * [Arkkitehtuuri](https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/arkkitehtuuri.md)
 * [Määrittelydokumentti](https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/maarittelydokumentti.md)
 * [Tuntikirjanpito](https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/tuntikirjanpito.md)
-* [release v1.0](https://github.com/eherra/ot-harjoitustyo/releases)
+
+### Releases
+* [v1.0](https://github.com/eherra/ot-harjoitustyo/releases)
 
 ### Terminal commands:
 To start the game:
