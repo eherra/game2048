@@ -251,7 +251,7 @@ public class Ui extends Application {
             if (!logic.isMoveableSquares() && moveService.isGameOver()) {
                 topNewGameButton.setDisable(true);
                 gameOverStack = getGameOverStack();
-                squareStack.getChildren().add((gameOverStack));
+                squareStack.getChildren().add(gameOverStack);
             }
         });   
         
@@ -269,36 +269,36 @@ public class Ui extends Application {
         endScore.setFont(new Font("Sans-Serif", 25));
         endScore.setTextFill(Color.web("#FFFFFF", 0.9));
         
-        Rectangle square = new Rectangle(sceneHeigth - 100, sceneWidth - 150, sceneHeigth - 100, sceneWidth - 150);
-        square.setFill(Color.web("#2F4F4F"));
-        square.setArcWidth(15);
-        square.setArcHeight(15);
+        Rectangle endSquare = new Rectangle(sceneHeigth - 160, sceneWidth - 160, Color.web("#2F4F4F"));
+        endSquare.setArcWidth(15);
+        endSquare.setArcHeight(15);
         
         // opacity button
         Button opacityForStackButton = new Button("hold for boardview");
-        opacityForStackButton.setFont(new Font("Sans-Serif", 12));
+        opacityForStackButton.setFont(new Font("Sans-Serif", 14));
         opacityForStackButton.setStyle("-fx-background-color: #F9E79F; ");
         opacityForStackButton.setOnMousePressed((event) -> {gameOverStack.setOpacity(0.3);});
         opacityForStackButton.setOnMouseReleased((event) -> {gameOverStack.setOpacity(1);});
         opacityForStackButton.setOnMouseEntered(e -> opacityForStackButton.setStyle("-fx-background-color: #FEF9E7"));
         opacityForStackButton.setOnMouseExited(e -> opacityForStackButton.setStyle("-fx-background-color: #F9E79F"));
         
-        //menu button, not finished
+        //menu button
         Button highScoresButton = new Button("High score");
-        highScoresButton.setFont(new Font("Sans-Serif", 16));
+        highScoresButton.setFont(new Font("Sans-Serif", 15));
         highScoresButton.setStyle("-fx-background-color: #b0d3bf; ");        
         highScoresButton.setOnMouseEntered(e -> highScoresButton.setStyle("-fx-background-color: #d3e5d1"));
         highScoresButton.setOnMouseExited(e -> highScoresButton.setStyle("-fx-background-color: #b0d3bf"));
         
-        VBox rows = new VBox();
-        HBox col = new HBox();
-        col.getChildren().addAll(getNewGameButton(), highScoresButton);
-        col.setSpacing(20);
-        col.setAlignment(Pos.CENTER);
-        rows.getChildren().addAll(opacityForStackButton, gameOverLabel, endScore, col);
-        rows.setSpacing(20);
-        rows.setAlignment(Pos.CENTER);
-        gameOverStack.getChildren().addAll(square, rows);
+        HBox buttonCol = new HBox();
+        buttonCol.getChildren().addAll(getNewGameButton(), highScoresButton);
+        buttonCol.setSpacing(18);
+        buttonCol.setAlignment(Pos.CENTER);
+        
+        VBox centerRow = new VBox();
+        centerRow.getChildren().addAll(opacityForStackButton, gameOverLabel, endScore, buttonCol);
+        centerRow.setSpacing(20);
+        centerRow.setAlignment(Pos.CENTER);
+        gameOverStack.getChildren().addAll(endSquare, centerRow);
 
         return gameOverStack;
     }
