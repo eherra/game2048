@@ -3,6 +3,7 @@ package game2048.ui;
 
 import game2048.domain.GameLogic;
 import game2048.domain.MoveExecutor;
+import game2048.utils.Square;
 import java.io.FileNotFoundException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,7 +42,7 @@ public class Ui extends Application {
     private Rectangle square;
     private double sceneHeigth, sceneWidth;
     private Stage currentStage;
-    private int wrongInputCount, boardSize;
+    private int wrongInputCount;
     
     @Override
     public void start(Stage stage) throws Exception {
@@ -58,7 +59,7 @@ public class Ui extends Application {
         BorderPane rootMenu = new BorderPane();
         rootMenu.setStyle("-fx-background-color:#008080");
         
-        // big main label
+        // big game name label
         Label topLabel = new Label("Game 2048");        
         topLabel.setFont(Font.font("Monospaced", FontWeight.BOLD, 60));
         topLabel.setUnderline(true);
@@ -75,11 +76,13 @@ public class Ui extends Application {
         playArea.setAlignment(Pos.CENTER);
         playArea.setTextFill(Color.web("#131516"));
         
+        // textField wrong inputs casehandeling
         Label wrongInputErrors = new Label("How about between 3-9?");
         wrongInputErrors.setFont(Font.font("Sans-serif", FontWeight.BOLD, 15));
         wrongInputErrors.setTextFill(Color.web("#FFFF99"));
         wrongInputErrors.setVisible(false);
         
+        // main menu buttons
         Button highScoresButton = styleMenuButtons("High Scores"); 
         Button playButton = styleMenuButtons("Play!");
         Button quickStart = styleMenuButtons("Quick start");
@@ -126,13 +129,13 @@ public class Ui extends Application {
         rootCenterArea.setSpacing(150);
         rootCenterArea.setAlignment(Pos.CENTER);
         
-        VBox mainRoot = new VBox();
-        VBox top = new VBox();
-        top.setAlignment(Pos.CENTER);
-        top.setSpacing(10);
-        top.getChildren().addAll(topLabel, highScoresButton);
-        mainRoot.getChildren().addAll(top, rootCenterArea);
-        mainRoot.setSpacing(80);
+        VBox menuCenterComponents = new VBox();
+        VBox menuTopComponents = new VBox();
+        menuTopComponents.setAlignment(Pos.CENTER);
+        menuTopComponents.setSpacing(10);
+        menuTopComponents.getChildren().addAll(topLabel, highScoresButton);
+        menuCenterComponents.getChildren().addAll(menuTopComponents, rootCenterArea);
+        menuCenterComponents.setSpacing(80);
         
         exitButton.setOnMouseClicked(event -> {
             currentStage.close();
@@ -174,8 +177,8 @@ public class Ui extends Application {
             sceneWidth = currentStage.getWidth();
         });
         
-        mainRoot.setAlignment(Pos.CENTER);
-        rootMenu.setCenter(mainRoot);
+        menuCenterComponents.setAlignment(Pos.CENTER);
+        rootMenu.setCenter(menuCenterComponents);
         rootMenu.setRight(exitButton);
         
         return new Scene(rootMenu, 700, 516);
@@ -365,72 +368,12 @@ public class Ui extends Application {
         StackPane squareStack = new StackPane();
         for (int i = 0; i < logic.getTableSize(); i++) {
             for (int j = 0; j < logic.getTableSize(); j++) {
-                squareStack = getSquareStack(logic.getValueFromBoard(i, j));
+                Square square = new Square(logic.getValueFromBoard(i, j));
+                squareStack = square.getSquareStack(logic.getTableSize());
                 gridToReturn.add(squareStack, j, i);
             }
         }
         return gridToReturn;
-    }
-       
-    public StackPane getSquareStack(int size) {
-        int squareSize = setSquareSizeOrFont(logic.getTableSize(), false);
-        square = new Rectangle(squareSize, squareSize, squareSize, squareSize);
-        stackToReturn = new StackPane();
-        square.setArcWidth(15);
-        square.setArcHeight(15);
-        square.setFill(Color.web(getSquareColour(size)));
-        fontLabel = size != 0 ? new Label(String.valueOf(size)) : new Label();
-        int fontSize = setSquareSizeOrFont(logic.getTableSize(), true);
-        
-        fontLabel.setFont(new Font("Sans-Serif", fontSize));
-        stackToReturn.getChildren().addAll(square, fontLabel);
-        return stackToReturn;
-    }
-    
-    public int setSquareSizeOrFont(int size, boolean isFont) {
-        switch (size) {
-            case 3:
-                return isFont ? 30 : 120;
-            case 4:
-                return isFont ? 26 : 100;
-            case 5: 
-                return isFont ? 25 : 95;
-            case 6:
-                return isFont ? 23 : 90;
-            case 7:
-                return isFont ? 23 : 85;
-            case 8:
-                return isFont ? 22 : 75;
-        }
-        return isFont ? 21 : 70;
-    }
-    
-    public String getSquareColour(int size) {
-        switch (size) {
-            case 0:
-                return "#cdc0b4";
-            case 2:
-                return "#eee4da";
-            case 4: 
-                return "#b2d8b2";
-            case 8:
-                return "#f3b27a";
-            case 16:
-                return "#f29663";
-            case 32:
-                return "#ff7f7f";
-            case 64:
-                return "#ee5d39";
-            case 128:
-                return "#F9E79F";
-            case 256:
-                return "#F7DC6F";
-            case 512:
-                return "#F1C40F";
-            case 1024:
-                return "#B7950B";
-        }
-        return "7D3C98"; // colour of 2048 square
     }
        
     public Button getNewGameButton() {
