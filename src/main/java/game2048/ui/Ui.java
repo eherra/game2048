@@ -48,15 +48,16 @@ public class Ui extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         currentStage = stage;
-        Scene currentScene = getMainMenuScene();
-        currentStage.setScene(currentScene);
+        gameOverStack = new StackPane();
+        currentStage.setScene(getMainMenuScene());
         currentStage.show();
         
-        sceneHeigth = currentScene.getHeight();
-        sceneWidth = currentScene.getWidth();
+        sceneHeigth = currentStage.getHeight();
+        sceneWidth = currentStage.getWidth();
     }
     
-    public Scene getMainMenuScene() throws FileNotFoundException {
+    public Scene getMainMenuScene() throws FileNotFoundException {     
+        gameOverStack.setVisible(false);
         BorderPane rootMenu = new BorderPane();
         rootMenu.setStyle("-fx-background-color:#008080");
         
@@ -172,7 +173,8 @@ public class Ui extends Application {
     public Scene getGameScene(int boardSize) {
         logic = new GameLogic(boardSize);
         moveService = new MoveExecutor(logic);
-        gameOverStack = new StackPane();
+        gameOverStack = new StackPane();        
+        gameOverStack.setVisible(false);
         
         // stack for moving squares
         squareStack = new StackPane();
@@ -187,7 +189,7 @@ public class Ui extends Application {
         topNewGameButton.setFocusTraversable(false);
 
         //back to menu button
-        topMainMenuButton = getTopMenuButton();
+        topMainMenuButton = getBackButton();
         topMainMenuButton.setFocusTraversable(false);
 
         // top labels
@@ -250,6 +252,7 @@ public class Ui extends Application {
             
             if (!logic.isMoveableSquares() && moveService.isGameOver()) {
                 topNewGameButton.setDisable(true);
+                gameOverStack.getChildren().clear();
                 gameOverStack = getGameOverStack();
                 squareStack.getChildren().add(gameOverStack);
             }
@@ -259,7 +262,7 @@ public class Ui extends Application {
     }
     
     public StackPane getGameOverStack() {
-        StackPane gameOverStack = new StackPane();
+        gameOverStack = new StackPane();
         
         Label gameOverLabel = new Label("You lost!");
         gameOverLabel.setFont(new Font("Sans-Serif", 30));
@@ -332,6 +335,7 @@ public class Ui extends Application {
         newGameButton.setOnMouseExited(e -> newGameButton.setStyle("-fx-background-color: #b0d3bf"));
 
         newGameButton.setOnMouseClicked((event) -> {
+            squareStack.getChildren().remove(gameOverStack);
             gameOverStack.setVisible(false);
             topNewGameButton.setDisable(false);
             logic.setNewGame();
@@ -342,7 +346,7 @@ public class Ui extends Application {
         return newGameButton;
     }
     
-    public Button getTopMenuButton() {
+    public Button getBackButton() {
         Button topMainMenuButton = new Button("Back");
         topMainMenuButton.setFont(new Font("Sans-Serif", 15));
         topMainMenuButton.setStyle("-fx-background-color: #CD5C5C; ");
@@ -351,6 +355,7 @@ public class Ui extends Application {
         topMainMenuButton.setFocusTraversable(false);
         
         topMainMenuButton.setOnMouseClicked((event) -> {
+            squareStack.getChildren().remove(gameOverStack);
             try {
                 currentStage.setScene(getMainMenuScene());
             } catch (FileNotFoundException ex) {
