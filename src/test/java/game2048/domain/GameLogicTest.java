@@ -61,10 +61,6 @@ public class GameLogicTest {
     public void testFindEmptyCoordinates() {
         
     }
-
-    /**
-    * Creating a specific board setup for testing the moving methods. Simplifying the testing
-    */
  
     @Test
     public void testUpdateBoard() {
@@ -78,16 +74,6 @@ public class GameLogicTest {
     public void testGetRandomCoordinate() {
     }
 
-    /**
-     * Test of isGameOver method, of class GameLogic.
-     */
-    @Test
-    public void testIsGameOver() {
-    }
-
-    /**
-     * Test of setNewGame method, of class GameLogic.
-     */
     @Test
     public void testSetNewGame() {
         for (int i = 0; i < 5; i++) {

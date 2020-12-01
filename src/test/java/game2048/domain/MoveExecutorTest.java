@@ -1,19 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package game2048.domain;
 
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author balooza
- */
-public class MoveMakerTest {
+public class MoveExecutorTest {
     private GameLogic testLogic;
     private MoveExecutor testMoveController;
     private int n;
@@ -120,46 +112,39 @@ public class MoveMakerTest {
         }
         assertEquals(true, differences == 1);
     }
-    /**
-     * Test of makeChangesToBoardDownAndUpMoves method, of class MoveMaker.
-     */
+
     @Test
     public void testMakeChangesToBoardDownAndUpMoves() {
     }
 
-    /**
-     * Test of makeChangesToBoardLeftAndRight method, of class MoveMaker.
-     */
     @Test
     public void testMakeChangesToBoardLeftAndRight() {
     }
 
-    /**
-     * Test of updateBoardFromMoveUpDown method, of class MoveMaker.
-     */
     @Test
     public void testUpdateBoardFromMoveUpDown() {
     }
 
-    /**
-     * Test of updateBoardFromMoveLeftRight method, of class MoveMaker.
-     */
     @Test
     public void testUpdateBoardFromMoveLeftRight() {
     }
 
-    /**
-     * Test of sameValuesAddingLegally method, of class MoveMaker.
-     */
     @Test
     public void testSameValuesAddingLegally() {
     }
 
-    /**
-     * Test of sameValuesAddingWithNoIncorrectMove method, of class MoveMaker.
-     */
+
     @Test
     public void testSameValuesAddingWithNoIncorrectMove() {
+    }
+
+    @Test
+    public void testMakeChangesToBoardLeftAndRightMoves() {
+    }
+
+ 
+    @Test
+    public void testIsGameOver() {
     }
     
 }
