@@ -16,4 +16,5 @@
 | 26.11.      | 3    | alotusmenun UI kuntoon, nappien painallukset|
 | 28.11.      | 2    | checkstylen viilaus, sekvenssikaavion teko|
 | 30.11.      | 2    | UI:n refaktorointi, muutamia lisäominaisuudet UI:n näppäimiin, Square-luokan luonti|
+| 3.12.      | 4    | sqliten lisäys, highscoren hakeminen ja tallentaminen tietokantaan, UI lisäys highscore näkymään|
 |yht   |   41| 
