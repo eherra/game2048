@@ -267,7 +267,6 @@ public class Ui extends Application {
         return gameSkene;
     }
     
-    // refaktorointi, button to go back main menu
     public Scene getHighScoreScene() {
         BorderPane rootSetting = new BorderPane();
         rootSetting.setStyle("-fx-background-color:#008080");

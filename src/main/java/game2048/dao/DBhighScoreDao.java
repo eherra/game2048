@@ -9,6 +9,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+    /**
+     * Class for making queries to the database.
+     */
 public class DBhighScoreDao implements HighscoreDao  {
     private Database database;
     
@@ -17,6 +20,9 @@ public class DBhighScoreDao implements HighscoreDao  {
         database.createHighscoreTable(); 
     }
     
+    /**
+     * Adds value(game points) to the sql table.
+     */
     @Override 
     public void addScore(int value, int boardSize, String date) {
         try {
@@ -33,14 +39,19 @@ public class DBhighScoreDao implements HighscoreDao  {
         }
     }
     
+    /**
+     * Get top5 scores from sql database.
+     * @return List of 5 top scores in a string modified with rank number, points and date when made.
+     */
     @Override 
     public List<String> getTopFiveScores(int boardSize) {
         ArrayList<String> topScores = new ArrayList();
         try {
             Connection db = database.getConnection();    
-            Statement s = db.createStatement();
-            ResultSet r = s.executeQuery("SELECT id, score AS score, date AS date FROM Scores WHERE boardsize=" + boardSize + " GROUP BY id ORDER BY score DESC LIMIT 5");
+            PreparedStatement p = db.prepareStatement("SELECT id, score AS score, date AS date FROM Scores WHERE boardsize=? GROUP BY id ORDER BY score DESC LIMIT 5");
+            p.setInt(1, boardSize);
             int rankIndex = 1;
+            ResultSet r = p.executeQuery();
             while (r.next()) {
                 StringBuilder build = new StringBuilder();
                 build.append(rankIndex + ". "  + (r.getInt("score")) + "p, ");
@@ -49,7 +60,7 @@ public class DBhighScoreDao implements HighscoreDao  {
                 rankIndex++;
             }
             db.close();
-            s.close();
+            p.close();
         } catch (Exception e) {
             System.out.println("didnt work scorefetch");
         }
@@ -57,17 +68,22 @@ public class DBhighScoreDao implements HighscoreDao  {
         return topScores;
     }
 
+    /**
+     * Get top score from database.
+     * @return best score from database.
+     */
     @Override
     public int getTopScore(int boardSize) {
         int topScore = 0;
         try {
             Connection db = database.getConnection();    
-            Statement s = db.createStatement();
-            ResultSet r = s.executeQuery("SELECT MAX(score) AS maxScore FROM Scores WHERE boardsize=" + boardSize);
+            PreparedStatement p = db.prepareStatement("SELECT MAX(score) AS maxScore FROM Scores WHERE boardsize=?");
+            p.setInt(1, boardSize);
+            ResultSet r = p.executeQuery();
             while (r.next()) {
                 topScore = r.getInt("maxScore");
             }
-            s.close();
+            p.close();
             db.close();
             System.out.println("TopScore fetched succesfully");
         } catch (Exception e) {
@@ -78,17 +94,22 @@ public class DBhighScoreDao implements HighscoreDao  {
         return topScore;
     }
     
+    /**
+     * Get fifth best score from database.
+     * Method used to check if made score on top 5 scores.
+     */
     @Override 
     public int getFifthScore(int boardSize) {
         int fifthScore = 0;
         try {
             Connection db = database.getConnection();    
-            Statement s = db.createStatement();
-            ResultSet r = s.executeQuery("SELECT score AS fifthScore FROM Scores WHERE boardsize=" + boardSize + " AND rowid = 5");
+            PreparedStatement p = db.prepareStatement("SELECT score AS fifthScore FROM Scores WHERE boardsize=? AND rowid = 5");
+            p.setInt(1, boardSize);
+            ResultSet r = p.executeQuery();
             while (r.next()) {
                 fifthScore = r.getInt("fifthScore");
             }
-            s.close();
+            p.close();
             db.close();
             System.out.println("fifthScore fetched succesfully");
         } catch (Exception e) {

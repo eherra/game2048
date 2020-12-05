@@ -181,7 +181,9 @@ public class MoveExecutor {
     /**
      * Method to move value on up and down moves to board to specific x and y coordinate.
      * @param normalAdding if values need to be only moved to other position. If false, value will be moved and added to other square.
+     * @param isUp true if method should do the up move changes.
      */
+    
     public void updateBoardFromMoveUpDown(boolean isUp, boolean normalAdding, int lastX, int y, int currentValue) {
         if (isUp) {
             int toAdd = normalAdding ? currentValue : currentValue * 2;
@@ -196,6 +198,7 @@ public class MoveExecutor {
     /**
      * Method to move value on left and right moves to board to specific x and y coordinate.
      * @param normalAdding if values need to be only moved to other position. If false, value will be moved and added to other square.
+     * @param isLeft true if method should do the left move changes.
      */
     public void updateBoardFromMoveLeftRight(boolean isLeft, boolean normalAdding, int x, int lastY, int currentValue) {
         if (isLeft) {

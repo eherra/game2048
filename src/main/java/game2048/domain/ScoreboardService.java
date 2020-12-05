@@ -6,6 +6,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class to handle game points and highscore counting.
+ */
 public class ScoreboardService {
     private int highscore;
     private int currentScore; 
@@ -28,6 +31,11 @@ public class ScoreboardService {
         return highScoreService.getTopFiveScores(boardSize);
     }
     
+    /**
+    * Adding points to current score.
+    * If currentScore has reached to same level as high score, updates highscore at same time.
+    * @param add value to add 2x to current score.
+    */
     public void addCurrentPoints(int add) {
         currentScore += add * 2;
         if (currentScore >= highscore) {

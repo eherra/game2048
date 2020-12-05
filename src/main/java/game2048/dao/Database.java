@@ -10,6 +10,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+    /**
+     * Class to create a connection to the database and handles of creating the database.
+     */
 public class Database {
     private String databaseUrl;
     
@@ -17,6 +20,10 @@ public class Database {
         databaseUrl = "jdbc:sqlite:main.db";
     }
     
+    /**
+     * Method for getting connection.
+     * @return connection object
+     */
     public Connection getConnection() {
         Connection conn = null;
         try {
@@ -26,7 +33,9 @@ public class Database {
         }
         return conn;
     }
-    
+    /**
+     * Creates SQLtable with columns of id, score, boardsize, date.
+     */
     public void createHighscoreTable() {
         try {
             Connection db = getConnection();    
