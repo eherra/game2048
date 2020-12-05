@@ -26,7 +26,9 @@ public class GameLogic {
         findEmptyCoordinates();
         initializeStartBoard();
     }
-    
+    /**
+     * Adds 2 randomed placed squares to board.
+     */
     public void initializeStartBoard() {
         for (int i = 0; i < 2; i++) {
             byte[] coordinatesXY = getRandomCoordinate();
@@ -39,7 +41,9 @@ public class GameLogic {
         findEmptyCoordinates();
         addRandomSquare();
     }
-    
+    /**
+     * Makes a list of coordinates of all empty slots on gameboard.
+     */
     public void findEmptyCoordinates() {
         emptyCoordinates = new ArrayList();
         for (int x = 0; x < tableLength; x++) {
@@ -51,7 +55,9 @@ public class GameLogic {
             }
         }
     }
-
+    /**
+     * Adds square valued 2 or 4 to the gametable.
+     */
     public void addRandomSquare() {
         byte[] coordinate = getRandomCoordinate();
         gameTable[coordinate[0]][coordinate[1]] = Math.random() <= 0.1 ? 4 : 2;
@@ -107,9 +113,11 @@ public class GameLogic {
     public List<String> getTopFive(int boardSize) {
         return scoreboard.getTopFiveScores(boardSize);
     }
-    
-    public void updateHighScore(int highscore, int boardSize) {
+     /**
+     * Saves Highscore to the sql table.
+     */
+    public void saveHighscore(int highscore) {
         String dateAsString = LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy"));
-        scoreboard.addHighScore(highscore, boardSize, dateAsString);
+        scoreboard.addHighScore(highscore, tableLength, dateAsString);
     }
 }

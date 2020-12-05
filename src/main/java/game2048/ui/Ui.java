@@ -258,8 +258,8 @@ public class Ui extends Application {
                 gameOverStack = getGameOverStack();
                 squareStack.getChildren().add(gameOverStack);
                 if (logic.getGamePoints() == logic.getHighScore() 
-                        || highScoreService.getFifthScore(logic.getTableSize()) < logic.getGamePoints()) { // get lowest score of TOP5 and add if higher
-                    logic.updateHighScore(logic.getGamePoints(), logic.getTableSize());
+                        || highScoreService.getFifthScore(logic.getTableSize()) < logic.getGamePoints()) {
+                    logic.saveHighscore(logic.getGamePoints());
                 }
             }
         });   

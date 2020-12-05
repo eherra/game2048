@@ -14,7 +14,7 @@ public class DBhighScoreDao implements HighscoreDao  {
     
     public DBhighScoreDao() {
         database = new Database();
-        database.createHighscoreTable(); // ei tartte joka kerralla tehdä
+        database.createHighscoreTable(); 
     }
     
     @Override 

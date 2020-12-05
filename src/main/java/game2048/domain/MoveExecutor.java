@@ -16,6 +16,10 @@ public class MoveExecutor {
         tableLength = gameLogic.getTableSize();
     }
     
+    /**
+     * Method to makes up move to the game table array.
+     * @param gameOverTest if method is used to check if there are any moves available.
+     */
     public boolean moveUp(boolean gameOverTest) {
         isMoveMade = false;
         for (int y = 0; y < tableLength; y++) {
@@ -41,6 +45,10 @@ public class MoveExecutor {
         return false;
     }
     
+    /**
+     * Method to makes down move to the game table array.
+     * @param gameOverTest if method is used to check if there are any moves available.
+     */
     public boolean moveDown(boolean gameOverTest) {
         isMoveMade = false;
         for (int y = 0; y < tableLength; y++) {
@@ -65,6 +73,10 @@ public class MoveExecutor {
         return false;
     }
     
+    /**
+     * Method to makes right move to the game table array.
+     * @param gameOverTest if method is used to check if there are any moves available.
+     */
     public boolean moveRight(boolean gameOverTest) {
         isMoveMade = false;
         for (int x = 0; x < tableLength; x++) {
@@ -89,6 +101,10 @@ public class MoveExecutor {
         return false;
     }
     
+    /**
+     * Method to makes left move to the game table array.
+     * @param gameOverTest if method is used to check if there are any moves available.
+     */
     public boolean moveLeft(boolean gameOverTest) {
         isMoveMade = false;
         for (int x = 0; x < tableLength; x++) {
@@ -113,6 +129,10 @@ public class MoveExecutor {
         return false;
     }
     
+    /**
+     * Helping method to up and down moves to update the board.
+     * @return true if method is used for checking gameOverTest
+     */
     public boolean makeChangesToBoardDownAndUpMoves(int lastX, int y, int currentValue, int positionToMoveValue, boolean gameOverTest, boolean isUpMove) {
         if (positionToMoveValue == 0) {
             if (gameOverTest) {
@@ -134,6 +154,10 @@ public class MoveExecutor {
         return false;
     }
     
+    /**
+     * Helping method to right and left moves to update the board.
+     * @return true if method is used for checking gameOverTest
+     */
     public boolean makeChangesToBoardLeftAndRightMoves(int x, int lastY, int currentValue, int positionToMoveValue, boolean gameOverTest, boolean isLeftMove) {
         if (positionToMoveValue == 0) {
             if (gameOverTest) {
@@ -154,7 +178,10 @@ public class MoveExecutor {
         }
         return false;
     }
-    
+    /**
+     * Method to move value on up and down moves to board to specific x and y coordinate.
+     * @param normalAdding if values need to be only moved to other position. If false, value will be moved and added to other square.
+     */
     public void updateBoardFromMoveUpDown(boolean isUp, boolean normalAdding, int lastX, int y, int currentValue) {
         if (isUp) {
             int toAdd = normalAdding ? currentValue : currentValue * 2;
@@ -166,6 +193,10 @@ public class MoveExecutor {
         gameLogic.setValueOnBoard(lastX, y, 0);        
     }
     
+    /**
+     * Method to move value on left and right moves to board to specific x and y coordinate.
+     * @param normalAdding if values need to be only moved to other position. If false, value will be moved and added to other square.
+     */
     public void updateBoardFromMoveLeftRight(boolean isLeft, boolean normalAdding, int x, int lastY, int currentValue) {
         if (isLeft) {
             int toAdd = normalAdding ? currentValue : currentValue * 2;
@@ -177,15 +208,24 @@ public class MoveExecutor {
         gameLogic.setValueOnBoard(x, lastY, 0);        
     }
     
+    /**
+     * Checks if 2 values can be added according to 2048 rules.
+     */
     public boolean sameValuesAddingLegally(int positionToMoveValue, int currentValue) {
         return positionToMoveValue == currentValue && currentValue != lastChangeNum * 2;
     }
     
+    /**
+     * Checks if 2 values can be added according to 2048 rules.
+     * In a case where two values were added earlier on same checking line. (rules of 2048)
+     */
     public boolean sameValuesAddingWithNoIncorrectMove(int currentValue, int positionToMoveValue, int toCheckIndex, boolean minusOrPlus) {
         int differenceInIndex = minusOrPlus ? toCheckIndex - lastChangeNumIndex : lastChangeNumIndex - toCheckIndex;
         return positionToMoveValue == currentValue && currentValue == lastChangeNum * 2 && differenceInIndex > 1;
     }
-    
+    /**
+     * Checks if there any moves left on board.
+     */
     public boolean isGameOver() {
         return !moveRight(true) && !moveUp(true) && !moveDown(true) && !moveLeft(true);
     }
