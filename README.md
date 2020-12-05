@@ -37,3 +37,8 @@ To create jar file:
 ```console
 mvn package
 ```
+
+To generate JavaDoc:
+```console
+mvn javadoc:javadoc
+```
