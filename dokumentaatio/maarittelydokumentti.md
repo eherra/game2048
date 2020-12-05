@@ -4,11 +4,11 @@ Sovellus on 2048 peliin perustuva replika, jossa voi itse valita pelilaudan koon
 
 ### Suunnitellut toiminnallisuudet
 - Peliä on mahdollista pelata haluamallaan pelikoolla. (tehty)
-- Sovellus pitää kirjaa pelaajien high scoresta ja tallentaa ne mongoDB tietokantaan vain jos pelimuoto on 4x4 ruutua. Muissa pelilautojen koissa sovellus laskee pelaajan pisteet, mutta niitä ei lasketa high score-järjestelmään. 
-- Sovelluksessa on osio, josta näkee TOP 10 pisteet (vain koko 4x4) pelaajista jotka ovat sovellusta pelanneet. Pelin päätyttyä oman scoren voi lisätä listalle 3 kirjaimisella nimimerkillä jos näin tahtoo. 
+- Sovellus pitää kirjaa pelaajien high scoresta ja tallentaa ne Sqlite tietokantaan pelimuodoilla 3x3, 4x4 ja 5x5. Muissa pelilautojen koissa sovellus laskee pelaajan pisteet, mutta niitä ei lasketa high score-järjestelmään. 
+- Sovelluksessa on osio, josta näkee TOP 5 pisteet koille 3x3, 4x4 ja 5x5. Pelin päätyttyä pelaajan pisteet tallennetaan sqlite-tietokantaan jos pisteet riittävät top5 sijotuksiin.
 
 ### Ylläpitäjän toiminnallisuus
-Ylläpitäjä huolehtii että MongoDB tietokanta toimii sovelluksen kanssa, jotta high scoren hakeminen ja tallentaminen tietokantaa toimii moitteettomasti. Mikäli tietokanta ei jostain syystä toimisi, sovellus täytyy toimia pelattavana, mutta luonnollisesti ilman mahdollisuutta lisätä high scorea tietokantaan.
+Ylläpitäjä huolehtii että tietokanta toimii sovelluksen kanssa, jotta high scoren hakeminen ja tallentaminen tietokantaa toimii moitteettomasti. Mikäli tietokanta ei jostain syystä toimisi, sovellus täytyy toimia pelattavana, mutta luonnollisesti ilman mahdollisuutta lisätä high scorea tietokantaan.
 
 ### Toimintaympäristön rajoitteet
 Sovellus toimii macOS ja Linux pohjaisilla käyttöjärjestelmillä.
