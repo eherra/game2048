@@ -1,6 +1,8 @@
 
 package game2048.domain;
 
+import game2048.dao.DBhighScoreDao;
+import java.sql.SQLException;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -8,12 +10,14 @@ import static org.junit.Assert.*;
 public class MoveExecutorTest {
     private GameLogic testLogic;
     private MoveExecutor testMoveController;
+    private DBhighScoreDao db;
     private int n;
 
     
     @Before
-    public void setUp() {
-        testLogic = new GameLogic(4);
+    public void setUp() throws SQLException {
+        db = new DBhighScoreDao();
+        testLogic = new GameLogic(4, db);
         testMoveController = new MoveExecutor(testLogic);
         n = testLogic.getTableSize();
     }

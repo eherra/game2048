@@ -1,7 +1,12 @@
 
 package game2048.domain;
 
+import game2048.dao.DBhighScoreDao;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class GameLogic {
@@ -9,12 +14,12 @@ public class GameLogic {
     private final Random ran;
     private ArrayList<byte[]> emptyCoordinates;
     private int tableLength;
-    private Scoreboard scoreboard;
+    private ScoreboardService scoreboard;
     public boolean isMoveMade;
     public int lastChangeNum, lastChangeNumIndex;
     
-    public GameLogic(int size) {
-        scoreboard = new Scoreboard();
+    public GameLogic(int size, DBhighScoreDao db) {
+        scoreboard = new ScoreboardService(size, db);
         tableLength = size;
         gameTable = new int[size][size];
         ran = new Random();
@@ -97,5 +102,14 @@ public class GameLogic {
     
     public void addValuesToScoreboard(int current) {
         scoreboard.addCurrentPoints(current);
+    }
+    
+    public List<String> getTopFive(int boardSize) {
+        return scoreboard.getTopFiveScores(boardSize);
+    }
+    
+    public void updateHighScore(int highscore, int boardSize) {
+        String dateAsString = LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy"));
+        scoreboard.updateHighScore(highscore, boardSize, dateAsString);
     }
 }

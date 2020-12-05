@@ -5,6 +5,8 @@
  */
 package game2048.domain;
 
+import game2048.dao.DBhighScoreDao;
+import java.sql.SQLException;
 import java.util.HashSet;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,11 +16,13 @@ import org.junit.Ignore;
 public class GameLogicTest {
     private GameLogic testLogic;
     private MoveExecutor testMoveController;
+    private DBhighScoreDao db;
     private int n;
 
     @Before
-    public void setUp() {
-        testLogic = new GameLogic(4);   // creating board size 4x4 with 2 values in random coordinates on int[][] array. 
+    public void setUp() throws SQLException {
+        db = new DBhighScoreDao();
+        testLogic = new GameLogic(4, db);   // creating board size 4x4 with 2 values in random coordinates on int[][] array. 
                                         // Making testing a bit harder but is workaroundable
         n = testLogic.getTableSize();
         testMoveController = new MoveExecutor(testLogic);

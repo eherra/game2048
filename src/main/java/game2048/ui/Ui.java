@@ -1,10 +1,13 @@
 
 package game2048.ui;
 
+import game2048.dao.DBhighScoreDao;
 import game2048.domain.GameLogic;
 import game2048.domain.MoveExecutor;
 import game2048.utils.Square;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -32,7 +35,7 @@ import javafx.stage.Stage;
 
 public class Ui extends Application {
     private GameLogic logic;
-    private MoveExecutor moveService;
+    private MoveExecutor moveExecutor;
     private GridPane gridForSquares, gridToReturn, toReturnPane;
     private StackPane squareStack, gameOverStack, stackToReturn;
     private BorderPane rootSetting, mainTop;
@@ -44,6 +47,12 @@ public class Ui extends Application {
     private Stage currentStage;
     private double sceneHeigth, sceneWidth;
     private int wrongInputCount;
+    private DBhighScoreDao highScoreService;
+    
+   @Override
+   public void init() {
+       highScoreService = new DBhighScoreDao();
+   }
     
     @Override
     public void start(Stage stage) throws Exception {
@@ -61,7 +70,7 @@ public class Ui extends Application {
         BorderPane rootMenu = new BorderPane();
         rootMenu.setStyle("-fx-background-color:#008080");
         
-        // big game name label
+        // big game namelabel
         Label topLabel = new Label("Game 2048");        
         topLabel.setFont(Font.font("Monospaced", FontWeight.BOLD, 60));
         topLabel.setUnderline(true);
@@ -85,11 +94,11 @@ public class Ui extends Application {
         wrongInputErrors.setVisible(false);
         
         // main menu buttons
-        Button highScoresButton = styleMenuButtons("High Scores"); 
+        Button highScoresButton = getHighScoreButton();
         Button playButton = styleMenuButtons("Play!");
         Button quickStart = styleMenuButtons("Quick start");
         Button rulesButton = styleMenuButtons("Rules"); // think a position for this
-        chooseBoardSizeField = getBoardSetUpField();
+        chooseBoardSizeField = getBoardSetUpTextField();
 
         // AI menu
         Label feelingLazy = new Label("\tFeeling lazy? \nLet AI Doge play for you!");
@@ -154,6 +163,8 @@ public class Ui extends Application {
             sceneWidth = currentStage.getWidth();
         });
         
+        
+        
         menuCenterComponents.setAlignment(Pos.CENTER);
         rootMenu.setCenter(menuCenterComponents);
         rootMenu.setRight(exitButton);
@@ -161,18 +172,9 @@ public class Ui extends Application {
         return new Scene(rootMenu, 700, 516);
     }
     
-    public Button styleMenuButtons(String name) {
-        Button buttonToReturn = new Button(name);
-        buttonToReturn.setStyle("-fx-background-color: #b0d3bf; ");
-        buttonToReturn.setOnMouseEntered(e -> buttonToReturn.setStyle("-fx-background-color: #d3e5d1"));
-        buttonToReturn.setOnMouseExited(e -> buttonToReturn.setStyle("-fx-background-color: #b0d3bf"));
-        buttonToReturn.setFont(new Font("Monospaced", 15));    
-        return buttonToReturn;
-    }
-    
     public Scene getGameScene(int boardSize) {
-        logic = new GameLogic(boardSize);
-        moveService = new MoveExecutor(logic);
+        logic = new GameLogic(boardSize, highScoreService);
+        moveExecutor = new MoveExecutor(logic);
         gameOverStack = new StackPane();        
         gameOverStack.setVisible(false);
         
@@ -189,7 +191,7 @@ public class Ui extends Application {
         topNewGameButton.setFocusTraversable(false);
 
         //back to menu button
-        topMainMenuButton = getBackButton();
+        topMainMenuButton = getBackButton("Back");
         topMainMenuButton.setFocusTraversable(false);
 
         // top labels
@@ -234,31 +236,138 @@ public class Ui extends Application {
         
         gameSkene.setOnKeyPressed((KeyEvent event) -> {
             if (event.getCode() == KeyCode.UP) {
-                moveService.moveUp(false);
+                moveExecutor.moveUp(false);
             } else if (event.getCode() == KeyCode.DOWN) {
-                moveService.moveDown(false);
+                moveExecutor.moveDown(false);
             } else if (event.getCode() == KeyCode.RIGHT) {
-                moveService.moveRight(false);
+                moveExecutor.moveRight(false);
             } else if (event.getCode() == KeyCode.LEFT) {
-                moveService.moveLeft(false);
+                moveExecutor.moveLeft(false);
             } else {
                 return;
             }
             gridForSquares.getChildren().clear();
             gridForSquares = getUpdatedAndStyledPane();
             currentScoreLabel.setText("Current Score \n" + logic.getGamePoints());
-            highScoreLabel.setText("High Score \n" + logic.getHighScore()); // metodin hakemaan highScoren
+            highScoreLabel.setText("High Score \n" + logic.getHighScore()); 
             squareStack.getChildren().add(gridForSquares);
             
-            if (!logic.isMoveableSquares() && moveService.isGameOver()) {
+            if (!logic.isMoveableSquares() && moveExecutor.isGameOver()) {
                 topNewGameButton.setDisable(true);
                 gameOverStack.getChildren().clear();
                 gameOverStack = getGameOverStack();
                 squareStack.getChildren().add(gameOverStack);
+                if (logic.getGamePoints() == logic.getHighScore() 
+                        || highScoreService.getFifthScore(logic.getTableSize()) < logic.getGamePoints()) { // get lowest score of TOP5 and add if higher
+                    logic.updateHighScore(logic.getGamePoints(), logic.getTableSize());
+                }
             }
         });   
         
         return gameSkene;
+    }
+    
+    // refaktorointi, button to go back main menu
+    public Scene getHighScoreScene() {
+        BorderPane rootSetting = new BorderPane();
+        rootSetting.setStyle("-fx-background-color:#008080");
+        GridPane centerPane = new GridPane();
+        
+        Label highScores = new Label("High Scores");
+        highScores.setUnderline(true);
+        highScores.setFont(new Font("Sans-Serif", 45));
+        highScores.setTextFill(Color.web("#131516"));
+        
+        Label threeLabel = new Label("3x3");
+        threeLabel.setUnderline(true);
+        threeLabel.setFont(new Font("Sans-Serif", 19));
+        threeLabel.setTextFill(Color.web("#131516"));
+
+        Label fourLabel = new Label("4x4");
+        fourLabel.setUnderline(true);
+        fourLabel.setFont(new Font("Sans-Serif", 19));
+        fourLabel.setTextFill(Color.web("#131516"));
+
+        Label fiveLabel = new Label("5x5");
+        fiveLabel.setUnderline(true);
+        fiveLabel.setFont(new Font("Sans-Serif", 19));
+        fiveLabel.setTextFill(Color.web("#131516"));
+        
+        Button backToMenuButton = getBackButton("Back to menu");
+
+        VBox set1 = new VBox();
+        VBox set2 = new VBox();
+        VBox set3 = new VBox();
+        
+        set1.setSpacing(5);
+        set2.setSpacing(5);
+        set3.setSpacing(5);
+        
+        List<String> threeScores = highScoreService.getTopFiveScores(3);
+        List<String> fourScores = highScoreService.getTopFiveScores(4);
+        List<String> fiveScores = highScoreService.getTopFiveScores(5);
+        
+        VBox threes = new VBox();
+        threes.getChildren().add(threeLabel);
+        threes.setSpacing(15);
+        if (threeScores.isEmpty()) {
+            Label no = styleHighScoreLabels("No games finished.");
+            threes.getChildren().add(no);
+        } else {
+            for (String k : threeScores) {
+                Label o = styleHighScoreLabels(k);
+                threes.getChildren().add(o);
+            }
+        }
+        
+        VBox fours = new VBox();
+        fours.getChildren().add(fourLabel);
+        fours.setSpacing(15);
+        if (fourScores.isEmpty()) {
+            Label no = styleHighScoreLabels("No games finished.");
+            fours.getChildren().add(no);
+        } else {
+            for (String k : fourScores) {
+                Label o = styleHighScoreLabels(k);
+                fours.getChildren().add(o);
+            }
+        }
+        
+        VBox fives = new VBox();
+        fives.getChildren().add(fiveLabel);
+        fives.setSpacing(15);
+        if (fiveScores.isEmpty()) {
+            Label no = styleHighScoreLabels("No games finished.");
+            fives.getChildren().add(no);
+        } else {
+            for (String k : fiveScores) {
+                Label o = styleHighScoreLabels(k);
+                fives.getChildren().add(o);
+            }
+        }
+
+        set1.getChildren().addAll(threeLabel, threes);
+        set2.getChildren().addAll(fourLabel, fours);
+        set3.getChildren().addAll(fiveLabel, fives);
+
+        centerPane.add(set1, 1, 1);
+        centerPane.add(set2, 2, 1);
+        centerPane.add(set3, 3, 1);
+        centerPane.setAlignment(Pos.CENTER);
+        centerPane.setHgap(20); 
+        
+        VBox topSet = new VBox();
+        topSet.getChildren().addAll(highScores, backToMenuButton);
+        highScores.setAlignment(Pos.CENTER);
+        backToMenuButton.setAlignment(Pos.CENTER);
+        topSet.setAlignment(Pos.CENTER);
+        topSet.setSpacing(5);
+
+        rootSetting.setCenter(centerPane);
+        rootSetting.setTop(topSet);
+        rootSetting.setAlignment(topSet, Pos.CENTER);
+        
+        return new Scene(rootSetting, 700, 516);
     }
     
     public StackPane getGameOverStack() {
@@ -284,16 +393,9 @@ public class Ui extends Application {
         opacityForStackButton.setOnMouseReleased((event) -> {gameOverStack.setOpacity(1);});
         opacityForStackButton.setOnMouseEntered(e -> opacityForStackButton.setStyle("-fx-background-color: #FEF9E7"));
         opacityForStackButton.setOnMouseExited(e -> opacityForStackButton.setStyle("-fx-background-color: #F9E79F"));
-        
-        //menu button
-        Button highScoresButton = new Button("High score");
-        highScoresButton.setFont(new Font("Sans-Serif", 15));
-        highScoresButton.setStyle("-fx-background-color: #b0d3bf; ");        
-        highScoresButton.setOnMouseEntered(e -> highScoresButton.setStyle("-fx-background-color: #d3e5d1"));
-        highScoresButton.setOnMouseExited(e -> highScoresButton.setStyle("-fx-background-color: #b0d3bf"));
-        
+                
         HBox buttonCol = new HBox();
-        buttonCol.getChildren().addAll(getNewGameButton(), highScoresButton);
+        buttonCol.getChildren().addAll(getNewGameButton(), getHighScoreButton());
         buttonCol.setSpacing(18);
         buttonCol.setAlignment(Pos.CENTER);
         
@@ -326,13 +428,18 @@ public class Ui extends Application {
         }
         return gridToReturn;
     }
+    
+    public Button styleMenuButtons(String name) {
+        Button buttonToReturn = new Button(name);
+        buttonToReturn.setStyle("-fx-background-color: #b0d3bf; ");
+        buttonToReturn.setOnMouseEntered(e -> buttonToReturn.setStyle("-fx-background-color: #d3e5d1"));
+        buttonToReturn.setOnMouseExited(e -> buttonToReturn.setStyle("-fx-background-color: #b0d3bf"));
+        buttonToReturn.setFont(new Font("Sans-Serif", 15));    
+        return buttonToReturn;
+    }
        
     public Button getNewGameButton() {
-        Button newGameButton = new Button("New game");
-        newGameButton.setFont(new Font("Sans-Serif", 15));
-        newGameButton.setStyle("-fx-background-color: #b0d3bf; ");
-        newGameButton.setOnMouseEntered(e -> newGameButton.setStyle("-fx-background-color: #d3e5d1"));
-        newGameButton.setOnMouseExited(e -> newGameButton.setStyle("-fx-background-color: #b0d3bf"));
+        Button newGameButton = styleMenuButtons("New game");
 
         newGameButton.setOnMouseClicked((event) -> {
             squareStack.getChildren().remove(gameOverStack);
@@ -346,8 +453,8 @@ public class Ui extends Application {
         return newGameButton;
     }
     
-    public Button getBackButton() {
-        Button topMainMenuButton = new Button("Back");
+    public Button getBackButton(String name) {
+        Button topMainMenuButton = new Button(name);
         topMainMenuButton.setFont(new Font("Sans-Serif", 15));
         topMainMenuButton.setStyle("-fx-background-color: #CD5C5C; ");
         topMainMenuButton.setOnMouseEntered(e -> topMainMenuButton.setStyle("-fx-background-color: #F08080"));
@@ -355,7 +462,9 @@ public class Ui extends Application {
         topMainMenuButton.setFocusTraversable(false);
         
         topMainMenuButton.setOnMouseClicked((event) -> {
-            squareStack.getChildren().remove(gameOverStack);
+            if (squareStack != null) {
+                squareStack.getChildren().remove(gameOverStack);
+            }
             try {
                 currentStage.setScene(getMainMenuScene());
             } catch (FileNotFoundException ex) {
@@ -366,7 +475,7 @@ public class Ui extends Application {
         return topMainMenuButton;
     }
     
-    public TextField getBoardSetUpField() {
+    public TextField getBoardSetUpTextField() {
         TextField chooseBoardSizeField = new TextField("Choose board size (3-9)");
         chooseBoardSizeField.setStyle("-fx-text-inner-color: #b3b3b3");
         
@@ -392,7 +501,7 @@ public class Ui extends Application {
         
         chooseBoardSizeField.setOnKeyPressed((event) -> {
             if (event.getCode() == KeyCode.ENTER) {
-                handlePlayButtonEvent();            
+                handlePlayButtonEvent();
             }
         });
        
@@ -425,6 +534,24 @@ public class Ui extends Application {
             currentStage.setScene(getGameScene(size));
             sceneHeigth = currentStage.getHeight();
             sceneWidth = currentStage.getWidth();
+    }
+    
+    public Button getHighScoreButton() {
+        Button highScoreButton = styleMenuButtons("High score");
+        
+        highScoreButton.setOnMouseClicked((event) -> {
+            currentStage.setScene(getHighScoreScene());
+        });
+        
+        return highScoreButton;
+    }
+    
+    public Label styleHighScoreLabels(String name) {
+        Label highScoreLabel = new Label(name);
+        highScoreLabel.setFont(new Font("Sans-Serif", 15));
+        highScoreLabel.setTextFill(Color.web("#FFFFFF", 0.9));   
+        
+        return highScoreLabel;
     }
     
     public static void main(String[] args) {
