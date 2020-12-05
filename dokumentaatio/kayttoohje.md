@@ -2,8 +2,10 @@
 
 ### Pelin aloittaminen
 Voit joko painaa "Quick start" nappia aloittaaksesi klassisen 4x4 ruudukon pelin.
-<img src="https://i.ibb.co/68kCg0V/Screen-Shot-2020-12-05-at-18-15-03.png"> 
+
 Vaihtoehtoisesti voit kirjoittaa kohtaan "Board Set up" haluamasi laudan koon väliltä 3-9. Tämän jälkeen napin "Play!" tai näppäimistön "Enter":in painaminen käynnistää pelin. 
+
+<img src="https://i.ibb.co/68kCg0V/Screen-Shot-2020-12-05-at-18-15-03.png"> 
 
 ### Pelin säännöt 
 Pelissä yhdistellään saman arvoisia lukuja toisiinsa siihen asti kun yksikään luku ei enää yhdisty toisiinsa pelilaudan ollessa täynnä ruutuja. Alle havainnollistava kuvasarja:
@@ -17,9 +19,17 @@ Siirto vasemmalle:
 ### High score
 Pelin tulokset tallennetaan Sqlite-tietokantaan. Highscore-napin takaa löydät TOP5 pisteet lautojen 3x3, 4x4 ja 5x5 peleistä.
 
+<<<<<<< HEAD
 <img src="https://i.ibb.co/bsZM2gW/Screen-Shot-2020-12-05-at-18-16-20.png" width="401" heigth="215"> 
+=======
+<img src="https://i.ibb.co/bsZM2gW/Screen-Shot-2020-12-05-at-18-16-20.png" width="501" heigth="315"> 
+>>>>>>> 7ab6dbb413ed779c15ff574d9eea576783e21a36
 
 ### AI Doge
 Kyllästynyt pelaamaan itse? Anna AI Dogen pelailla puolestasi. 
 "Release doge" nappi käynnistää 4x4 kokoisen pelin, jota doge pelailee puolestasi ja voit itse keskittyä vaikka Tiran tehtävien tekoon. 
 
+<<<<<<< HEAD
+=======
+<img src="https://i.ibb.co/Ms7ZZCn/Screen-Shot-2020-12-05-at-18-17-51.png"> 
+>>>>>>> 7ab6dbb413ed779c15ff574d9eea576783e21a36
