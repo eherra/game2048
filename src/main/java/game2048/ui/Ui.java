@@ -476,28 +476,9 @@ public class Ui extends Application {
     }
     
     public TextField getBoardSetUpTextField() {
-        TextField chooseBoardSizeField = new TextField("Choose board size (3-9)");
-        chooseBoardSizeField.setStyle("-fx-text-inner-color: #b3b3b3");
-        
-        chooseBoardSizeField.setOnMouseEntered((event) -> {
-            if (!chooseBoardSizeField.getText().equals("Choose board size (3-9)")) return;
-            chooseBoardSizeField.setStyle("-fx-text-inner-color: #1a1a1a");
-            chooseBoardSizeField.setText("");
-        });
-        
-        chooseBoardSizeField.setOnMouseExited((event) -> {
-            if (!chooseBoardSizeField.getText().equals("")) return;
-            chooseBoardSizeField.setStyle("-fx-text-inner-color: #b3b3b3");
-            chooseBoardSizeField.setText("Choose board size (3-9)");
-            chooseBoardSizeField.setFocusTraversable(false);
-        });
-        
-        chooseBoardSizeField.setOnKeyPressed((event) -> {
-            if (chooseBoardSizeField.getText().contains("Choose board size (3-9)")) {
-                chooseBoardSizeField.setText(chooseBoardSizeField.getText().replace("Choose board size (3-9)", ""));
-                chooseBoardSizeField.setStyle("-fx-text-inner-color: #1a1a1a");
-            }
-        });
+        TextField chooseBoardSizeField = new TextField();
+        chooseBoardSizeField.setFocusTraversable(false);
+        chooseBoardSizeField.setPromptText("Choose board size (3-9)");
         
         chooseBoardSizeField.setOnKeyPressed((event) -> {
             if (event.getCode() == KeyCode.ENTER) {
@@ -505,7 +486,6 @@ public class Ui extends Application {
             }
         });
        
-        chooseBoardSizeField.setFocusTraversable(false);
         return chooseBoardSizeField;
     }
     

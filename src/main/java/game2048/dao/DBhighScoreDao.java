@@ -39,7 +39,7 @@ public class DBhighScoreDao implements HighscoreDao  {
         try {
             Connection db = database.getConnection();    
             Statement s = db.createStatement();
-            ResultSet r = s.executeQuery("SELECT score AS score, date AS date FROM Scores WHERE boardsize=" + boardSize + " ORDER BY score DESC LIMIT 5");
+            ResultSet r = s.executeQuery("SELECT id, score AS score, date AS date FROM Scores WHERE boardsize=" + boardSize + " GROUP BY id ORDER BY score DESC LIMIT 5");
             int rankIndex = 1;
             while (r.next()) {
                 StringBuilder build = new StringBuilder();

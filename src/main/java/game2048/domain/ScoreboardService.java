@@ -20,7 +20,7 @@ public class ScoreboardService {
         return currentScore;
     }
     
-    public void updateHighScore(int highscore, int boardSize, String date) {
+    public void addHighScore(int highscore, int boardSize, String date) {
         highScoreService.addScore(highscore, boardSize, date);
     }
     

@@ -14,7 +14,7 @@ public class Database {
     private String databaseUrl;
     
     public Database() {
-        databaseUrl = "jdbc:sqlite:testi.db";
+        databaseUrl = "jdbc:sqlite:main.db";
     }
     
     public Connection getConnection() {

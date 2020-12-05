@@ -110,6 +110,6 @@ public class GameLogic {
     
     public void updateHighScore(int highscore, int boardSize) {
         String dateAsString = LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy"));
-        scoreboard.updateHighScore(highscore, boardSize, dateAsString);
+        scoreboard.addHighScore(highscore, boardSize, dateAsString);
     }
 }
