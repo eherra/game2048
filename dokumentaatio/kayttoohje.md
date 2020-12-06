@@ -8,7 +8,7 @@ Vaihtoehtoisesti voit kirjoittaa kohtaan "Board Set up" haluamasi laudan koon v�
 <img src="https://i.ibb.co/68kCg0V/Screen-Shot-2020-12-05-at-18-15-03.png"> 
 
 ### Pelin säännöt 
-Pelissä yhdistellään saman arvoisia lukuja toisiinsa siihen asti kun yksikään luku ei enää yhdisty toisiinsa. Pelin häviää kun yksikään ruuduista ei yhdisty toisiinsa ja kaikki peliruudut ovat täynnä. Alle havainnollistava kuvasarja siirrosta:
+Pelissä yhdistellään saman arvoisia lukuja toisiinsa vaaka ja pysty tasossa siihen asti kun yksikään luku ei enää yhdisty siirron jälkeen. Pelin häviää kun ruudut ovat täynnä eikä mahdollisia siirtoja ole jäljellä, ja voittaa kun yksi liikkuttavista neliöistä on arvoltaan 2048. Alle havainnollistava kuvasarja siirrosta:
 
 <img src="https://i.ibb.co/D7Vjrv1/Screen-Shot-2020-12-05-at-18-15-31.png"> 
 
