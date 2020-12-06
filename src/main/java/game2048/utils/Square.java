@@ -8,6 +8,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
+
+    /**
+     * Class to make correctly styled and valued squares to the game board.
+     */
 public class Square {
     private StackPane squareStack;
     private int value;
@@ -17,6 +21,10 @@ public class Square {
         this.value = value;
     }
     
+    /**
+     * Creates a stackpane which consists color, shape and value.
+     * @param tableSize square size depends on tableSize parameter.
+     */
     public StackPane getSquareStack(int tableSize) {
         squareStack = new StackPane();
         int squareSize = setSquareSizeOrFont(tableSize, false);
@@ -33,6 +41,11 @@ public class Square {
         return squareStack;
     }
     
+    /**
+     * To determine correct size or font for square.
+     * @param size gametable size
+     * @param isFont is true if used to determine font size of square
+     */
     public int setSquareSizeOrFont(int size, boolean isFont) {
         switch (size) {
             case 3:
@@ -51,6 +64,9 @@ public class Square {
         return isFont ? 21 : 70;
     }
     
+    /**
+     * To determine correct color for square.
+     */
     public String getSquareColour(int size) {
         switch (size) {
             case 0:
