@@ -65,7 +65,7 @@ public class Ui extends Application {
         sceneWidth = currentStage.getWidth();
     }
     
-    public Scene getMainMenuScene() throws FileNotFoundException {     
+    public Scene getMainMenuScene() {     
         gameOverStack.setVisible(false);
         BorderPane rootMenu = new BorderPane();
         rootMenu.setStyle("-fx-background-color:#008080");
@@ -105,9 +105,16 @@ public class Ui extends Application {
         feelingLazy.setFont(Font.font("Sans-serif", FontWeight.BOLD, 20));
         feelingLazy.setAlignment(Pos.CENTER);
         feelingLazy.setTextFill(Color.web("#131516"));
-
-        Image dogeImagePath = new Image("images/dogeImage.png", 60, 60, true, true);
-        ImageView dogeImage = new ImageView(dogeImagePath);        
+        
+        Image dogeImagePath = null;
+        ImageView dogeImage = null;
+        
+        try {
+            dogeImagePath = new Image("images/dogeImage.png", 60, 60, true, true);
+            dogeImage = new ImageView(dogeImagePath);        
+        } catch (Exception e) {
+            System.out.println("Doge photo not found");
+        }
         
         Button dogeButton = new Button("Release doge");
         dogeButton.setStyle("-fx-background-color: #e1b303; ");
@@ -464,11 +471,9 @@ public class Ui extends Application {
             if (squareStack != null) {
                 squareStack.getChildren().remove(gameOverStack);
             }
-            try {
-                currentStage.setScene(getMainMenuScene());
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(Ui.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            
+            currentStage.setScene(getMainMenuScene());
+            
         });
         
         return topMainMenuButton;
@@ -490,7 +495,7 @@ public class Ui extends Application {
     
     public void handlePlayButtonEvent() {
         if (!chooseBoardSizeField.getText().matches("[3-9]")) {
-                if (chooseBoardSizeField.getText().equals("Choose board size (3-9)")) {
+                if (chooseBoardSizeField.getText().equals("")) {
                     wrongInputErrors.setText("You forgot board size.");
                     wrongInputErrors.setVisible(true);
                     return;

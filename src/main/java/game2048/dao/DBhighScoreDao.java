@@ -54,8 +54,7 @@ public class DBhighScoreDao implements HighscoreDao  {
             ResultSet r = p.executeQuery();
             while (r.next()) {
                 StringBuilder build = new StringBuilder();
-                build.append(rankIndex + ". "  + (r.getInt("score")) + "p, ");
-                build.append(r.getString("date"));
+                build.append(rankIndex + ". "  + (r.getInt("score")) + "p, " + r.getString("date"));
                 topScores.add(build.toString());
                 rankIndex++;
             }
