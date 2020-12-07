@@ -57,6 +57,7 @@ public class Ui extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         currentStage = stage;
+
         gameOverStack = new StackPane();
         currentStage.setScene(getMainMenuScene());
         currentStage.show();
@@ -122,37 +123,31 @@ public class Ui extends Application {
         dogeButton.setOnMouseExited(e -> dogeButton.setStyle("-fx-background-color: #e1b303"));
         dogeButton.setFont(new Font("Monospaced", 15));
 
-        HBox dogeButtonArea = new HBox();
-        dogeButtonArea.getChildren().addAll(dogeButton, dogeImage);
+        HBox dogeButtonArea = new HBox(dogeButton, dogeImage);
         dogeButtonArea.setSpacing(7);
         dogeButtonArea.setAlignment(Pos.CENTER);
         
-        HBox gameStartButtons = new HBox();
-        gameStartButtons.getChildren().addAll(playButton, quickStart);
+        HBox gameStartButtons = new HBox(playButton, quickStart);
         gameStartButtons.setAlignment(Pos.CENTER);
         gameStartButtons.setSpacing(7);
         
-        VBox gameSettingArea = new VBox();
-        gameSettingArea.getChildren().addAll(playArea, chooseBoardSizeField, gameStartButtons, wrongInputErrors);
+        VBox gameSettingArea = new VBox(playArea, chooseBoardSizeField, gameStartButtons, wrongInputErrors);
         gameSettingArea.setSpacing(7);
         gameSettingArea.setAlignment(Pos.CENTER);
 
-        VBox dogeArea = new VBox();
-        dogeArea.getChildren().addAll(feelingLazy, dogeButtonArea);
+        VBox dogeArea = new VBox(feelingLazy, dogeButtonArea);
         dogeArea.setAlignment(Pos.CENTER);
         dogeArea.setSpacing(7);
         
-        HBox rootCenterArea = new HBox();
-        rootCenterArea.getChildren().addAll(gameSettingArea, dogeArea);
+        HBox rootCenterArea = new HBox(gameSettingArea, dogeArea);
         rootCenterArea.setSpacing(150);
         rootCenterArea.setAlignment(Pos.CENTER);
         
-        VBox menuCenterComponents = new VBox();
-        VBox menuTopComponents = new VBox();
+        VBox menuTopComponents = new VBox(topLabel, highScoresButton);
+        VBox menuCenterComponents = new VBox(menuTopComponents, rootCenterArea);
+
         menuTopComponents.setAlignment(Pos.CENTER);
         menuTopComponents.setSpacing(10);
-        menuTopComponents.getChildren().addAll(topLabel, highScoresButton);
-        menuCenterComponents.getChildren().addAll(menuTopComponents, rootCenterArea);
         menuCenterComponents.setSpacing(80);
         
         exitButton.setOnMouseClicked(event -> {
@@ -216,20 +211,16 @@ public class Ui extends Application {
         currentScoreLabel.setTextFill(Color.web("#ffffff"));
         
         // top right scoreshow
-        HBox scoreShow = new HBox();
-        HBox buttonShow = new HBox();
-        
-        // right top
-        scoreShow.getChildren().addAll(currentScoreLabel, highScoreLabel);
+        HBox scoreShow = new HBox(currentScoreLabel, highScoreLabel);
         scoreShow.setSpacing(10);
-        buttonShow.getChildren().addAll(topNewGameButton, topMainMenuButton);
+
+        HBox buttonShow = new HBox(topNewGameButton, topMainMenuButton);
         buttonShow.setSpacing(5);
 
         // top setting
         mainTop = new BorderPane();
-        mainTopRight = new VBox();
+        mainTopRight = new VBox(scoreShow, buttonShow);
 
-        mainTopRight.getChildren().addAll(scoreShow, buttonShow);
         mainTop.setRight(mainTopRight);
         mainTop.setLeft(leftTopLabel);
         
@@ -279,86 +270,28 @@ public class Ui extends Application {
         rootSetting.setStyle("-fx-background-color:#008080");
         GridPane centerPane = new GridPane();
         
-        Label highScores = new Label("High Scores");
-        highScores.setUnderline(true);
-        highScores.setFont(new Font("Sans-Serif", 45));
-        highScores.setTextFill(Color.web("#131516"));
-        
-        Label threeLabel = new Label("3x3");
-        threeLabel.setUnderline(true);
-        threeLabel.setFont(new Font("Sans-Serif", 19));
-        threeLabel.setTextFill(Color.web("#131516"));
-
-        Label fourLabel = new Label("4x4");
-        fourLabel.setUnderline(true);
-        fourLabel.setFont(new Font("Sans-Serif", 19));
-        fourLabel.setTextFill(Color.web("#131516"));
-
-        Label fiveLabel = new Label("5x5");
-        fiveLabel.setUnderline(true);
-        fiveLabel.setFont(new Font("Sans-Serif", 19));
-        fiveLabel.setTextFill(Color.web("#131516"));
+        Label highScores = styleHighScoreLabels("High Scores", 45, "#131516", true);
+        Label threeLabel = styleHighScoreLabels("3x3", 19, "#131516", true);
+        Label fourLabel = styleHighScoreLabels("4x4", 19, "#131516", true);
+        Label fiveLabel = styleHighScoreLabels("5x5", 19, "#131516", true);
         
         Button backToMenuButton = getBackButton("Back to menu");
+        
+        VBox threeRowScores = getHighScoreList(highScoreService.getTopFiveScores(3), threeLabel);
+        VBox fourRowScores = getHighScoreList(highScoreService.getTopFiveScores(4), fourLabel);
+        VBox fiveRowScores = getHighScoreList(highScoreService.getTopFiveScores(5), fiveLabel);  
+        
+        VBox threeRow = new VBox(threeLabel, threeRowScores);
+        VBox fourRow = new VBox(fourLabel, fourRowScores);
+        VBox fiveRow = new VBox(fiveLabel, fiveRowScores);
 
-        VBox set1 = new VBox();
-        VBox set2 = new VBox();
-        VBox set3 = new VBox();
+        threeRow.setSpacing(5);
+        fourRow.setSpacing(5);
+        fiveRow.setSpacing(5);
         
-        set1.setSpacing(5);
-        set2.setSpacing(5);
-        set3.setSpacing(5);
-        
-        List<String> threeScores = highScoreService.getTopFiveScores(3);
-        List<String> fourScores = highScoreService.getTopFiveScores(4);
-        List<String> fiveScores = highScoreService.getTopFiveScores(5);
-        
-        VBox threes = new VBox();
-        threes.getChildren().add(threeLabel);
-        threes.setSpacing(15);
-        if (threeScores.isEmpty()) {
-            Label no = styleHighScoreLabels("No games finished.");
-            threes.getChildren().add(no);
-        } else {
-            for (String k : threeScores) {
-                Label o = styleHighScoreLabels(k);
-                threes.getChildren().add(o);
-            }
-        }
-        
-        VBox fours = new VBox();
-        fours.getChildren().add(fourLabel);
-        fours.setSpacing(15);
-        if (fourScores.isEmpty()) {
-            Label no = styleHighScoreLabels("No games finished.");
-            fours.getChildren().add(no);
-        } else {
-            for (String k : fourScores) {
-                Label o = styleHighScoreLabels(k);
-                fours.getChildren().add(o);
-            }
-        }
-        
-        VBox fives = new VBox();
-        fives.getChildren().add(fiveLabel);
-        fives.setSpacing(15);
-        if (fiveScores.isEmpty()) {
-            Label no = styleHighScoreLabels("No games finished.");
-            fives.getChildren().add(no);
-        } else {
-            for (String k : fiveScores) {
-                Label o = styleHighScoreLabels(k);
-                fives.getChildren().add(o);
-            }
-        }
-
-        set1.getChildren().addAll(threeLabel, threes);
-        set2.getChildren().addAll(fourLabel, fours);
-        set3.getChildren().addAll(fiveLabel, fives);
-
-        centerPane.add(set1, 1, 1);
-        centerPane.add(set2, 2, 1);
-        centerPane.add(set3, 3, 1);
+        centerPane.add(threeRow, 1, 1);
+        centerPane.add(fourRow, 2, 1);
+        centerPane.add(fiveRow, 3, 1);
         centerPane.setAlignment(Pos.CENTER);
         centerPane.setHgap(20); 
         
@@ -400,13 +333,11 @@ public class Ui extends Application {
         opacityForStackButton.setOnMouseEntered(e -> opacityForStackButton.setStyle("-fx-background-color: #FEF9E7"));
         opacityForStackButton.setOnMouseExited(e -> opacityForStackButton.setStyle("-fx-background-color: #F9E79F"));
                 
-        HBox buttonCol = new HBox();
-        buttonCol.getChildren().addAll(getNewGameButton(), getHighScoreButton());
+        HBox buttonCol = new HBox(getNewGameButton(), getHighScoreButton());
         buttonCol.setSpacing(18);
         buttonCol.setAlignment(Pos.CENTER);
         
-        VBox centerRow = new VBox();
-        centerRow.getChildren().addAll(opacityForStackButton, gameOverLabel, endScore, buttonCol);
+        VBox centerRow = new VBox(opacityForStackButton, gameOverLabel, endScore, buttonCol);
         centerRow.setSpacing(20);
         centerRow.setAlignment(Pos.CENTER);
         gameOverStack.getChildren().addAll(endSquare, centerRow);
@@ -471,9 +402,7 @@ public class Ui extends Application {
             if (squareStack != null) {
                 squareStack.getChildren().remove(gameOverStack);
             }
-            
             currentStage.setScene(getMainMenuScene());
-            
         });
         
         return topMainMenuButton;
@@ -530,12 +459,30 @@ public class Ui extends Application {
         return highScoreButton;
     }
     
-    public Label styleHighScoreLabels(String name) {
+    public Label styleHighScoreLabels(String name, int size, String hexColour, boolean underline) {
         Label highScoreLabel = new Label(name);
-        highScoreLabel.setFont(new Font("Sans-Serif", 15));
-        highScoreLabel.setTextFill(Color.web("#FFFFFF", 0.9));   
+        highScoreLabel.setUnderline(underline);
+        highScoreLabel.setFont(new Font("Sans-Serif", size));
+        highScoreLabel.setTextFill(Color.web(hexColour));   
         
         return highScoreLabel;
+    }
+    
+    public VBox getHighScoreList(List<String> scores, Label topic) {
+        VBox row = new VBox();
+        row.getChildren().add(topic);
+        row.setSpacing(15);
+        if (scores.isEmpty()) {
+            Label empty = styleHighScoreLabels("No games finished.", 15, "#FFFFFF", false);
+            row.getChildren().add(empty);
+        } else {
+            for (String k : scores) {
+                Label scoreAndDate = styleHighScoreLabels(k, 15, "#FFFFFF", false);
+                row.getChildren().add(scoreAndDate);
+            }
+        }
+        
+        return row;
     }
     
     public static void main(String[] args) {
