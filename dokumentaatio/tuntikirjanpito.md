@@ -18,4 +18,5 @@
 | 30.11.      | 2    | UI:n refaktorointi, muutamia lisäominaisuudet UI:n näppäimiin, Square-luokan luonti|
 | 3.12.      | 4    | sqliten lisäys, highscoren hakeminen ja tallentaminen tietokantaan, UI lisäys highscore näkymään|
 | 5.12.      | 4    | sqliten säätö, DBhighscoreDaoon metodit kuntoon|
-|yht   |   49| 
+| 8.12.      | 3    | UI:n refaktorointi, yleinen viilaus|
+|yht   |   52| 
