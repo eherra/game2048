@@ -469,8 +469,7 @@ public class Ui extends Application {
     }
     
     public VBox getHighScoreList(List<String> scores, Label topic) {
-        VBox row = new VBox();
-        row.getChildren().add(topic);
+        VBox row = new VBox(topic);
         row.setSpacing(15);
         if (scores.isEmpty()) {
             Label empty = styleHighScoreLabels("No games finished.", 15, "#FFFFFF", false);

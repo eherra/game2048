@@ -2,13 +2,11 @@
 
 ### Pelin aloittaminen
 Voit joko painaa "Quick start" nappia aloittaaksesi klassisen 4x4 ruudukon pelin.
-
+<img src="https://i.ibb.co/68kCg0V/Screen-Shot-2020-12-05-at-18-15-03.png"> 
 Vaihtoehtoisesti voit kirjoittaa kohtaan "Board Set up" haluamasi laudan koon väliltä 3-9. Tämän jälkeen napin "Play!" tai näppäimistön "Enter":in painaminen käynnistää pelin. 
 
-<img src="https://i.ibb.co/68kCg0V/Screen-Shot-2020-12-05-at-18-15-03.png"> 
-
 ### Pelin säännöt 
-Pelissä yhdistellään saman arvoisia lukuja toisiinsa vaaka ja pysty tasossa siihen asti kun yksikään luku ei enää yhdisty siirron jälkeen. Pelin häviää kun ruudut ovat täynnä eikä mahdollisia siirtoja ole jäljellä, ja voittaa kun yksi liikkuttavista neliöistä on arvoltaan 2048. Alle havainnollistava kuvasarja siirrosta:
+Pelissä yhdistellään saman arvoisia lukuja toisiinsa siihen asti kun yksikään luku ei enää yhdisty toisiinsa pelilaudan ollessa täynnä ruutuja. Alle havainnollistava kuvasarja:
 
 <img src="https://i.ibb.co/D7Vjrv1/Screen-Shot-2020-12-05-at-18-15-31.png"> 
 
@@ -25,4 +23,3 @@ Pelin tulokset tallennetaan Sqlite-tietokantaan. Highscore-napin takaa löydät 
 Kyllästynyt pelaamaan itse? Anna AI Dogen pelailla puolestasi. 
 "Release doge" nappi käynnistää 4x4 kokoisen pelin, jota doge pelailee puolestasi ja voit itse keskittyä vaikka Tiran tehtävien tekoon. 
 
-<img src="https://i.ibb.co/Ms7ZZCn/Screen-Shot-2020-12-05-at-18-17-51.png"> 
