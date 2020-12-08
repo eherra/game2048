@@ -8,7 +8,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
-
     /**
      * Class to make correctly styled and valued squares to the game board.
      */

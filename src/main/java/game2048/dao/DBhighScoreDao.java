@@ -114,7 +114,6 @@ public class DBhighScoreDao implements HighscoreDao  {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        
         return fifthScore;
     }
     
