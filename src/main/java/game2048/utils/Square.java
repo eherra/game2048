@@ -27,13 +27,13 @@ public class Square {
      */
     public StackPane getSquareStack(int tableSize) {
         squareStack = new StackPane();
-        int squareSize = setSquareSizeOrFont(tableSize, false);
+        int squareSize = getSquareSizeOrFont(tableSize, false);
         Rectangle square = new Rectangle(squareSize, squareSize, squareSize, squareSize);
         square.setArcWidth(15);
         square.setArcHeight(15);
         square.setFill(Color.web(getSquareColour(value)));
         Label fontLabel = value != 0 ? new Label(String.valueOf(value)) : new Label();
-        int fontSize = setSquareSizeOrFont(tableSize, true);
+        int fontSize = getSquareSizeOrFont(tableSize, true);
         
         fontLabel.setFont(new Font("Sans-Serif", fontSize));
         squareStack.getChildren().addAll(square, fontLabel);
@@ -46,7 +46,7 @@ public class Square {
      * @param size gametable size
      * @param isFont is true if used to determine font size of square
      */
-    public int setSquareSizeOrFont(int size, boolean isFont) {
+    public int getSquareSizeOrFont(int size, boolean isFont) {
         switch (size) {
             case 3:
                 return isFont ? 30 : 120;
