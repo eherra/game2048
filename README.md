@@ -9,7 +9,8 @@ The game will start with two random squares values of '2', and if summing has ha
 * [Määrittelydokumentti](https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/maarittelydokumentti.md)
 * [Tuntikirjanpito](https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/tuntikirjanpito.md)
 
-### Releases
+### Releases'
+* [v1.5](https://github.com/eherra/ot-harjoitustyo/releases/tag/viikko6)
 * [v1.2](https://github.com/eherra/ot-harjoitustyo/releases/tag/viikko5v1)
 
 ### Terminal commands:
