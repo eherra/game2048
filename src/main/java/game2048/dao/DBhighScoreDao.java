@@ -15,8 +15,8 @@ import java.util.List;
 public class DBhighScoreDao implements HighscoreDao  {
     private Database database;
     
-    public DBhighScoreDao() {
-        database = new Database();
+    public DBhighScoreDao(boolean testing) {
+        database = new Database(testing);
         database.createHighscoreTable(); 
     }
     
@@ -102,7 +102,7 @@ public class DBhighScoreDao implements HighscoreDao  {
         int fifthScore = 0;
         try {
             Connection db = database.getConnection();    
-            PreparedStatement p = db.prepareStatement("SELECT score AS fifthScore FROM Scores WHERE boardsize=? AND rowid = 5");
+            PreparedStatement p = db.prepareStatement("SELECT score AS fifthScore FROM Scores WHERE boardsize=? ORDER BY score DESC LIMIT 1 OFFSET 4");
             p.setInt(1, boardSize);
             ResultSet r = p.executeQuery();
             while (r.next()) {
@@ -116,5 +116,9 @@ public class DBhighScoreDao implements HighscoreDao  {
         }
         
         return fifthScore;
+    }
+    
+    public void deleteDatabase() {
+        database.deleteTestDatabase();
     }
 }

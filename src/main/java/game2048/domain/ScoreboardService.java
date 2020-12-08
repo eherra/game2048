@@ -12,23 +12,11 @@ import java.util.List;
 public class ScoreboardService {
     private int highscore;
     private int currentScore; 
-    private DBhighScoreDao highScoreService;
+    private DBhighScoreDao dBhighScoreDao;
     
     public ScoreboardService(int boardSize, DBhighScoreDao db) {
-        highScoreService = db;
-        highscore = highScoreService.getTopScore(boardSize); 
-    }
-        
-    public int getCurrentScore() {
-        return currentScore;
-    }
-    
-    public void addHighScore(int highscore, int boardSize, String date) {
-        highScoreService.addScore(highscore, boardSize, date);
-    }
-    
-    public List<String> getTopFiveScores(int boardSize) {
-        return highScoreService.getTopFiveScores(boardSize);
+        dBhighScoreDao = db;
+        highscore = dBhighScoreDao.getTopScore(boardSize); 
     }
     
     /**
@@ -41,6 +29,18 @@ public class ScoreboardService {
         if (currentScore >= highscore) {
             highscore = currentScore;
         }
+    }
+        
+    public int getCurrentScore() {
+        return currentScore;
+    }
+    
+    public void addHighScore(int highscore, int boardSize, String date) {
+        dBhighScoreDao.addScore(highscore, boardSize, date);
+    }
+    
+    public List<String> getTopFiveScores(int boardSize) {
+        return dBhighScoreDao.getTopFiveScores(boardSize);
     }
     
     public int getHighScore() {

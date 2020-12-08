@@ -6,8 +6,10 @@
 package game2048.domain;
 
 import game2048.dao.DBhighScoreDao;
+import game2048.dao.Database;
 import java.sql.SQLException;
 import java.util.HashSet;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -16,16 +18,21 @@ import org.junit.Ignore;
 public class GameLogicTest {
     private GameLogic testLogic;
     private MoveExecutor testMoveController;
-    private DBhighScoreDao db;
+    private DBhighScoreDao testDb;
     private int n;
 
     @Before
     public void setUp() throws SQLException {
-        db = new DBhighScoreDao();
-        testLogic = new GameLogic(4, db);   // creating board size 4x4 with 2 values in random coordinates on int[][] array. 
-                                        // Making testing a bit harder but is workaroundable
+        testDb = new DBhighScoreDao(true);
+        testLogic = new GameLogic(4, testDb);   // creating board size 4x4 with 2 values in random coordinates on int[][] array. 
+                                                // Making testing a bit harder but is workaroundable
         n = testLogic.getTableSize();
         testMoveController = new MoveExecutor(testLogic);
+    }
+    
+    @After
+    public void deleteDatabase() {
+        testDb.deleteDatabase();
     }
     
     /**
@@ -48,6 +55,7 @@ public class GameLogicTest {
         int amountOfSquares = tableSize * tableSize;
         arrayToReturn[0] = amountOfZeroes;
         arrayToReturn[1] = amountOfTwos;
+        
         return arrayToReturn;
     }
 

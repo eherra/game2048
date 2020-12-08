@@ -51,7 +51,7 @@ public class Ui extends Application {
     
    @Override
    public void init() {
-       highScoreService = new DBhighScoreDao();
+       highScoreService = new DBhighScoreDao(false);
    }
     
     @Override
@@ -164,8 +164,6 @@ public class Ui extends Application {
             sceneHeigth = currentStage.getHeight();
             sceneWidth = currentStage.getWidth();
         });
-        
-        
         
         menuCenterComponents.setAlignment(Pos.CENTER);
         rootMenu.setCenter(menuCenterComponents);

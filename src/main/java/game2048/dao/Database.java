@@ -5,6 +5,10 @@
  */
 package game2048.dao;
 
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -16,8 +20,12 @@ import java.sql.Statement;
 public class Database {
     private String databaseUrl;
     
-    public Database() {
-        databaseUrl = "jdbc:sqlite:main.db";
+    public Database(boolean testing) {
+        if (testing) {
+            databaseUrl = "jdbc:sqlite:test.db";
+        } else {
+            databaseUrl = "jdbc:sqlite:main.db";
+        }
     }
     
     /**
@@ -48,5 +56,14 @@ public class Database {
             System.out.println("Table existing already");
         }
     }
-
+    
+    public void deleteTestDatabase() {
+        try {
+            Path pathToTestDatabase = FileSystems.getDefault().getPath("test.db");
+            Files.delete(pathToTestDatabase);
+            System.out.println("Test database removed");
+        } catch (Exception e) {
+            System.out.println("Test database was not deleted.");
+        }
+    }
  }

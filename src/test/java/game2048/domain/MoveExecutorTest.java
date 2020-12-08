@@ -3,6 +3,7 @@ package game2048.domain;
 
 import game2048.dao.DBhighScoreDao;
 import java.sql.SQLException;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -10,18 +11,24 @@ import static org.junit.Assert.*;
 public class MoveExecutorTest {
     private GameLogic testLogic;
     private MoveExecutor testMoveController;
-    private DBhighScoreDao db;
+    private DBhighScoreDao testDb;
     private int n;
 
     
     @Before
     public void setUp() throws SQLException {
-        db = new DBhighScoreDao();
-        testLogic = new GameLogic(4, db);
+        testDb = new DBhighScoreDao(true);
+        testLogic = new GameLogic(4, testDb);
         testMoveController = new MoveExecutor(testLogic);
         n = testLogic.getTableSize();
     }
 
+    
+    @After
+    public void deleteDatabase() {
+        testDb.deleteDatabase();
+    }
+    
     public int[][] getTableForMovingMethods() {
         int[][] k = {{2, 4, 4, 2},
                     {2, 4, 2, 2},
@@ -30,6 +37,16 @@ public class MoveExecutorTest {
         
         return k;
     }
+    
+    public int[][] getGameOverTable() {
+        int[][] k = {{2, 4, 8, 16},
+                    {32, 64, 128, 256},
+                    {512, 1024, 2048, 2},
+                    {2, 8, 4, 16}};
+        
+        return k;
+    }
+
     @Test
     public void testMoveUp() {
         testLogic.setTable(getTableForMovingMethods());
@@ -119,6 +136,8 @@ public class MoveExecutorTest {
  
     @Test
     public void testIsGameOver() {
+        testLogic.setTable(getGameOverTable());
+        assertEquals(true, testMoveController.isGameOver());
     }
     
 }
