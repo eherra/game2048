@@ -20,7 +20,7 @@ Alla pakkaus/luokkakaavio joka kuvaa sovelluksen pakkauksien ja luokkien suhteit
 <img src= "https://i.ibb.co/1ZGPVBC/Screen-Shot-2020-12-08-at-12-18-46.png">
 
 ### Toiminnallisuudet 
-Kun aloitusnäkymästä löytyvätstä "Quick start" napista painetaan, tapahtuu sovelluksessa seuraavaa:
+Kun aloitusnäkymästä löytyvästä "Quick start" napista painetaan, tapahtuu sovelluksessa seuraavaa:
 
 <img src= "https://i.ibb.co/f2dc5DQ/Screen-Shot-2020-11-28-at-16-39-45.png">
 
