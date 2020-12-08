@@ -116,36 +116,6 @@ public class MoveExecutorTest {
         }
         assertEquals(true, differences == 1);
     }
-
-    @Test
-    public void testMakeChangesToBoardDownAndUpMoves() {
-    }
-
-    @Test
-    public void testMakeChangesToBoardLeftAndRight() {
-    }
-
-    @Test
-    public void testUpdateBoardFromMoveUpDown() {
-    }
-
-    @Test
-    public void testUpdateBoardFromMoveLeftRight() {
-    }
-
-    @Test
-    public void testSameValuesAddingLegally() {
-    }
-
-
-    @Test
-    public void testSameValuesAddingWithNoIncorrectMove() {
-    }
-
-    @Test
-    public void testMakeChangesToBoardLeftAndRightMoves() {
-    }
-
  
     @Test
     public void testIsGameOver() {
