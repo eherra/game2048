@@ -1,8 +1,9 @@
 ## Arkkitehtuuri
 ### Rakenne
-Ohjelmassa on neljä pakkausta, joista pakkaus **game2048.ui** sisältää javaFX:llä toteutetun käyttöliittymä näkymät ja **game2048.utils** siihen liittyvän apuluokan. 
+Ohjelmassa on neljä pakkausta, joista pakkaus **game2048.ui** sisältää javaFX:llä toteutetun käyttöliittymänäkymät ja **game2048.utils** siihen liittyvän apuluokan. 
 
 Pakkaus **game2048.domain** sisältää ohjelman pelilogiikan sekä **game2048.dao** sisältää ohjelman pisteiden tallentamisen SQLite tietokantaan.
+
 <img src="https://i.ibb.co/f2YcPDB/Screen-Shot-2020-12-08-at-11-54-04.png">
 
 ### Käyttöliittymä
@@ -20,6 +21,7 @@ Alla pakkaus/luokkakaavio joka kuvaa sovelluksen pakkauksien ja luokkien suhteit
 
 ### Toiminnallisuudet 
 Kun aloitusnäkymästä löytyvätstä "Quick start" napista painetaan, tapahtuu sovelluksessa seuraavaa:
+
 <img src= "https://i.ibb.co/f2dc5DQ/Screen-Shot-2020-11-28-at-16-39-45.png">
 
 
