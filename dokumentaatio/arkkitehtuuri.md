@@ -28,6 +28,6 @@ Kun aloitusnäkymästä löytyvästä "Quick start" napista painetaan, tapahtuu 
 ### Tietokanta
 Ohjelman pysyväistallennus on tehty SQLite tietokantaan käyttäen. Pakkauksen **game2048.dao**:sta löytyvä luokka DBHighScoreDao hoitaa SQL-kyselyt ja tallennukset tietokantaan, jota hallinnoidaan Database-luokan kanssa. Tietokantaan tallennetaan aina mikäli pelattu peli päättyy pisteisiin, jotka ovat arvoltaan vähintään top5:sen verran. Tietokannassa on sarakkeet _id_, _score_, _boardsize_ ja _date_.
 
-High score-näkymä näyttää pelien 3x3, 4x4 ja 5x5 top 5-tulokset ja ne haetaan tietokannasta DBHighScoreDao:n avulla. 
+High score-näkymä näyttää pelien 3x3, 4x4 ja 5x5 top 5-tulokset jotka haetaan tietokannasta DBHighScoreDao:n avulla. 
 
-Pelinäkymän luodessa tietokannasta haetaan valitseman pelilaudan koon mukainen high score ja asetetaan se pelinäkymän oikeaan yläkulmaan kohtaan "High Score". 
+Pelinäkymän luodessa tietokannasta haetaan valitseman pelilaudan koon mukainen paras pistetulos joka asetetaan sen pelinäkymän oikeaan yläkulmaan kohtaan "High Score". 
