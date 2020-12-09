@@ -116,7 +116,10 @@ public class DBhighScoreDao implements HighscoreDao  {
         }
         return fifthScore;
     }
-    
+    /**
+     * For testing.
+     * To delete test database.
+     */
     public void deleteDatabase() {
         database.deleteTestDatabase();
     }

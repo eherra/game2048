@@ -6,5 +6,11 @@
 
 <suppressions>
     <suppress files="game2048.ui.Ui.java" checks="[a-zA-Z0-9]*"/>
+    <suppress files="game2048.ui.packageinfo.java" checks="[a-zA-Z0-9]*"/>
+    
     <suppress files="game2048.utils.Square.java" checks="[a-zA-Z0-9]*"/>
+    <suppress files="game2048.utils.packageinfo.java" checks="[a-zA-Z0-9]*"/>
+    
+    <suppress files="game2048.domain.packageinfo.java" checks="[a-zA-Z0-9]*"/>
+    <suppress files="game2048.dao.packageinfo.java" checks="[a-zA-Z0-9]*"/>
 </suppressions>

@@ -4,12 +4,14 @@ package game2048.ui;
 import game2048.dao.DBhighScoreDao;
 import game2048.domain.GameLogic;
 import game2048.domain.MoveExecutor;
+import game2048.utils.DogeAI;
 import game2048.utils.Square;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -48,6 +50,9 @@ public class Ui extends Application {
     private double sceneHeigth, sceneWidth;
     private int wrongInputCount;
     private DBhighScoreDao highScoreService;
+    private boolean isDogeMode, lastGameDogeMode;
+    private KeyCode dogeKey;
+    private DogeAI dogeAI;
     
    @Override
    public void init() {
@@ -121,7 +126,7 @@ public class Ui extends Application {
         dogeButton.setStyle("-fx-background-color: #e1b303; ");
         dogeButton.setOnMouseEntered(e -> dogeButton.setStyle("-fx-background-color: #cb9800"));
         dogeButton.setOnMouseExited(e -> dogeButton.setStyle("-fx-background-color: #e1b303"));
-        dogeButton.setFont(new Font("Monospaced", 15));
+        dogeButton.setFont(new Font("Sans-Serif", 15));
 
         HBox dogeButtonArea = new HBox(dogeButton, dogeImage);
         dogeButtonArea.setSpacing(7);
@@ -165,6 +170,13 @@ public class Ui extends Application {
             sceneWidth = currentStage.getWidth();
         });
         
+        dogeButton.setOnMouseClicked((event) -> {
+            isDogeMode = true;
+            currentStage.setScene(getGameScene(4));
+            sceneHeigth = currentStage.getHeight();
+            sceneWidth = currentStage.getWidth();
+        });
+        
         menuCenterComponents.setAlignment(Pos.CENTER);
         rootMenu.setCenter(menuCenterComponents);
         rootMenu.setRight(exitButton);
@@ -175,6 +187,8 @@ public class Ui extends Application {
     public Scene getGameScene(int boardSize) {
         logic = new GameLogic(boardSize, highScoreService);
         moveExecutor = new MoveExecutor(logic);
+        if (isDogeMode) dogeAI = new DogeAI(moveExecutor);
+      
         gameOverStack = new StackPane();        
         gameOverStack.setVisible(false);
         
@@ -185,6 +199,7 @@ public class Ui extends Application {
         // root for game view
         rootSetting = new BorderPane();
         rootSetting.setStyle("-fx-background-color:#008080");
+        if (isDogeMode) rootSetting.setStyle("-fx-background-color:#d9bd62");
         
         // top right new game button
         topNewGameButton = getNewGameButton();
@@ -197,6 +212,8 @@ public class Ui extends Application {
         // top labels
         Label leftTopLabel = new Label("Game 2048");
         currentScoreLabel = new Label("Current Score \n" + logic.getGamePoints());
+        if (isDogeMode) currentScoreLabel.setText("Doge score \n" + logic.getGamePoints());
+
         highScoreLabel = new Label("High Score \n" + logic.getHighScore());
         
         // top labels styling
@@ -204,9 +221,9 @@ public class Ui extends Application {
         leftTopLabel.setPadding(new Insets(20, 20, 20, 20));
         leftTopLabel.setFont(Font.font("Monospaced", FontWeight.BOLD, 35));
         highScoreLabel.setFont(new Font("Sans-Serif", 15));
-        highScoreLabel.setTextFill(Color.web("#ffffff"));
+        if (!isDogeMode) highScoreLabel.setTextFill(Color.web("#ffffff"));
         currentScoreLabel.setFont(new Font("Sans-Serif", 15));
-        currentScoreLabel.setTextFill(Color.web("#ffffff"));
+        if (!isDogeMode) currentScoreLabel.setTextFill(Color.web("#ffffff"));
         
         // top right scoreshow
         HBox scoreShow = new HBox(currentScoreLabel, highScoreLabel);
@@ -229,38 +246,73 @@ public class Ui extends Application {
         rootSetting.setCenter(squareStack);
         
         Scene gameSkene = new Scene(rootSetting);
-        
+       
         gameSkene.setOnKeyPressed((KeyEvent event) -> {
-            if (event.getCode() == KeyCode.UP) {
-                moveExecutor.moveUp(false);
-            } else if (event.getCode() == KeyCode.DOWN) {
-                moveExecutor.moveDown(false);
-            } else if (event.getCode() == KeyCode.RIGHT) {
-                moveExecutor.moveRight(false);
-            } else if (event.getCode() == KeyCode.LEFT) {
-                moveExecutor.moveLeft(false);
-            } else {
-                return;
-            }
-            gridForSquares.getChildren().clear();
-            gridForSquares = getUpdatedAndStyledPane();
-            currentScoreLabel.setText("Current Score \n" + logic.getGamePoints());
-            highScoreLabel.setText("High Score \n" + logic.getHighScore()); 
-            squareStack.getChildren().add(gridForSquares);
-            
-            if (!logic.isMoveableSquares() && moveExecutor.isGameOver()) {
-                topNewGameButton.setDisable(true);
-                gameOverStack.getChildren().clear();
-                gameOverStack = getGameOverStack();
-                squareStack.getChildren().add(gameOverStack);
-                if (logic.getGamePoints() == logic.getHighScore() 
-                        || highScoreService.getFifthScore(logic.getTableSize()) < logic.getGamePoints()) {
-                    logic.saveHighscore(logic.getGamePoints());
-                }
-            }
+            handleKeyPress(event, null);
         });   
         
+        new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                if (isDogeMode) {
+                     try {
+                        dogeKey = dogeAI.getBestMove();
+                        handleKeyPress(null, dogeKey);
+                        Thread.sleep(100);
+                    } catch (Exception e) {
+                         System.out.println("Doge move was not succesfully executed.");
+                    }
+                }
+            }
+        }.start();
+        
         return gameSkene;
+    }
+    
+    public void handleKeyPress(KeyEvent event, KeyCode code) {
+        KeyCode keyPressed = isDogeMode ? code : event.getCode();
+        switch(keyPressed) {
+            case UP:
+                moveExecutor.moveUp(false);
+                break;
+            case DOWN:
+                moveExecutor.moveDown(false);
+                break;
+            case RIGHT:   
+                moveExecutor.moveRight(false);
+                break;
+            case LEFT:
+                moveExecutor.moveLeft(false);
+                break;
+            default:
+                return;
+        }
+        updateChangesToGameScene();
+    }
+    
+    public void updateChangesToGameScene() {
+        gridForSquares.getChildren().clear();
+        gridForSquares = getUpdatedAndStyledPane();
+        currentScoreLabel.setText("Current Score \n" + logic.getGamePoints());
+        if (isDogeMode) currentScoreLabel.setText("Doge Score \n" + logic.getGamePoints());
+        highScoreLabel.setText("High Score \n" + logic.getHighScore()); 
+        squareStack.getChildren().add(gridForSquares);
+
+        if (!logic.isMoveableSquares() && moveExecutor.isGameOver()) {
+            if (isDogeMode) {
+                isDogeMode = false;
+                lastGameDogeMode = true;
+            }
+
+            topNewGameButton.setDisable(true);
+            gameOverStack.getChildren().clear();
+            gameOverStack = getGameOverStack();
+            squareStack.getChildren().add(gameOverStack);
+            if (logic.getGamePoints() == logic.getHighScore() 
+                    || highScoreService.getFifthScore(logic.getTableSize()) < logic.getGamePoints()) {
+                logic.saveHighscore(logic.getGamePoints());
+            }
+        }
     }
     
     public Scene getHighScoreScene() {
@@ -310,15 +362,24 @@ public class Ui extends Application {
     public StackPane getGameOverStack() {
         gameOverStack = new StackPane();
         
-        Label gameOverLabel = new Label("You lost!");
+        Label gameOverLabel = new Label();
+        Label endScore = new Label();
+
+        if (lastGameDogeMode) {
+            gameOverLabel.setText("AI Doge lost :(");
+            endScore.setText("Doge's score: " + logic.getGamePoints());
+        } else {
+            gameOverLabel.setText("You lost!");
+            endScore.setText("Final score: " + logic.getGamePoints());
+        }
         gameOverLabel.setFont(new Font("Sans-Serif", 30));
-        gameOverLabel.setTextFill(Color.web("#FFFFFF", 0.9));
+        if (!lastGameDogeMode) gameOverLabel.setTextFill(Color.web("#FFFFFF"));
         
-        Label endScore = new Label("Final score: " + logic.getGamePoints());
         endScore.setFont(new Font("Sans-Serif", 25));
-        endScore.setTextFill(Color.web("#FFFFFF", 0.9));
+        if (!lastGameDogeMode) endScore.setTextFill(Color.web("#FFFFFF"));
         
         Rectangle endSquare = new Rectangle(sceneHeigth - 160, sceneWidth - 160, Color.web("#2F4F4F"));
+        if (lastGameDogeMode) endSquare.setFill(Color.web("#d9bd62"));
         endSquare.setArcWidth(15);
         endSquare.setArcHeight(15);
         
@@ -366,17 +427,32 @@ public class Ui extends Application {
     
     public Button styleMenuButtons(String name) {
         Button buttonToReturn = new Button(name);
-        buttonToReturn.setStyle("-fx-background-color: #b0d3bf; ");
-        buttonToReturn.setOnMouseEntered(e -> buttonToReturn.setStyle("-fx-background-color: #d3e5d1"));
-        buttonToReturn.setOnMouseExited(e -> buttonToReturn.setStyle("-fx-background-color: #b0d3bf"));
-        buttonToReturn.setFont(new Font("Sans-Serif", 15));    
+        
+        if (lastGameDogeMode || isDogeMode) {
+            if (name.equals("New game")) {
+                buttonToReturn.setText("much wow");
+            } else {
+                buttonToReturn.setText("much score");
+            }                
+            buttonToReturn.setStyle("-fx-background-color: #cb9800; ");
+            buttonToReturn.setOnMouseEntered(e -> buttonToReturn.setStyle("-fx-background-color: #e1b303"));
+            buttonToReturn.setOnMouseExited(e -> buttonToReturn.setStyle("-fx-background-color: #cb9800"));
+        } else {
+            buttonToReturn.setStyle("-fx-background-color: #b0d3bf; ");
+            buttonToReturn.setOnMouseEntered(e -> buttonToReturn.setStyle("-fx-background-color: #d3e5d1"));
+            buttonToReturn.setOnMouseExited(e -> buttonToReturn.setStyle("-fx-background-color: #b0d3bf"));
+        }
+        
+        buttonToReturn.setFont(new Font("Sans-Serif", 15));  
+        
         return buttonToReturn;
     }
        
     public Button getNewGameButton() {
         Button newGameButton = styleMenuButtons("New game");
-
+        
         newGameButton.setOnMouseClicked((event) -> {
+            if (lastGameDogeMode) isDogeMode = true;
             squareStack.getChildren().remove(gameOverStack);
             gameOverStack.setVisible(false);
             topNewGameButton.setDisable(false);
@@ -384,19 +460,24 @@ public class Ui extends Application {
             gridForSquares = getUpdatedAndStyledPane();
             squareStack.getChildren().add(gridForSquares);
             currentScoreLabel.setText("Current Score \n" + logic.getGamePoints());
+            if (lastGameDogeMode) currentScoreLabel.setText("Doge Score \n" + logic.getGamePoints());
         });
         return newGameButton;
     }
     
     public Button getBackButton(String name) {
         Button topMainMenuButton = new Button(name);
-        topMainMenuButton.setFont(new Font("Sans-Serif", 15));
         topMainMenuButton.setStyle("-fx-background-color: #CD5C5C; ");
+        topMainMenuButton.setFont(new Font("Sans-Serif", 15));
         topMainMenuButton.setOnMouseEntered(e -> topMainMenuButton.setStyle("-fx-background-color: #F08080"));
         topMainMenuButton.setOnMouseExited(e -> topMainMenuButton.setStyle("-fx-background-color: #CD5C5C"));
         topMainMenuButton.setFocusTraversable(false);
         
+        if (lastGameDogeMode || isDogeMode) topMainMenuButton.setText("heck");
+        
         topMainMenuButton.setOnMouseClicked((event) -> {
+            isDogeMode = false;
+            lastGameDogeMode = false;
             if (squareStack != null) {
                 squareStack.getChildren().remove(gameOverStack);
             }
@@ -451,9 +532,10 @@ public class Ui extends Application {
         Button highScoreButton = styleMenuButtons("High score");
         
         highScoreButton.setOnMouseClicked((event) -> {
+            isDogeMode = false;
+            lastGameDogeMode = false;
             currentStage.setScene(getHighScoreScene());
         });
-        
         return highScoreButton;
     }
     
@@ -462,7 +544,6 @@ public class Ui extends Application {
         highScoreLabel.setUnderline(underline);
         highScoreLabel.setFont(new Font("Sans-Serif", size));
         highScoreLabel.setTextFill(Color.web(hexColour));   
-        
         return highScoreLabel;
     }
     
@@ -478,7 +559,6 @@ public class Ui extends Application {
                 row.getChildren().add(scoreAndDate);
             }
         }
-        
         return row;
     }
     
