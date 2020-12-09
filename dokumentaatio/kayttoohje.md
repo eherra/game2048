@@ -2,8 +2,8 @@
 
 ### Pelin aloittaminen
 Voit joko painaa "Quick start" nappia aloittaaksesi klassisen 4x4 ruudukon pelin.
-<img src="https://i.ibb.co/68kCg0V/Screen-Shot-2020-12-05-at-18-15-03.png"> 
 Vaihtoehtoisesti voit kirjoittaa kohtaan "Board Set up" haluamasi laudan koon väliltä 3-9. Tämän jälkeen napin "Play!" tai näppäimistön "Enter":in painaminen käynnistää pelin. 
+<img src="https://i.ibb.co/68kCg0V/Screen-Shot-2020-12-05-at-18-15-03.png"> 
 
 ### Pelin säännöt 
 Pelissä yhdistellään saman arvoisia lukuja toisiinsa siihen asti kun yksikään luku ei enää yhdisty toisiinsa pelilaudan ollessa täynnä ruutuja. Alle havainnollistava kuvasarja:
