@@ -25,6 +25,6 @@ Kyllästynyt pelaamaan itse? Anna AI Dogen pelailla puolestasi.
 
 <p float="left">
   <img src="https://i.ibb.co/SBHRVzn/Screen-Shot-2020-12-09-at-18-24-28.png width="301" heigth="387">
-  <img src="https://i.ibb.co/sFWst0Z/Screen-Shot-2020-12-09-at-18-25-01.png width="301" heigth="390">
+  <img src="https://i.ibb.co/sFWst0Z/Screen-Shot-2020-12-09-at-18-25-01.png width="301" heigth="400">
 </p>
 
