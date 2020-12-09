@@ -53,6 +53,7 @@ public class Ui extends Application {
     private boolean isDogeMode, lastGameDogeMode;
     private KeyCode dogeKey;
     private DogeAI dogeAI;
+    private AnimationTimer timer;
     
    @Override
    public void init() {
@@ -211,20 +212,19 @@ public class Ui extends Application {
 
         // top labels
         Label leftTopLabel = new Label("Game 2048");
-        currentScoreLabel = new Label("Current Score \n" + logic.getGamePoints());
-        if (isDogeMode) currentScoreLabel.setText("Doge score \n" + logic.getGamePoints());
-
-        highScoreLabel = new Label("High Score \n" + logic.getHighScore());
-        
-        // top labels styling
         leftTopLabel.setUnderline(true);
         leftTopLabel.setPadding(new Insets(20, 20, 20, 20));
         leftTopLabel.setFont(Font.font("Monospaced", FontWeight.BOLD, 35));
+        
+        highScoreLabel = new Label("High Score \n" + logic.getHighScore());
         highScoreLabel.setFont(new Font("Sans-Serif", 15));
         if (!isDogeMode) highScoreLabel.setTextFill(Color.web("#ffffff"));
-        currentScoreLabel.setFont(new Font("Sans-Serif", 15));
-        if (!isDogeMode) currentScoreLabel.setTextFill(Color.web("#ffffff"));
         
+        currentScoreLabel = new Label("Current Score \n" + logic.getGamePoints());
+        currentScoreLabel.setFont(new Font("Sans-Serif", 15));
+        if (isDogeMode) currentScoreLabel.setText("Doge score \n" + logic.getGamePoints());
+        if (!isDogeMode) currentScoreLabel.setTextFill(Color.web("#ffffff"));
+
         // top right scoreshow
         HBox scoreShow = new HBox(currentScoreLabel, highScoreLabel);
         scoreShow.setSpacing(10);
@@ -251,9 +251,10 @@ public class Ui extends Application {
             handleKeyPress(event, null);
         });   
         
-        new AnimationTimer() {
+        timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
+                System.out.println("hepo");
                 if (isDogeMode) {
                      try {
                         dogeKey = dogeAI.getBestMove();
@@ -264,7 +265,9 @@ public class Ui extends Application {
                     }
                 }
             }
-        }.start();
+        };
+        
+        if (isDogeMode) timer.start();
         
         return gameSkene;
     }
@@ -302,6 +305,7 @@ public class Ui extends Application {
             if (isDogeMode) {
                 isDogeMode = false;
                 lastGameDogeMode = true;
+                timer.stop();
             }
 
             topNewGameButton.setDisable(true);
@@ -361,7 +365,6 @@ public class Ui extends Application {
     
     public StackPane getGameOverStack() {
         gameOverStack = new StackPane();
-        
         Label gameOverLabel = new Label();
         Label endScore = new Label();
 
@@ -452,7 +455,10 @@ public class Ui extends Application {
         Button newGameButton = styleMenuButtons("New game");
         
         newGameButton.setOnMouseClicked((event) -> {
-            if (lastGameDogeMode) isDogeMode = true;
+            if (lastGameDogeMode) {
+                timer.start();
+                isDogeMode = true;
+            }
             squareStack.getChildren().remove(gameOverStack);
             gameOverStack.setVisible(false);
             topNewGameButton.setDisable(false);
@@ -476,6 +482,7 @@ public class Ui extends Application {
         if (lastGameDogeMode || isDogeMode) topMainMenuButton.setText("heck");
         
         topMainMenuButton.setOnMouseClicked((event) -> {
+            if (timer != null) timer.stop();
             isDogeMode = false;
             lastGameDogeMode = false;
             if (squareStack != null) {
@@ -532,6 +539,7 @@ public class Ui extends Application {
         Button highScoreButton = styleMenuButtons("High score");
         
         highScoreButton.setOnMouseClicked((event) -> {
+            if (timer != null) timer.stop();
             isDogeMode = false;
             lastGameDogeMode = false;
             currentStage.setScene(getHighScoreScene());
