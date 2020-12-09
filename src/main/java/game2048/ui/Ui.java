@@ -248,13 +248,13 @@ public class Ui extends Application {
         Scene gameSkene = new Scene(rootSetting);
        
         gameSkene.setOnKeyPressed((KeyEvent event) -> {
+            if (isDogeMode) return;
             handleKeyPress(event, null);
         });   
         
         timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                System.out.println("hepo");
                 if (isDogeMode) {
                      try {
                         dogeKey = dogeAI.getBestMove();
