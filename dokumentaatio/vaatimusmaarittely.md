@@ -1,4 +1,4 @@
-## Määrittelydokumentti
+## Vaatimusmäärittely
 ### Sovelluksen tarkoitus
 Sovellus on 2048 peliin perustuva replika, jossa voi itse valita pelilaudan koon. 
 
