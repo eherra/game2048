@@ -23,3 +23,8 @@ Pelin tulokset tallennetaan Sqlite-tietokantaan. Highscore-napin takaa löydät 
 Kyllästynyt pelaamaan itse? Anna AI Dogen pelailla puolestasi. 
 "Release doge" nappi käynnistää 4x4 kokoisen pelin, jota doge pelailee puolestasi ja voit itse keskittyä vaikka Tiran tehtävien tekoon. 
 
+<p float="left">
+  <img src="https://i.ibb.co/SBHRVzn/Screen-Shot-2020-12-09-at-18-24-28.png width="301" heigth="387">
+  <img src="https://i.ibb.co/sFWst0Z/Screen-Shot-2020-12-09-at-18-25-01.png width="301" heigth="390">
+</p>
+
