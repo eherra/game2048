@@ -19,4 +19,5 @@
 | 3.12.      | 4    | sqliten lisäys, highscoren hakeminen ja tallentaminen tietokantaan, UI lisäys highscore näkymään|
 | 5.12.      | 4    | sqliten säätö, DBhighscoreDaoon metodit kuntoon|
 | 8.12.      | 3    | UI:n refaktorointi, yleinen viilaus|
-|yht   |   52| 
+| 9.12.      | 4    | AI Dogen implementoiti, UI:n viilaus|
+|yht   |   56| 
