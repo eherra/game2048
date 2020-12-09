@@ -7,7 +7,7 @@ The game will start with two random squares values of '2', and if summing has ha
 ### Dokumentation
 * [Käyttöohje](https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/kayttoohje.md)
 * [Arkkitehtuuri](https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/arkkitehtuuri.md)
-* [Määrittelydokumentti](https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/vaatimusmaarittely.md)
+* [Vaatimusmäärittely](https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/vaatimusmaarittely.md)
 * [Tuntikirjanpito](https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/tuntikirjanpito.md)
 
 ### Releases'
