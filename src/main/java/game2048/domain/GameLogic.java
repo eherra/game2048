@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * A class to handle the game logic of the game. 
+ * Including taking care of the board's values and setting the values to given (x,y) coordinates on 2D array.
+ */
 public class GameLogic {
     private int[][] gameTable;
     private final Random ran;
@@ -86,6 +90,9 @@ public class GameLogic {
         gameTable[x][y] = value;
     }
      
+    /**
+     * Returns random coordinates from the game board which is empty from square.
+     */
     public byte[] getRandomCoordinate() {
         return emptyCoordinates.get(ran.nextInt(emptyCoordinates.size()));
     }
