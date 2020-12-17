@@ -20,9 +20,12 @@ Alla pakkaus/luokkakaavio joka kuvaa sovelluksen pakkauksien ja luokkien suhteit
 <img src= "https://i.ibb.co/1ZGPVBC/Screen-Shot-2020-12-08-at-12-18-46.png">
 
 ### Toiminnallisuudet 
-Kun aloitusnäkymästä löytyvästä "Quick start" napista painetaan, tapahtuu sovelluksessa seuraavaa:
+Kun peli käynnistetään ja aloitusnäkymästä löytyvästä "Quick start" napista painetaan, tapahtuu sovelluksessa seuraavaa:
 
 <img src= "https://i.ibb.co/f2dc5DQ/Screen-Shot-2020-11-28-at-16-39-45.png">
+
+Kun aloitusnäkymästä löytyvästä High Score-napista painetaan:
+<img src= "https://github.com/eherra/ot-harjoitustyo/blob/main/src/main/resources/images/highScore.png">
 
 
 ### Tietokanta
