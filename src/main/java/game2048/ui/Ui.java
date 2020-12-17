@@ -6,11 +6,7 @@ import game2048.domain.GameLogic;
 import game2048.domain.MoveExecutor;
 import game2048.utils.DogeAI;
 import game2048.utils.Square;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -104,7 +100,6 @@ public class Ui extends Application {
         Button highScoresButton = getHighScoreButton();
         Button playButton = styleMenuButtons("Play!");
         Button quickStart = styleMenuButtons("Quick start");
-        Button rulesButton = styleMenuButtons("Rules"); // think a position for this
         chooseBoardSizeField = getBoardSetUpTextField();
 
         // AI menu
@@ -253,16 +248,15 @@ public class Ui extends Application {
         });   
         
         timer = new AnimationTimer() {
+            long lastUpdate = 0;
+            long frequencyLimit = 100000000; // 0.1 seconds
+            
             @Override
             public void handle(long now) {
-                if (isDogeMode) {
-                     try {
-                        dogeKey = dogeAI.getBestMove();
-                        handleKeyPress(null, dogeKey);
-                        Thread.sleep(100);
-                    } catch (Exception e) {
-                         System.out.println("Doge move was not succesfully executed.");
-                    }
+                if (now - lastUpdate >= frequencyLimit) {
+                    dogeKey = dogeAI.getBestMove();
+                    handleKeyPress(null, dogeKey);
+                    lastUpdate = now;
                 }
             }
         };

@@ -25,18 +25,17 @@ public class Square {
      * @param tableSize square size depends on tableSize parameter.
      */
     public StackPane getSquareStack(int tableSize) {
-        squareStack = new StackPane();
         int squareSize = getSquareSizeOrFont(tableSize, false);
         Rectangle square = new Rectangle(squareSize, squareSize, squareSize, squareSize);
         square.setArcWidth(15);
         square.setArcHeight(15);
         square.setFill(Color.web(getSquareColour(value)));
-        Label fontLabel = value != 0 ? new Label(String.valueOf(value)) : new Label();
+        
         int fontSize = getSquareSizeOrFont(tableSize, true);
-        
+        Label fontLabel = value != 0 ? new Label(String.valueOf(value)) : new Label();
         fontLabel.setFont(new Font("Sans-Serif", fontSize));
-        squareStack.getChildren().addAll(square, fontLabel);
         
+        squareStack = new StackPane(square, fontLabel);
         return squareStack;
     }
     
