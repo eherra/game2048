@@ -12,7 +12,7 @@ public class DogeAI {
     }
     
     /**
-     * To determine the best move for the current position of the board.
+     * To determine the best move for doge AI at the current situation of the game.
      */
     public KeyCode getBestMove() {
         if (moveExetur.moveLeft(true)) {
