@@ -8,9 +8,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
-    /**
-     * Class to make correctly styled and valued squares to the game board.
-     */
+/**
+ * Class to make correctly styled and valued squares to the game board.
+ */
 public class Square {
     private StackPane squareStack;
     private int value;

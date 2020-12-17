@@ -9,9 +9,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-    /**
-     * Class for making queries to the database.
-     */
+/**
+ * Class for making queries to the database.
+ */
 public class DBhighScoreDao implements HighscoreDao  {
     private Database database;
     

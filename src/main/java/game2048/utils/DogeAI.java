@@ -4,6 +4,9 @@ package game2048.utils;
 import game2048.domain.MoveExecutor;
 import javafx.scene.input.KeyCode;
 
+/**
+ * Class to calculate the moves to Doge AI on Doge AI mode. 
+ */
 public class DogeAI {
     private MoveExecutor moveExetur;
     

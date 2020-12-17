@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package game2048.dao;
 
 import java.io.IOException;
@@ -14,10 +9,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-    /**
-     * Class to create a connection to the database and handles of creating the database.
-     */
-
+/**
+ * Class to create a connection to the database and handles of creating the database.
+ */
 public class Database {
     private String databaseUrl;
     
