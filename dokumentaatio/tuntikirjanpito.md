@@ -20,4 +20,5 @@
 | 5.12.      | 4    | sqliten säätö, DBhighscoreDaoon metodit kuntoon|
 | 8.12.      | 3    | UI:n refaktorointi, yleinen viilaus|
 | 9.12.      | 4    | AI Dogen implementoiti, UI:n viilaus|
-|yht   |   56| 
+| 17.12.      | 3    |Testausdokumentin kirjoitus, arkkitehtuurin viimeistely, testit AI Dogelle, yleinen viilaus|
+|yht   |   59| 
