@@ -30,7 +30,7 @@ Ohjelman pysyväistallennus on tehty SQLite tietokantaan käyttäen. Pakkauksen 
 High score-näkymä näyttää pelien 3x3, 4x4 ja 5x5 top 5-tulokset jotka haetaan tietokannasta DBHighScoreDao:n avulla. 
 
 Kun aloitusnäkymästä löytyvästä High Score-napista painetaan:
-<img src= "https://github.com/eherra/ot-harjoitustyo/blob/main/src/main/resources/images/highScore.png">
+<img src= "https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/kuvat/highScore.png">
 
 Pelinäkymän luodessa tietokannasta haetaan valitseman pelilaudan koon mukainen paras pistetulos joka asetetaan sen pelinäkymän oikeaan yläkulmaan kohtaan "High Score". 
 
