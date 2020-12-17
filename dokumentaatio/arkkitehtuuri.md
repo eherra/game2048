@@ -31,3 +31,9 @@ Ohjelman pysyväistallennus on tehty SQLite tietokantaan käyttäen. Pakkauksen 
 High score-näkymä näyttää pelien 3x3, 4x4 ja 5x5 top 5-tulokset jotka haetaan tietokannasta DBHighScoreDao:n avulla. 
 
 Pelinäkymän luodessa tietokannasta haetaan valitseman pelilaudan koon mukainen paras pistetulos joka asetetaan sen pelinäkymän oikeaan yläkulmaan kohtaan "High Score". 
+
+### Ohjelman rakenteeseen jääneet heikkoudet
+Koko käyttöliittymän koodi on pääpiirteittäin luotu ui-luokkaan. Tästä olisi voinut ainakin eri scene:jen luonnit ja metodit eriyttää omiin luokkiinsa. FXML:n käyttöä olisi voinut myös harkita.
+
+AI Doge ei loppujen lopuksi hirveän fiksu, joten algoritmia olisi voinut viedä pidemmälle nykyisestä else-if ratkaisusta minimax:in impletointiin, mutta olisi tullut aika paljon tekemistä lisää. Toki tälläkin ratkaisulla AI Doge saa pelattu noin 400-700 siirtoa eteenpäin ennen pelin häviämistä.
+
