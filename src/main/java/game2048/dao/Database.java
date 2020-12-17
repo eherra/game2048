@@ -17,6 +17,7 @@ import java.sql.Statement;
     /**
      * Class to create a connection to the database and handles of creating the database.
      */
+
 public class Database {
     private String databaseUrl;
     
