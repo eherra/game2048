@@ -12,14 +12,14 @@ Ohjelman moottorina toimivat GameLogic-, ScoreBoard- ja MoveExecutor-luokat (gam
 ### Tiedon (pisteet) pysyväistallennus
 Pysyväistallennusta ja sen hakemiseen olevia metodeita on testattu laajasti, jotta haettu tieto on oikeata sekä tallennus tapahtuu oikeaan paikkaan sekä oikeille tiedoilla. 
 
-Testien alussa luodaan @Before-annotiaatiolla merkatulla metodilla **test.db** tiedosto, johon tallennetaan testien aikana olevat tietokantatiedot. Kyseinen tiedosto poistetaan testien päätyttyä @After-annotiaatiolla merkatulla metodilla. 
+Testien alussa luodaan @Before-annotiaatiolla merkatulla metodilla **test.db**-tiedosto, johon tallennetaan testien aikana olevat tietokantatiedot. Kyseinen tiedosto poistetaan testien päätyttyä @After-annotiaatiolla merkatulla metodilla. 
 
 ### Testauskattavuus
 
 Sovelluksen testattujen osien testauksen rivikattavuus on 87% ja haarautumiskattavuus 91%.
 <img src= "https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/kuvat/coverage.png">
 
-Luokan **utils** Square-luokan _getSquareStack_-metodia ei ole testattu täysin, sillä tämä osa UI:n toiminallisuutta.
+Luokan **utils** Square-luokan _getSquareStack_-metodia ei ole testattu, sillä tämä osa UI:n toiminallisuutta.
 <img src= "https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/kuvat/utils.png">
 
 
