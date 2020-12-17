@@ -24,14 +24,13 @@ Kun peli käynnistetään ja aloitusnäkymästä löytyvästä "Quick start" nap
 
 <img src= "https://i.ibb.co/f2dc5DQ/Screen-Shot-2020-11-28-at-16-39-45.png">
 
-Kun aloitusnäkymästä löytyvästä High Score-napista painetaan:
-<img src= "https://github.com/eherra/ot-harjoitustyo/blob/main/src/main/resources/images/highScore.png">
-
-
 ### Tietokanta
 Ohjelman pysyväistallennus on tehty SQLite tietokantaan käyttäen. Pakkauksen **game2048.dao**:sta löytyvä luokka DBHighScoreDao hoitaa SQL-kyselyt ja tallennukset tietokantaan, jota hallinnoidaan Database-luokan kanssa. Tietokantaan tallennetaan aina mikäli pelattu peli päättyy pisteisiin, jotka ovat arvoltaan vähintään top5:sen verran. Tietokannassa on sarakkeet _id_, _score_, _boardsize_ ja _date_.
 
 High score-näkymä näyttää pelien 3x3, 4x4 ja 5x5 top 5-tulokset jotka haetaan tietokannasta DBHighScoreDao:n avulla. 
+
+Kun aloitusnäkymästä löytyvästä High Score-napista painetaan:
+<img src= "https://github.com/eherra/ot-harjoitustyo/blob/main/src/main/resources/images/highScore.png">
 
 Pelinäkymän luodessa tietokannasta haetaan valitseman pelilaudan koon mukainen paras pistetulos joka asetetaan sen pelinäkymän oikeaan yläkulmaan kohtaan "High Score". 
 
