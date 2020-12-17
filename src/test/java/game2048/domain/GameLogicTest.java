@@ -70,23 +70,6 @@ public class GameLogicTest {
     }
 
     @Test
-    public void testFindEmptyCoordinates() {
-        
-    }
- 
-    @Test
-    public void testUpdateBoard() {
-    }
-
-    @Test
-    public void testAddRandomValue() {
-    }
-    
-    @Test
-    public void testGetRandomCoordinate() {
-    }
-
-    @Test
     public void testSetNewGame() {
         for (int i = 0; i < 5; i++) {
             testMoveController.moveLeft(false);
