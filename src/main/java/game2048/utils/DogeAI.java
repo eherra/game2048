@@ -11,6 +11,9 @@ public class DogeAI {
         moveExetur = moveExecutor;
     }
     
+    /**
+     * To determine the best move for the current position of the board.
+     */
     public KeyCode getBestMove() {
         if (moveExetur.moveLeft(true)) {
             return KeyCode.LEFT;
