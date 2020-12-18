@@ -12,7 +12,7 @@ The game will start with two random squares values of '2', and if summing has ha
 * [Testausdokumentti](https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/testausdokumentti.md)
 
 ### Final release
-* [loppupalalutus](https://github.com/eherra/ot-harjoitustyo/releases/tag/loppupalautus)
+* [loppupalautus](https://github.com/eherra/ot-harjoitustyo/releases/tag/loppupalautus)
 
 ### Terminal commands:
 To start the game:
