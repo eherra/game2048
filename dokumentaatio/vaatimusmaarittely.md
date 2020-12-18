@@ -15,4 +15,4 @@ Ylläpitäjä huolehtii että tietokanta toimii sovelluksen kanssa, jotta high s
 Sovellus toimii macOS ja Linux pohjaisilla käyttöjärjestelmillä.
 
 ### Käyttöliittymä
-Sovelluksen käyttöliittymä tehdään Javan javafx-kirjastolla. Käyttöliittymä on yksinkertainen, jossa sovelluksen käynnistäessä aukeaa pelinäkymä ja pelin päätyttyä näkymän päälle luodaan näkymä (stackpane) jossa mahdollisuus uuden pelin aloittamiseen ja high scorejen tarkasteluun. Mikäli pelattu tulos on vähintään top5 pisteiden verran, tulos tallennetaan tietokantaan.
+Sovelluksen käyttöliittymä tehdään Javan javafx-kirjastolla. Käyttöliittymässä on aloitusnäkymä, josta voi valita haluamansa pelin koon, AI Doge-pelimuodon valinnan tai high score näkymään siirtymisen. Pelinäkymän käynnistäessä aukeaa näkymä, jossa voi nuolinäppäimillä tehdä siirtoja ja pelin päätyttyä (ei siirtoja jäljellä) näkymän päälle lisätään tila (stackpane), jossa näytetään kertyneet pisteet, uuden pelin aloittamiseen mahdollistava nappi ja high scorejen tarkasteluun siirtyminen oleva napi. Mikäli pelattu tulos on vähintään top5 pisteiden verran, tulos tallennetaan tietokantaan automaattisesti.
