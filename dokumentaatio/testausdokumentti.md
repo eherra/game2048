@@ -16,8 +16,8 @@ Testien alussa luodaan @Before-annotiaatiolla merkatulla metodilla **test.db**-t
 
 ### Testauskattavuus
 
-Sovelluksen testattujen osien testauksen rivikattavuus on 87% ja haarautumiskattavuus 91%.
-<img src= "https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/kuvat/coverage.png">
+Sovelluksen testattujen osien testauksen rivikattavuus on 86% ja haarautumiskattavuus 89%.
+<img src= "https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/kuvat/coveragee.png">
 
 Pakkauksen **utils** Square-luokan _getSquareStack_-metodia ei ole testattu, sillä tämä osa UI:n toiminallisuutta.
 <img src= "https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/kuvat/utils.png">
