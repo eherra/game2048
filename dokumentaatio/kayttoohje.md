@@ -4,9 +4,10 @@ Kloonaa tiedosto terminaalistasi komennolla:
 git clone https://github.com/eherra/ot-harjoitustyo.git
 ```
 Tai lataa jar-tiedosto alla olevan linkin takaa:
-<path to jar>
-  
-Käynnistä jar-tiedosto terminaalista komennolla:
+
+[Loppupalautus](https://github.com/eherra/ot-harjoitustyo/releases/tag/loppupalautus)
+
+* Käynnistä jar-tiedosto terminaalista komennolla:
 ```console
 java -jar game2048.jar
 ```
