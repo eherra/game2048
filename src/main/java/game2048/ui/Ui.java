@@ -388,13 +388,7 @@ public class Ui extends Application {
         endSquare.setArcHeight(15);
         
         // opacity button
-        Button opacityForStackButton = new Button("hold for boardview");
-        opacityForStackButton.setFont(new Font("Sans-Serif", 14));
-        opacityForStackButton.setStyle("-fx-background-color: #F9E79F; ");
-        opacityForStackButton.setOnMousePressed((event) -> {gameWonStack.setOpacity(0.3);});
-        opacityForStackButton.setOnMouseReleased((event) -> {gameWonStack.setOpacity(1);});
-        opacityForStackButton.setOnMouseEntered(e -> opacityForStackButton.setStyle("-fx-background-color: #FEF9E7"));
-        opacityForStackButton.setOnMouseExited(e -> opacityForStackButton.setStyle("-fx-background-color: #F9E79F"));
+        Button opacityForStackButton = getOpacityViewButton(true);
                 
         Button continueGameButton = styleMenuButtons("Continue playing");
         
@@ -438,13 +432,7 @@ public class Ui extends Application {
         endSquare.setArcHeight(15);
         
         // opacity button
-        Button opacityForStackButton = new Button("hold for boardview");
-        opacityForStackButton.setFont(new Font("Sans-Serif", 14));
-        opacityForStackButton.setStyle("-fx-background-color: #F9E79F; ");
-        opacityForStackButton.setOnMousePressed((event) -> {gameOverStack.setOpacity(0.3);});
-        opacityForStackButton.setOnMouseReleased((event) -> {gameOverStack.setOpacity(1);});
-        opacityForStackButton.setOnMouseEntered(e -> opacityForStackButton.setStyle("-fx-background-color: #FEF9E7"));
-        opacityForStackButton.setOnMouseExited(e -> opacityForStackButton.setStyle("-fx-background-color: #F9E79F"));
+        Button opacityForStackButton = getOpacityViewButton(false);
                 
         HBox buttonCol = new HBox(getNewGameButton(), getHighScoreButton());
         buttonCol.setSpacing(18);
@@ -621,6 +609,24 @@ public class Ui extends Application {
             }
         }
         return row;
+    }
+    
+    public Button getOpacityViewButton(boolean isWonStack) {
+        Button opacityForStackButton = new Button("hold for boardview");
+        opacityForStackButton.setFont(new Font("Sans-Serif", 14));
+        opacityForStackButton.setStyle("-fx-background-color: #F9E79F; ");
+        opacityForStackButton.setOnMouseEntered(e -> opacityForStackButton.setStyle("-fx-background-color: #FEF9E7"));
+        opacityForStackButton.setOnMouseExited(e -> opacityForStackButton.setStyle("-fx-background-color: #F9E79F"));
+
+        if (isWonStack) {
+            opacityForStackButton.setOnMousePressed((event) -> {gameWonStack.setOpacity(0.3);});
+            opacityForStackButton.setOnMouseReleased((event) -> {gameWonStack.setOpacity(1);});
+        } else {
+            opacityForStackButton.setOnMousePressed((event) -> {gameOverStack.setOpacity(0.3);});
+            opacityForStackButton.setOnMouseReleased((event) -> {gameOverStack.setOpacity(1);});
+        }
+        
+        return opacityForStackButton;
     }
     
     public static void main(String[] args) {
