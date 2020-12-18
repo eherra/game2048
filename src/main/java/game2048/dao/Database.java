@@ -47,7 +47,6 @@ public class Database {
             s.close();
             db.close();
         } catch (Exception e) {
-            System.out.println("Table existing already");
         }
     }
     
