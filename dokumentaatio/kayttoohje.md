@@ -1,4 +1,15 @@
 ## Käyttöohje
+Kloonaa tiedosto terminaalistasi komennolla:
+```console
+git clone https://github.com/eherra/ot-harjoitustyo.git
+```
+Tai lataa jar-tiedosto alla olevan linkin takaa:
+<path to jar>
+  
+Käynnistä jar-tiedosto terminaalista komennolla:
+```console
+java -jar game2048.jar
+```
 ### Main menu
 <img src="https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/kuvat/mainmenu.png"> 
 
