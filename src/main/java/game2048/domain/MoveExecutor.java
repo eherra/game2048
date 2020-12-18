@@ -8,7 +8,7 @@ package game2048.domain;
  */
 public class MoveExecutor {
     public boolean isMoveMade;
-    public int lastChangeNum, lastChangeNumIndex, tableLength;
+    public int lastChangeNum, lastChangeNumIndex, tableLength; 
     public GameLogic gameLogic;
 
     public MoveExecutor(GameLogic gameLogic) {
@@ -23,8 +23,8 @@ public class MoveExecutor {
     public boolean moveUp(boolean gameOverTest) {
         isMoveMade = false;
         for (int y = 0; y < tableLength; y++) {
-            lastChangeNum = -1;
-            lastChangeNumIndex = -10;
+            lastChangeNum = -1; // when starting checking the row, default as -1 since not values changed yet
+            lastChangeNumIndex = -20; // no changes yet, so index to be smaller than the gameboard size
             for (int x = 1; x < tableLength; x++) {
                 for (int lastX = x; lastX >= 1; lastX--) {
                     int currentValue = gameLogic.getValueFromBoard(lastX, y);
@@ -33,6 +33,7 @@ public class MoveExecutor {
                     if (currentValue == 0) {
                         continue;
                     }
+                    
                     if (makeChangesToBoardDownAndUpMoves(lastX, y, currentValue, valueToMoveTo, gameOverTest, true)) {
                         return true;
                     }
@@ -53,7 +54,7 @@ public class MoveExecutor {
         isMoveMade = false;
         for (int y = 0; y < tableLength; y++) {
             lastChangeNum = -1; 
-            lastChangeNumIndex = -10;
+            lastChangeNumIndex = -20;
             for (int x = tableLength - 2; x >= 0; x--) {
                 for (int lastX = x; lastX < tableLength - 1; lastX++) {
                     int currentValue = gameLogic.getValueFromBoard(lastX, y); 
@@ -81,7 +82,7 @@ public class MoveExecutor {
         isMoveMade = false;
         for (int x = 0; x < tableLength; x++) {
             lastChangeNum = -1; 
-            lastChangeNumIndex = -10;
+            lastChangeNumIndex = -20;
             for (int y = tableLength - 2; y >= 0; y--) {
                 for (int lastY = y; lastY < tableLength - 1; lastY++) {
                     int currentValue = gameLogic.getValueFromBoard(x, lastY); 
@@ -109,7 +110,7 @@ public class MoveExecutor {
         isMoveMade = false;
         for (int x = 0; x < tableLength; x++) {
             lastChangeNum = -1;
-            lastChangeNumIndex = -10;
+            lastChangeNumIndex = -20;
             for (int y = 1; y < tableLength; y++) {
                 for (int lastY = y; lastY > 0; lastY--) {
                     int currentValue = gameLogic.getValueFromBoard(x, lastY);
@@ -178,12 +179,12 @@ public class MoveExecutor {
         }
         return false;
     }
+    
     /**
      * Method to move value on up and down moves to board to specific x and y coordinate.
      * @param normalAdding if values need to be only moved to other position. If false, value will be moved and added to other square.
      * @param isUp true if method should do the up move changes.
      */
-    
     public void updateBoardFromMoveUpDown(boolean isUp, boolean normalAdding, int lastX, int y, int currentValue) {
         if (isUp) {
             int toAdd = normalAdding ? currentValue : currentValue * 2;
@@ -231,5 +232,44 @@ public class MoveExecutor {
      */
     public boolean isGameOver() {
         return !moveRight(true) && !moveUp(true) && !moveDown(true) && !moveLeft(true);
+    }
+    
+    // HOX
+    // jos yhdessä metodissa liikumisen hoito.
+    public boolean moveRefak(boolean isGameOverTest) {
+        isMoveMade = false;
+        for (int y = 0; y < tableLength; y++) {
+            lastChangeNum = -1;
+            lastChangeNumIndex = -10;
+            for (int x = 1; x < tableLength; x++) {
+                for (int lastX = x; lastX >= 1; lastX--) {
+                    int currentValue = gameLogic.getValueFromBoard(lastX, y);
+                    int valueToMoveTo = gameLogic.getValueFromBoard(lastX - 1, y);
+                    if (currentValue == 0) {
+                        continue;
+                    }
+                    
+                    if (valueToMoveTo == 0) {
+                        if (isGameOverTest) return true;
+                        isMoveMade = true;
+                        gameLogic.setValueOnBoard(lastX - 1, y, currentValue);
+                        gameLogic.setValueOnBoard(lastX, y, 0);
+                    } else if (sameValuesAddingLegally(currentValue, valueToMoveTo) 
+                            || sameValuesAddingWithNoIncorrectIndexing(currentValue, valueToMoveTo, lastX, true))  {
+                        if (isGameOverTest) return true;
+                        isMoveMade = true;
+                        lastChangeNum = currentValue; 
+                        lastChangeNumIndex = lastX - 1;
+                        gameLogic.setValueOnBoard(lastX - 1, y, currentValue * 2); // moving piece on ahead on the game board.
+                        gameLogic.setValueOnBoard(lastX, y, 0);    
+                        gameLogic.addValuesToScoreboard(currentValue);
+                    }
+                }
+            }
+        }
+        if (isMoveMade) {
+            gameLogic.updateBoard();
+        }
+        return false;
     }
 }
