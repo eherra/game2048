@@ -11,9 +11,8 @@ The game will start with two random squares values of '2', and if summing has ha
 * [Tuntikirjanpito](https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/tuntikirjanpito.md)
 * [Testausdokumentti](https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/testausdokumentti.md)
 
-### Releases'
-* [v1.5](https://github.com/eherra/ot-harjoitustyo/releases/tag/viikko6)
-* [v1.2](https://github.com/eherra/ot-harjoitustyo/releases/tag/viikko5v1)
+### Final release
+* [loppupalalutus](https://github.com/eherra/ot-harjoitustyo/releases/tag/loppupalautus)
 
 ### Terminal commands:
 To start the game:
