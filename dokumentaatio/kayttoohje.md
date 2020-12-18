@@ -5,7 +5,7 @@ git clone https://github.com/eherra/ot-harjoitustyo.git
 ```
 Tai lataa jar-tiedosto alla olevan linkin takaa:
 
-[Loppupalautus](https://github.com/eherra/ot-harjoitustyo/releases/tag/loppupalautus)
+[lataa jar](https://github.com/eherra/ot-harjoitustyo/releases/tag/loppupalautus)
 
 * Käynnistä jar-tiedosto terminaalista komennolla:
 ```console
