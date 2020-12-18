@@ -141,7 +141,7 @@ public class MoveExecutor {
             isMoveMade = true;
             updateBoardFromMoveUpDown(isUpMove, true, lastX, y, currentValue);
         } else if (sameValuesAddingLegally(currentValue, positionToMoveValue) || 
-                sameValuesAddingWithNoIncorrectMove(currentValue, positionToMoveValue, lastX, isUpMove)) { 
+                sameValuesAddingWithNoIncorrectIndexing(currentValue, positionToMoveValue, lastX, isUpMove)) { 
             if (gameOverTest) {
                 return true;
             } 
@@ -166,7 +166,7 @@ public class MoveExecutor {
             isMoveMade = true;
             updateBoardFromMoveLeftRight(isLeftMove, true, x, lastY, currentValue);
         } else if (sameValuesAddingLegally(currentValue, positionToMoveValue) || 
-                sameValuesAddingWithNoIncorrectMove(currentValue, positionToMoveValue, lastY, isLeftMove)) { 
+                sameValuesAddingWithNoIncorrectIndexing(currentValue, positionToMoveValue, lastY, isLeftMove)) { 
             if (gameOverTest) {
                 return true;
             } 
@@ -222,7 +222,7 @@ public class MoveExecutor {
      * Checks if 2 values can be added according to 2048 rules.
      * In a case where two values were added earlier on same checking line. (rules of 2048)
      */
-    public boolean sameValuesAddingWithNoIncorrectMove(int currentValue, int positionToMoveValue, int toCheckIndex, boolean minusOrPlus) {
+    public boolean sameValuesAddingWithNoIncorrectIndexing(int currentValue, int positionToMoveValue, int toCheckIndex, boolean minusOrPlus) {
         int differenceInIndex = minusOrPlus ? toCheckIndex - lastChangeNumIndex : lastChangeNumIndex - toCheckIndex;
         return positionToMoveValue == currentValue && currentValue == lastChangeNum * 2 && differenceInIndex > 1;
     }

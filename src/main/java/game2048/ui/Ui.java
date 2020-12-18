@@ -35,7 +35,7 @@ public class Ui extends Application {
     private GameLogic logic;
     private MoveExecutor moveExecutor;
     private GridPane gridForSquares, gridToReturn, toReturnPane;
-    private StackPane squareStack, gameOverStack, stackToReturn;
+    private StackPane squareStack, gameOverStack, gameWonStack, stackToReturn;
     private BorderPane rootSetting, mainTop;
     private VBox mainTopRight;
     private TextField chooseBoardSizeField;
@@ -295,6 +295,7 @@ public class Ui extends Application {
         highScoreLabel.setText("High Score \n" + logic.getHighScore()); 
         squareStack.getChildren().add(gridForSquares);
 
+        // game lost
         if (!logic.isMoveableSquares() && moveExecutor.isGameOver()) {
             if (isDogeMode) {
                 isDogeMode = false;
@@ -310,6 +311,18 @@ public class Ui extends Application {
                     || highScoreService.getFifthScore(logic.getTableSize()) < logic.getGamePoints()) {
                 logic.saveHighscore(logic.getGamePoints());
             }
+        }
+        
+        // game won
+        if (logic.isGameWon()) {
+            if (isDogeMode) {
+                isDogeMode = false;
+                lastGameDogeMode = true;
+                timer.stop();
+            }
+            topNewGameButton.setDisable(true);
+            gameWonStack = getGameWonStack();
+            squareStack.getChildren().add(gameWonStack);
         }
     }
     
@@ -357,6 +370,49 @@ public class Ui extends Application {
         return new Scene(rootSetting, 700, 516);
     }
     
+    public StackPane getGameWonStack() {
+        gameWonStack = new StackPane();
+        Label gameWonLabel = new Label();
+
+        if (lastGameDogeMode) {
+            gameWonLabel.setText("AI Doge won!");
+        } else {
+            gameWonLabel.setText("  Congratulation!!!\nYou beat the game!");
+        }
+        gameWonLabel.setFont(new Font("Sans-Serif", 24));
+        if (!lastGameDogeMode) gameWonLabel.setTextFill(Color.web("#131516"));
+        
+        Rectangle endSquare = new Rectangle(sceneHeigth - 160, sceneWidth - 160, Color.web("#ffda77"));
+        if (lastGameDogeMode) endSquare.setFill(Color.web("#d9bd62"));
+        endSquare.setArcWidth(15);
+        endSquare.setArcHeight(15);
+        
+        // opacity button
+        Button opacityForStackButton = new Button("hold for boardview");
+        opacityForStackButton.setFont(new Font("Sans-Serif", 14));
+        opacityForStackButton.setStyle("-fx-background-color: #F9E79F; ");
+        opacityForStackButton.setOnMousePressed((event) -> {gameWonStack.setOpacity(0.3);});
+        opacityForStackButton.setOnMouseReleased((event) -> {gameWonStack.setOpacity(1);});
+        opacityForStackButton.setOnMouseEntered(e -> opacityForStackButton.setStyle("-fx-background-color: #FEF9E7"));
+        opacityForStackButton.setOnMouseExited(e -> opacityForStackButton.setStyle("-fx-background-color: #F9E79F"));
+                
+        Button continueGameButton = styleMenuButtons("Continue playing");
+        
+        continueGameButton.setOnMouseClicked((event) -> {
+            gameWonStack.setVisible(false);
+            squareStack.getChildren().remove(gameWonStack);
+            logic.plusOne2048played();
+            topNewGameButton.setDisable(false);
+        });
+        
+        VBox centerRow = new VBox(opacityForStackButton, gameWonLabel, continueGameButton);
+        centerRow.setSpacing(20);
+        centerRow.setAlignment(Pos.CENTER);
+        gameWonStack.getChildren().addAll(endSquare, centerRow);
+        
+        return gameWonStack;
+    }
+    
     public StackPane getGameOverStack() {
         gameOverStack = new StackPane();
         Label gameOverLabel = new Label();
@@ -366,9 +422,10 @@ public class Ui extends Application {
             gameOverLabel.setText("AI Doge lost :(");
             endScore.setText("Doge's score: " + logic.getGamePoints());
         } else {
-            gameOverLabel.setText("You lost!");
+            gameOverLabel.setText("Game over!");
             endScore.setText("Final score: " + logic.getGamePoints());
         }
+        
         gameOverLabel.setFont(new Font("Sans-Serif", 30));
         if (!lastGameDogeMode) gameOverLabel.setTextFill(Color.web("#FFFFFF"));
         
@@ -481,7 +538,9 @@ public class Ui extends Application {
             lastGameDogeMode = false;
             if (squareStack != null) {
                 squareStack.getChildren().remove(gameOverStack);
+                squareStack.getChildren().remove(gameWonStack);
             }
+            
             currentStage.setScene(getMainMenuScene());
         });
         

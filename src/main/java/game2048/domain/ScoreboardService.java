@@ -23,12 +23,16 @@ public class ScoreboardService {
     * Adding points to current score.
     * If currentScore has reached to same level as high score, updates highscore at same time.
     * @param add value to add 2x to current score.
+    * @return returns true if the value which added was 2048.
     */
-    public void addCurrentPoints(int add) {
-        currentScore += add * 2;
+    public boolean addCurrentPoints(int add) {
+        int valueToAdd = add * 2;
+        currentScore += valueToAdd;
         if (currentScore >= highscore) {
             highscore = currentScore;
         }
+        
+        return 2048 == valueToAdd;
     }
         
     public int getCurrentScore() {

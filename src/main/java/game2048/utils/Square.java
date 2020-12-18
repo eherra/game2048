@@ -89,7 +89,9 @@ public class Square {
                 return "#F1C40F";
             case 1024:
                 return "#B7950B";
+            case 2048:
+                return "7D3C98";
         }
-        return "7D3C98"; // colour of 2048 square
+        return "33B3A6"; // colour for values >= 4096
     }
 }

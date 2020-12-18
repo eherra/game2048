@@ -20,7 +20,7 @@ public class GameLogic {
     private int tableLength;
     private ScoreboardService scoreboard;
     public boolean isMoveMade;
-    public int lastChangeNum, lastChangeNumIndex;
+    public int lastChangeNum, lastChangeNumIndex, is2048played;
     
     public GameLogic(int size, DBhighScoreDao db) {
         scoreboard = new ScoreboardService(size, db);
@@ -72,6 +72,7 @@ public class GameLogic {
         gameTable = new int[tableLength][tableLength];
         findEmptyCoordinates();
         initializeStartBoard();
+        is2048played = 0;
     }
     
     public int[][] getTable() {
@@ -114,12 +115,26 @@ public class GameLogic {
     }
     
     public void addValuesToScoreboard(int current) {
-        scoreboard.addCurrentPoints(current);
+        if (scoreboard.addCurrentPoints(current)) {
+            plusOne2048played();
+        }
+    }
+    
+    public void plusOne2048played() {
+        is2048played++;
+    }
+    
+    /**
+     * Returns true if 2048 valued square has been played first time.
+     */
+    public boolean isGameWon() {
+        return is2048played == 1;
     }
     
     public List<String> getTopFive(int boardSize) {
         return scoreboard.getTopFiveScores(boardSize);
     }
+    
      /**
      * Saves Highscore to the sql table.
      */
