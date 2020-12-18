@@ -18,28 +18,33 @@ public class MoveExecutor {
     
     /**
      * Method to makes up move to the game table array.
-     * @param gameOverTest if method is used to check if there are any moves available.
+     * @param gameOverTest if method is used to check if there are any moves available on board. (gameover if not moves left).
      */
     public boolean moveUp(boolean gameOverTest) {
         isMoveMade = false;
         for (int y = 0; y < tableLength; y++) {
-            lastChangeNum = -1; // when starting checking the row, default as -1 since not values changed yet
+            // helpers for making changes for the board according the rules of game 2048.
+            lastChangeNum = -1; // when starting to check the row, default as -1 since not values changed yet
             lastChangeNumIndex = -20; // no changes yet, so index to be smaller than the gameboard size
             for (int x = 1; x < tableLength; x++) {
                 for (int lastX = x; lastX >= 1; lastX--) {
                     int currentValue = gameLogic.getValueFromBoard(lastX, y);
                     int valueToMoveTo = gameLogic.getValueFromBoard(lastX - 1, y);
 
+                    // if current square's value is 0 (empty), it doesn't need to be moved.
                     if (currentValue == 0) {
                         continue;
                     }
                     
+                    // returns true if method used for game over testing
                     if (makeChangesToBoardDownAndUpMoves(lastX, y, currentValue, valueToMoveTo, gameOverTest, true)) {
                         return true;
                     }
                 }
             }
         }
+        
+        // if there has been a move => update the game view
         if (isMoveMade) {
             gameLogic.updateBoard();
         }
@@ -48,7 +53,7 @@ public class MoveExecutor {
     
     /**
      * Method to makes down move to the game table array.
-     * @param gameOverTest if method is used to check if there are any moves available.
+     * @param gameOverTest if method is used to check if there are any moves available on board. (gameover if not moves left).
      */
     public boolean moveDown(boolean gameOverTest) {
         isMoveMade = false;
@@ -76,7 +81,7 @@ public class MoveExecutor {
     
     /**
      * Method to makes right move to the game table array.
-     * @param gameOverTest if method is used to check if there are any moves available.
+     * @param gameOverTest if method is used to check if there are any moves available on board. (gameover if not moves left).
      */
     public boolean moveRight(boolean gameOverTest) {
         isMoveMade = false;
@@ -104,7 +109,7 @@ public class MoveExecutor {
     
     /**
      * Method to makes left move to the game table array.
-     * @param gameOverTest if method is used to check if there are any moves available.
+     * @param gameOverTest if method is used to check if there are any moves available on board. (gameover if not moves left).
      */
     public boolean moveLeft(boolean gameOverTest) {
         isMoveMade = false;
@@ -182,7 +187,7 @@ public class MoveExecutor {
     
     /**
      * Method to move value on up and down moves to board to specific x and y coordinate.
-     * @param normalAdding if values need to be only moved to other position. If false, value will be moved and added to other square.
+     * @param normalAdding if values need to be only moved to other position then true. If false, value will be moved and added to other square.
      * @param isUp true if method should do the up move changes.
      */
     public void updateBoardFromMoveUpDown(boolean isUp, boolean normalAdding, int lastX, int y, int currentValue) {
@@ -232,44 +237,5 @@ public class MoveExecutor {
      */
     public boolean isGameOver() {
         return !moveRight(true) && !moveUp(true) && !moveDown(true) && !moveLeft(true);
-    }
-    
-    // HOX
-    // jos yhdessä metodissa liikumisen hoito.
-    public boolean moveRefak(boolean isGameOverTest) {
-        isMoveMade = false;
-        for (int y = 0; y < tableLength; y++) {
-            lastChangeNum = -1;
-            lastChangeNumIndex = -10;
-            for (int x = 1; x < tableLength; x++) {
-                for (int lastX = x; lastX >= 1; lastX--) {
-                    int currentValue = gameLogic.getValueFromBoard(lastX, y);
-                    int valueToMoveTo = gameLogic.getValueFromBoard(lastX - 1, y);
-                    if (currentValue == 0) {
-                        continue;
-                    }
-                    
-                    if (valueToMoveTo == 0) {
-                        if (isGameOverTest) return true;
-                        isMoveMade = true;
-                        gameLogic.setValueOnBoard(lastX - 1, y, currentValue);
-                        gameLogic.setValueOnBoard(lastX, y, 0);
-                    } else if (sameValuesAddingLegally(currentValue, valueToMoveTo) 
-                            || sameValuesAddingWithNoIncorrectIndexing(currentValue, valueToMoveTo, lastX, true))  {
-                        if (isGameOverTest) return true;
-                        isMoveMade = true;
-                        lastChangeNum = currentValue; 
-                        lastChangeNumIndex = lastX - 1;
-                        gameLogic.setValueOnBoard(lastX - 1, y, currentValue * 2); // moving piece on ahead on the game board.
-                        gameLogic.setValueOnBoard(lastX, y, 0);    
-                        gameLogic.addValuesToScoreboard(currentValue);
-                    }
-                }
-            }
-        }
-        if (isMoveMade) {
-            gameLogic.updateBoard();
-        }
-        return false;
     }
 }

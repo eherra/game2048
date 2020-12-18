@@ -80,5 +80,13 @@ public class ScoreboardServiceTest {
             assertEquals(testString, testSet.get(i-1));
         }
     }
-
+        
+    @Test
+    public void testAddCurrentPointsGivesCorretBooleanWhenGamePassed() {
+        boolean not2048Played = scoreB.addCurrentPoints(2);
+        assertEquals(false, not2048Played);
+        
+        boolean played2048 = scoreB.addCurrentPoints(1024);
+        assertEquals(true, played2048);
+    }
 }
