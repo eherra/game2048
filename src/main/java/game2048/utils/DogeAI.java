@@ -27,6 +27,7 @@ public class DogeAI {
         } else if (moveExetur.moveRight(true)) {
             return KeyCode.RIGHT;
         }
+        
         return null;
     }
 }

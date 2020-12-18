@@ -44,7 +44,6 @@ public class Database {
             Connection db = getConnection();    
             Statement s = db.createStatement();
             s.execute("CREATE TABLE Scores (id INTEGER PRIMARY KEY, score Integer, boardsize Integer, date String)");
-            System.out.println("Database added succesfully");
             s.close();
             db.close();
         } catch (Exception e) {
@@ -56,7 +55,6 @@ public class Database {
         try {
             Path pathToTestDatabase = FileSystems.getDefault().getPath("test.db");
             Files.delete(pathToTestDatabase);
-            System.out.println("Test database removed");
         } catch (Exception e) {
             System.out.println("Test database was not deleted.");
         }

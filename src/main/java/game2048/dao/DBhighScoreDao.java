@@ -33,9 +33,8 @@ public class DBhighScoreDao implements HighscoreDao  {
             p.setString(3, date);
             p.executeUpdate();
             db.close();
-            System.out.println("Score added succesfully");
         } catch (Exception e) {
-            System.out.println("adding score didn't work");
+            System.out.println("Adding score didn't workout.");
         }
     }
     
@@ -61,7 +60,7 @@ public class DBhighScoreDao implements HighscoreDao  {
             db.close();
             p.close();
         } catch (Exception e) {
-            System.out.println("didnt work scorefetch");
+            System.out.println("Fetching scores didn't workout.");
         }
         
         return topScores;
@@ -84,9 +83,8 @@ public class DBhighScoreDao implements HighscoreDao  {
             }
             p.close();
             db.close();
-            System.out.println("TopScore fetched succesfully");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("Fetching top score didn't workout.");
             topScore = 0;
         }
         
@@ -110,9 +108,8 @@ public class DBhighScoreDao implements HighscoreDao  {
             }
             p.close();
             db.close();
-            System.out.println("fifthScore fetched succesfully");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("Fetching fifth best score didn't workout.");
         }
         return fifthScore;
     }
