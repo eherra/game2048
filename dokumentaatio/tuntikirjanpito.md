@@ -21,4 +21,5 @@
 | 8.12.      | 3    | UI:n refaktorointi, yleinen viilaus|
 | 9.12.      | 4    | AI Dogen implementoiti, UI:n viilaus|
 | 17.12.      | 3    |Testausdokumentin kirjoitus, arkkitehtuurin viimeistely, testit AI Dogelle, yleinen viilaus|
-|yht   |   59| 
+| 18.12.      | 3    |pelin läpipääsy lisätty, viilaukset dokumentteihin, muutamat testit lisää|
+|yht   |   62| 
