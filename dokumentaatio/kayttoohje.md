@@ -1,4 +1,6 @@
 ## Käyttöohje
+### Main menu
+<img src="https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/kuvat/mainmenu.png"> 
 
 ### Pelin aloittaminen
 Voit joko painaa "Quick start" nappia aloittaaksesi klassisen 4x4 ruudukon pelin.
