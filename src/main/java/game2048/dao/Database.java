@@ -38,6 +38,7 @@ public class Database {
     }
     /**
      * Creates SQLtable with columns of id, score, boardsize, date.
+     * If table already exists, method won't do anything.
      */
     public void createHighscoreTable() {
         try {

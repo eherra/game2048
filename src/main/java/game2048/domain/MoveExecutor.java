@@ -140,12 +140,15 @@ public class MoveExecutor {
      * @return true if method is used for checking gameOverTest
      */
     public boolean makeChangesToBoardDownAndUpMoves(int lastX, int y, int currentValue, int positionToMoveValue, boolean gameOverTest, boolean isUpMove) {
+        // 1 is upMove, 2 downMove
+        int keycode = isUpMove ? 1 : 2;
+        
         if (positionToMoveValue == 0) {
             if (gameOverTest) {
                 return true;
             }     
             isMoveMade = true;
-            updateBoardFromMoveUpDown(isUpMove, true, lastX, y, currentValue);
+            updateBoardWithValue(keycode, true, lastX, y, currentValue);
         } else if (sameValuesAddingLegally(currentValue, positionToMoveValue) || 
                 sameValuesAddingWithNoIncorrectIndexing(currentValue, positionToMoveValue, lastX, isUpMove)) { 
             if (gameOverTest) {
@@ -154,7 +157,7 @@ public class MoveExecutor {
             isMoveMade = true;
             lastChangeNum = currentValue;
             lastChangeNumIndex = lastX - 1;
-            updateBoardFromMoveUpDown(isUpMove, false, lastX, y, currentValue);
+            updateBoardWithValue(keycode, false, lastX, y, currentValue);
             gameLogic.addValuesToScoreboard(currentValue);
         }
         return false;
@@ -165,12 +168,15 @@ public class MoveExecutor {
      * @return true if method is used for checking gameOverTest
      */
     public boolean makeChangesToBoardLeftAndRightMoves(int x, int lastY, int currentValue, int positionToMoveValue, boolean gameOverTest, boolean isLeftMove) {
+        // 3 is leftMove, 4 rightMove
+        int keycode = isLeftMove ? 3 : 4;
+        
         if (positionToMoveValue == 0) {
             if (gameOverTest) {
                 return true;
             }     
             isMoveMade = true;
-            updateBoardFromMoveLeftRight(isLeftMove, true, x, lastY, currentValue);
+            updateBoardWithValue(keycode, true, x, lastY, currentValue);
         } else if (sameValuesAddingLegally(currentValue, positionToMoveValue) || 
                 sameValuesAddingWithNoIncorrectIndexing(currentValue, positionToMoveValue, lastY, isLeftMove)) { 
             if (gameOverTest) {
@@ -179,42 +185,31 @@ public class MoveExecutor {
             isMoveMade = true;
             lastChangeNum = currentValue;
             lastChangeNumIndex = lastY - 1;
-            updateBoardFromMoveLeftRight(isLeftMove, false, x, lastY, currentValue);
+            updateBoardWithValue(keycode, false, x, lastY, currentValue);
             gameLogic.addValuesToScoreboard(currentValue);
         }
         return false;
     }
     
-    /**
-     * Method to move value on up and down moves to board to specific x and y coordinate.
-     * @param normalAdding if values need to be only moved to other position then true. If false, value will be moved and added to other square.
-     * @param isUp true if method should do the up move changes.
-     */
-    public void updateBoardFromMoveUpDown(boolean isUp, boolean normalAdding, int lastX, int y, int currentValue) {
-        if (isUp) {
-            int toAdd = normalAdding ? currentValue : currentValue * 2;
-            gameLogic.setValueOnBoard(lastX - 1, y, toAdd);
-        } else {
-            int toAdd = normalAdding ? currentValue : currentValue * 2;
-            gameLogic.setValueOnBoard(lastX + 1, y, toAdd);        
+    public void updateBoardWithValue(int keycode, boolean normalAdding, int lastX, int lastY, int currentValue) {
+        int valueToAddToBoard = normalAdding ? currentValue : currentValue * 2;
+        
+        switch (keycode) {
+            case 1:
+                gameLogic.setValueOnBoard(lastX - 1, lastY, valueToAddToBoard);
+                break;
+            case 2:
+                gameLogic.setValueOnBoard(lastX + 1, lastY, valueToAddToBoard); 
+                break;
+            case 3:
+                gameLogic.setValueOnBoard(lastX, lastY - 1, valueToAddToBoard);
+                break;
+            case 4:
+                gameLogic.setValueOnBoard(lastX, lastY + 1, valueToAddToBoard);
+                break;
         }
-        gameLogic.setValueOnBoard(lastX, y, 0);        
-    }
-    
-    /**
-     * Method to move value on left and right moves to board to specific x and y coordinate.
-     * @param normalAdding if values need to be only moved to other position. If false, value will be moved and added to other square.
-     * @param isLeft true if method should do the left move changes.
-     */
-    public void updateBoardFromMoveLeftRight(boolean isLeft, boolean normalAdding, int x, int lastY, int currentValue) {
-        if (isLeft) {
-            int toAdd = normalAdding ? currentValue : currentValue * 2;
-            gameLogic.setValueOnBoard(x, lastY - 1, toAdd);
-        } else {
-            int toAdd = normalAdding ? currentValue : currentValue * 2;
-            gameLogic.setValueOnBoard(x, lastY + 1, toAdd);
-        }
-        gameLogic.setValueOnBoard(x, lastY, 0);        
+        // the spot where the value was orginally moved to one forward -> updates it to empty (0).
+        gameLogic.setValueOnBoard(lastX, lastY, 0);        
     }
     
     /**
@@ -232,6 +227,7 @@ public class MoveExecutor {
         int differenceInIndex = minusOrPlus ? toCheckIndex - lastChangeNumIndex : lastChangeNumIndex - toCheckIndex;
         return positionToMoveValue == currentValue && currentValue == lastChangeNum * 2 && differenceInIndex > 1;
     }
+    
     /**
      * Checks if there any moves left on board.
      */
