@@ -14,13 +14,16 @@ The game will start with two random squares values of '2', and if summing has ha
 ### Final release
 * [loppupalautus](https://github.com/eherra/ot-harjoitustyo/releases/tag/loppupalautus2)
 
-### Terminal commands:
+## Terminal commands:
+<sub>These commands can be executed from the root folder. (_ot-harjoitustyo_)<sub>
+
 To start the game:
 ```console
 mvn compile exec:java -Dexec.mainClass=game2048.ui.Ui
 ```
 
-To run tests:
+### Testing the program
+To run JUnit tests:
 ```console
 mvn test
 ```
@@ -30,16 +33,19 @@ To get Jacoco report:
 mvn test jacoco:report
 ```
 
-To run checkstyle:
+### Checkstyle
+To run checkstyle validation:
 ```console
 mvn jxr:jxr checkstyle:checkstyle
 ```
 
+### Generating executable file
 To create jar file:
 ```console
 mvn package
 ```
 
+### Javadoc
 To generate JavaDoc:
 ```console
 mvn javadoc:javadoc
