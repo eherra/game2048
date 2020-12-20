@@ -17,7 +17,7 @@ public class MoveExecutor {
     }
     
     /**
-     * Method to makes up move to the game table array.
+     * Method to make up move on the game board.
      * @param gameOverTest if method is used to check if there are any moves available on board. (gameover if not moves left).
      */
     public boolean moveUp(boolean gameOverTest) {
@@ -52,7 +52,7 @@ public class MoveExecutor {
     }
     
     /**
-     * Method to makes down move to the game table array.
+     * Method to make down move on the game board.
      * @param gameOverTest if method is used to check if there are any moves available on board. (gameover if not moves left).
      */
     public boolean moveDown(boolean gameOverTest) {
@@ -80,7 +80,7 @@ public class MoveExecutor {
     }
     
     /**
-     * Method to makes right move to the game table array.
+     * Method to make right move on the game board.
      * @param gameOverTest if method is used to check if there are any moves available on board. (gameover if not moves left).
      */
     public boolean moveRight(boolean gameOverTest) {
@@ -108,7 +108,7 @@ public class MoveExecutor {
     }
     
     /**
-     * Method to makes left move to the game table array.
+     * Method to make left move on the game board.
      * @param gameOverTest if method is used to check if there are any moves available on board. (gameover if not moves left).
      */
     public boolean moveLeft(boolean gameOverTest) {
