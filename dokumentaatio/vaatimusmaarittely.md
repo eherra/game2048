@@ -16,3 +16,9 @@ Sovellus toimii macOS ja Linux pohjaisilla käyttöjärjestelmillä.
 
 ### Käyttöliittymä
 Sovelluksen käyttöliittymä tehdään Javan javafx-kirjastolla. Käyttöliittymässä on aloitusnäkymä, josta voi valita haluamansa pelin koon, AI Doge-pelimuodon valinnan tai high score näkymään siirtymisen. Pelinäkymän käynnistäessä aukeaa näkymä, jossa voi nuolinäppäimillä tehdä siirtoja ja pelin päätyttyä (ei siirtoja jäljellä) näkymän päälle lisätään tila (stackpane), jossa näytetään kertyneet pisteet, uuden pelin aloittamiseen mahdollistava nappi ja high scorejen tarkasteluun siirtyminen oleva napi. Mikäli pelattu tulos on vähintään top5 pisteiden verran, tulos tallennetaan tietokantaan automaattisesti.
+
+### Jatkokehitysideoita
+* Sääntösivusto, josta käytäisiin pelin säännöt lävitse esimerkiksi miten palaset yhdistyvät toisiinsa ja missä tilanteissa eivät.
+* Tietokannan siirto internettiin, johon voisi omalla nimimerkillä tallentaa tuloksensa koneeltaan.
+* Doge AI:n kehitys, jotta doge osaisi pelata pelin kokonaan lävitse. (Minimax:n algoritmin impletointi)
+* Doge AI:n muiden lautojen koon pelaamisen mahdollisuus.
