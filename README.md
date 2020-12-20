@@ -15,7 +15,7 @@ The game will start with two random squares values of '2', and if summing has ha
 * [loppupalautus](https://github.com/eherra/ot-harjoitustyo/releases/tag/loppupalautus2)
 
 ## Terminal commands:
-<sub>These commands can be executed from the root folder. (_ot-harjoitustyo_)<sub>
+<sub>These commands can be executed from the root folder on terminal. (_ot-harjoitustyo_)<sub>
 
 To start the game:
 ```console
