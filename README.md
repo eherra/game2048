@@ -4,14 +4,14 @@ A game where you move squares on board and try to sum same valued squares with e
 
 The game will start with two random squares values of '2', and if summing has happened after a move (up, down, left or right), the board will be updated with random coordinated square with value of '2' or '4' (10% chance for value '4')
 
-* [Instructions](https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/kayttoohje.md)
+* [How to play](https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/kayttoohje.md)
 
 <img src="https://github.com/eherra/game2048/blob/main/dokumentaatio/kuvat/mainmenu.png">
 
 ### Dokumentation
 * [Architecture](https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/arkkitehtuuri.md)
 * [Requirements specification](https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/vaatimusmaarittely.md)
-* [Tests](https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/testausdokumentti.md)
+* [Testing](https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/testausdokumentti.md)
 
 ## Terminal commands:
 <sub><b>These commands can be executed from the root folder (_game2048_) on terminal.</b></sub>
