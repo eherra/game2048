@@ -8,14 +8,6 @@ git clone https://github.com/eherra/ot-harjoitustyo.git
 mvn compile exec:java -Dexec.mainClass=game2048.ui.Ui
 ```
 
-Tai lataa jar-tiedosto alla olevan linkin takaa:
-
-[lataa jar](https://github.com/eherra/ot-harjoitustyo/releases/tag/loppupalautus)
-
-* ja käynnistä jar-tiedosto terminaalista komennolla:
-```console
-java -jar game2048.jar
-```
 ### Main menu
 <img src="https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/kuvat/mainmenu.png"> 
 
