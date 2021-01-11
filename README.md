@@ -4,7 +4,7 @@ A game where you move squares on board and try to sum same valued squares with e
 
 The game will start with two random squares values of '2', and if summing has happened after a move (up, down, left or right), the board will be updated with random coordinated square with value of '2' or '4' (10% chance for value '4')
 
-* [How to play](https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/kayttoohje.md)
+* [Instructions with photos](https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/kayttoohje.md)
 
 <img src="https://github.com/eherra/game2048/blob/main/dokumentaatio/kuvat/mainmenu.png">
 
@@ -33,19 +33,16 @@ mvn test jacoco:report
 ```
 
 ### Checkstyle
-To run checkstyle validation:
 ```console
 mvn jxr:jxr checkstyle:checkstyle
 ```
 
 ### Generating executable file
-To create jar file:
 ```console
 mvn package
 ```
 
 ### Javadoc
-To generate JavaDoc:
 ```console
 mvn javadoc:javadoc
 ```
