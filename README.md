@@ -8,7 +8,7 @@ The game will start with two random squares values of '2', and if summing has ha
 
 <img src="https://github.com/eherra/game2048/blob/main/dokumentaatio/kuvat/mainmenu.png">
 
-### Dokumentation
+### Dokumentation (in Finnish)
 * [Architecture](https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/arkkitehtuuri.md)
 * [Requirements specification](https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/vaatimusmaarittely.md)
 * [Testing](https://github.com/eherra/ot-harjoitustyo/blob/main/dokumentaatio/testausdokumentti.md)
