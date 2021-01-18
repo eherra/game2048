@@ -1,7 +1,7 @@
 ## Käyttöohje
 Kloonaa tiedosto terminaalistasi komennolla:
 ```console
-git clone https://github.com/eherra/ot-harjoitustyo.git
+git clone https://github.com/eherra/game2048.git
 ```
 * Ja käynnistä terminaalista komennolla: 
 ```console
